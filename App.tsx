@@ -212,7 +212,7 @@ const App: React.FC = () => {
         {/* HERO SECTION */}
         <section id="overview" className="bg-linen-texture pt-32 pb-24 md:pt-48 md:pb-32 px-6">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="mb-10 flex justify-center relative group">
+            <div className="mb-10 flex flex-col items-center relative group">
               <div className="absolute inset-0 rounded-[2.5rem] bg-pistachio blur-3xl opacity-30 -z-10 transition-all group-hover:opacity-50 scale-125 animate-pulse"></div>
               <img 
                 src={PROFILE_IMAGE_URL} 
