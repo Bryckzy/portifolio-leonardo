@@ -76,7 +76,7 @@ const experienceData: Experience[] = [
     company: "Mercedes-Benz do Brasil",
     period: "Janeiro 2019 - Março 2023",
     location: "SBC, SP",
-    logoUrl: "https://i.imgur.com/7rZNLUq.png",
+    logoUrl: "https://i.imgur.com/mFq1vmJ.png",
     description: [
       "Participação no desenvolvimento de veículos elétricos e tecnologias de ponta.",
       "Aplicação de metodologias ágeis em ambientes industriais de alta complexidade.",
