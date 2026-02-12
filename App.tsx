@@ -63,7 +63,7 @@ const experienceData: Experience[] = [
     company: "Fluencypass",
     period: "Novembro 2023 - Setembro 2024",
     location: "SBC, SP",
-    logoUrl: "https://imgur.com/b83BoxP",
+    logoUrl: "https://i.imgur.com/b83BoxP_d.webp?maxwidth=760&fidelity=grand",
     description: [
       "Orquestração de produtos EdTech integrando Inteligência Artificial Generativa.",
       "Desenvolvimento de protótipos e testes adaptativos (CAT) para escala global.",
