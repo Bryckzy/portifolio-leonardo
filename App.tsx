@@ -11,7 +11,6 @@ import Header from './src/components/Header';
 import MarketingPerformance from './src/components/MarketingPerformance';
 
 const PROFILE_IMAGE_URL = "https://avatars.githubusercontent.com/u/69459277?v=4";
-const PM3_LOGO = "https://media.licdn.com/dms/image/v2/D4D0BAQGQLThpk2gbbQ/company-logo_100_100/B4DZrgcwhBKIAY-/0/1764702227104/escola_pm3_logo?e=1770249600&v=beta&t=EFbJ4d0wtsv-_ksRmUSlfZnYh1ri9qHzl0XEMiCPDcQ";
 
 const navLinksData: NavLink[] = [
   { href: "#overview", label: "Overview" },
@@ -35,7 +34,7 @@ const experienceData: Experience[] = [
     company: "Startools Ferramentas",
     period: "Dezembro 2025 - Presente",
     location: "SBC, SP",
-    logoUrl: "https://imgur.com/q7hnTeR",
+    logoUrl: "https://i.imgur.com/q7hnTeR.png",
     description: [
       "Focado em operações de produto B2B, atuando na governança de Master Data no ERP.",
       "Otimização do ciclo de vida de dados para compliance fiscal e eficiência logística.",
@@ -49,7 +48,7 @@ const experienceData: Experience[] = [
     company: "Quark-IT",
     period: "Maio 2020 - Presente",
     location: "Brasil",
-    logoUrl: "https://imgur.com/cwCk6d6",
+    logoUrl: "https://i.imgur.com/cwCk6d6.png",
     description: [
       "Liderança estratégica impactando +50 empresas com soluções digitais escaláveis.",
       "Desenvolvimento de arquiteturas robustas em Vercel, Supabase e automações com IA.",
@@ -77,7 +76,7 @@ const experienceData: Experience[] = [
     company: "Mercedes-Benz do Brasil",
     period: "Janeiro 2019 - Março 2023",
     location: "SBC, SP",
-    logoUrl: "https://imgur.com/7rZNLUq",
+    logoUrl: "https://i.imgur.com/7rZNLUq.png",
     description: [
       "Participação no desenvolvimento de veículos elétricos e tecnologias de ponta.",
       "Aplicação de metodologias ágeis em ambientes industriais de alta complexidade.",
@@ -94,7 +93,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia de Gestão",
     period: "2022 - 2027",
     details: "Formação simultânea e interdisciplinar focada em estratégia e otimização de sistemas complexos.",
-    logoUrl: "https://imgur.com/MiEi4Je"
+    logoUrl: "https://i.imgur.com/MiEi4Je.png"
   },
   {
     id: "edu-ufabc-aero",
@@ -102,7 +101,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia Aeroespacial",
     period: "2022 - 2027",
     details: "Formação técnica de alta complexidade em paralelo à gestão, unificando precisão técnica e visão estratégica.",
-    logoUrl: "https://imgur.com/MiEi4Je"
+    logoUrl: "https://i.imgur.com/MiEi4Je.png"
   },
   {
     id: "edu-pm3-path",
@@ -110,7 +109,7 @@ const educationData: Education[] = [
     degree: "Formação em Product Management",
     period: "2023",
     details: "Referência em gestão de produtos no Brasil, focando em Discovery, Delivery e Product-Led Growth.",
-    logoUrl: "https://imgur.com/1NHtBuj"
+    logoUrl: "https://i.imgur.com/1NHtBuj.png"
   },
   {
     id: "edu-senai-mb",
@@ -118,15 +117,15 @@ const educationData: Education[] = [
     degree: "Manufatura Automotiva & Mecânica",
     period: "2019 - 2021",
     details: "Base técnica de manufatura de precisão em ambiente corporativo global.",
-    logoUrl: "https://imgur.com/NnL38S1"
+    logoUrl: "https://i.imgur.com/NnL38S1.png"
   }
 ];
 
 const certificationData: Certification[] = [
-  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: "https://imgur.com/1NHtBuj" },
-  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: "https://imgur.com/1NHtBuj" },
-  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://imgur.com/uH5sops" },
-  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://imgur.com/NnL38S1" },
+  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
+  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
+  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://i.imgur.com/uH5sops.png" },
+  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://i.imgur.com/NnL38S1.png" },
 ];
 
 const projectShowcaseData: ProjectShowcaseItem[] = [
