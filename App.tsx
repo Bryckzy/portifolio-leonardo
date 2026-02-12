@@ -35,7 +35,7 @@ const experienceData: Experience[] = [
     company: "Startools Ferramentas",
     period: "Dezembro 2025 - Presente",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4E0BAQFBbZxaaOmw2w/company-logo_100_100/B4EZY0LW0QG0AU-/0/1744632115253/startoolsferramentas_logo?e=1771459200&v=beta&t=B7Sbg8WjTKkhD4srwsTjEZPVlqhYXW6gnm1qH7ywaJo",
+    logoUrl: "https://imgur.com/q7hnTeR",
     description: [
       "Focado em operações de produto B2B, atuando na governança de Master Data no ERP.",
       "Otimização do ciclo de vida de dados para compliance fiscal e eficiência logística.",
@@ -49,7 +49,7 @@ const experienceData: Experience[] = [
     company: "Quark-IT",
     period: "Maio 2020 - Presente",
     location: "Brasil",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4E0BAQFdaRd_bx_HPQ/company-logo_100_100/B4EZeXUaeHHsAQ-/0/1750590401271/quark_it_logo?e=1770249600&v=beta&t=IQ5e6PFPH3x8zuL5X_sq3P8ZJ5OLOY7WwwWVIKAOHKw",
+    logoUrl: "https://imgur.com/cwCk6d6",
     description: [
       "Liderança estratégica impactando +50 empresas com soluções digitais escaláveis.",
       "Desenvolvimento de arquiteturas robustas em Vercel, Supabase e automações com IA.",
@@ -63,7 +63,7 @@ const experienceData: Experience[] = [
     company: "Fluencypass",
     period: "Novembro 2023 - Setembro 2024",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQHFhYD7eWyToQ/company-logo_100_100/company-logo_100_100/0/1630573545660/intercambiodireto_logo?e=1770249600&v=beta&t=1yHY_JvBWNhQ4lLM4gwVr3Dzoh-AGisaiR2EaE1x_qw",
+    logoUrl: "https://imgur.com/b83BoxP",
     description: [
       "Orquestração de produtos EdTech integrando Inteligência Artificial Generativa.",
       "Desenvolvimento de protótipos e testes adaptativos (CAT) para escala global.",
@@ -77,7 +77,7 @@ const experienceData: Experience[] = [
     company: "Mercedes-Benz do Brasil",
     period: "Janeiro 2019 - Março 2023",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQEkDK7TnthtLw/company-logo_100_100/company-logo_100_100/0/1630455336611?e=1770249600&v=beta&t=yEDKuVUvpvspcxXLCTWqbRKJyCHl8nq2F6b9PtcKTuI",
+    logoUrl: "https://imgur.com/7rZNLUq",
     description: [
       "Participação no desenvolvimento de veículos elétricos e tecnologias de ponta.",
       "Aplicação de metodologias ágeis em ambientes industriais de alta complexidade.",
@@ -94,7 +94,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia de Gestão",
     period: "2022 - 2027",
     details: "Formação simultânea e interdisciplinar focada em estratégia e otimização de sistemas complexos.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQE5uoSry7ph7A/company-logo_100_100/company-logo_100_100/0/1690208954192/ufabc_logo?e=1770249600&v=beta&t=Kywtl8OWoqZVnvPMp0eWy7k3vNSUfKXf92kH3E9zDcg"
+    logoUrl: "https://imgur.com/MiEi4Je"
   },
   {
     id: "edu-ufabc-aero",
@@ -102,7 +102,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia Aeroespacial",
     period: "2022 - 2027",
     details: "Formação técnica de alta complexidade em paralelo à gestão, unificando precisão técnica e visão estratégica.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQE5uoSry7ph7A/company-logo_100_100/company-logo_100_100/0/1690208954192/ufabc_logo?e=1770249600&v=beta&t=Kywtl8OWoqZVnvPMp0eWy7k3vNSUfKXf92kH3E9zDcg"
+    logoUrl: "https://imgur.com/MiEi4Je"
   },
   {
     id: "edu-pm3-path",
@@ -110,7 +110,7 @@ const educationData: Education[] = [
     degree: "Formação em Product Management",
     period: "2023",
     details: "Referência em gestão de produtos no Brasil, focando em Discovery, Delivery e Product-Led Growth.",
-    logoUrl: PM3_LOGO
+    logoUrl: "https://imgur.com/1NHtBuj"
   },
   {
     id: "edu-senai-mb",
@@ -118,15 +118,15 @@ const educationData: Education[] = [
     degree: "Manufatura Automotiva & Mecânica",
     period: "2019 - 2021",
     details: "Base técnica de manufatura de precisão em ambiente corporativo global.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQEXQZMYuhyf3A/company-logo_100_100/B4DZfF0q9fGkAU-/0/1751370608886/senaisp_logo?e=1770249600&v=beta&t=GS59LkzmXWat1irm592N8zBv_UL1DOJALR-gKLIzT5k"
+    logoUrl: "https://imgur.com/NnL38S1"
   }
 ];
 
 const certificationData: Certification[] = [
-  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: PM3_LOGO },
-  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: PM3_LOGO },
-  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQHzAFzG6umH9g/company-logo_100_100/company-logo_100_100/0/1630574057001/cambridge_assessment_logo?e=1770249600&v=beta&t=8NpIQ7K_o9is023H1r3McXHBMF0P9AxoyOwTjIcvb_g" },
-  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQEXQZMYuhyf3A/company-logo_100_100/B4DZfF0q9fGkAU-/0/1751370608886/senaisp_logo?e=1770249600&v=beta&t=GS59LkzmXWat1irm592N8zBv_UL1DOJALR-gKLIzT5k" },
+  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: "https://imgur.com/1NHtBuj" },
+  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: "https://imgur.com/1NHtBuj" },
+  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://imgur.com/uH5sops" },
+  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://imgur.com/NnL38S1" },
 ];
 
 const projectShowcaseData: ProjectShowcaseItem[] = [
