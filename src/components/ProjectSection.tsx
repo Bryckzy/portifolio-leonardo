@@ -20,12 +20,9 @@ interface ProjectSectionProps {
 
 const getCategoryEmoji = (category: string) => {
   const cat = category.toLowerCase();
-  if (cat.includes('ai')) return '🤖';
-  if (cat.includes('business') || cat.includes('growth')) return '💼';
   if (cat.includes('ops') || cat.includes('interno')) return '⚙️';
-  if (cat.includes('data')) return '📊';
-  if (cat.includes('tooling')) return '🛠️';
-  return '✨';
+  if (cat.includes('marketing') || cat.includes('business')) return '🚀';
+  return '💡';
 };
 
 const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
@@ -91,7 +88,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
         <div className="text-center mb-20 md:mb-32">
           <h2 className="section-title mb-6">Projetos & Impacto.</h2>
           <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-3xl mx-auto leading-relaxed">
-            Uma visão consolidada dos principais cases de transformação, estruturados na ótica de <span className="text-apple font-bold bg-white/50 px-3 py-1 rounded-xl shadow-sm border border-white">Product Management</span>.
+            Abaixo está a seleção dos meus principais <strong className="text-apple font-black">projetos, ferramentas e resultados</strong> construídos na prática.
           </p>
         </div>
 
@@ -101,9 +98,9 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             <button 
               key={project.id}
               onClick={() => openModal(project)}
-              className="group text-left rounded-[2.5rem] bg-white/60 backdrop-blur-md border border-white hover:border-emerald-300 overflow-hidden flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgba(110,231,183,0.3)] transition-all duration-500 transform hover:-translate-y-2 h-full relative"
+              className="group text-left rounded-[2.5rem] bg-[#f1f4ea] backdrop-blur-md border-2 border-pistachio hover:border-emerald-400 overflow-hidden flex flex-col shadow-lg hover:shadow-[0_20px_50px_rgba(110,231,183,0.3)] transition-all duration-500 transform hover:-translate-y-2 h-full relative"
             >
-              <div className="relative aspect-[4/3] w-full bg-white overflow-hidden p-8 md:p-10 border-b border-white/50">
+              <div className="relative aspect-[4/3] w-full bg-white overflow-hidden p-8 md:p-10 border-b-2 border-pistachio/50">
                 {/* Subtle colorful gradient behind image */}
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-pistachio/30 to-emerald-100/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 
@@ -116,13 +113,13 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                 
                 {/* Hover Glass Overlay Button */}
                 <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-20">
-                  <span className="text-apple font-black uppercase tracking-[0.2em] text-xs flex items-center gap-2 border border-white px-6 py-4 rounded-full bg-white/90 shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
+                  <span className="text-apple font-black uppercase tracking-[0.2em] text-xs flex items-center gap-2 border-2 border-white px-6 py-4 rounded-full bg-white shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
                     Detalhes do Case 👀
                   </span>
                 </div>
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col gap-4 flex-grow relative bg-white/40 group-hover:bg-gradient-to-r group-hover:from-pistachio/20 group-hover:to-emerald-50/50 transition-colors duration-500">
+              <div className="p-8 md:p-10 flex flex-col gap-4 flex-grow relative bg-white/80 group-hover:bg-gradient-to-r group-hover:from-pistachio/10 group-hover:to-emerald-50/40 transition-colors duration-500">
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 block mb-3 flex items-center gap-1.5">
                     <span className="text-sm">{getCategoryEmoji(project.category)}</span> {project.category}
