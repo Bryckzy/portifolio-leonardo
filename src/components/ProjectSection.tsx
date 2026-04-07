@@ -101,7 +101,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
               className="group text-left rounded-[2.5rem] md:rounded-[3rem] bg-white border border-[#e5e9db] hover:border-emerald-300 overflow-hidden flex flex-col shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_80px_rgba(16,185,129,0.15)] transition-all duration-700 transform hover:-translate-y-4 h-full relative"
             >
               {/* Image Section - BIGGER and BOLDER */}
-              <div className="relative h-[340px] md:h-[400px] w-full bg-[#fbfdf7] overflow-hidden p-6 md:p-10 flex items-center justify-center">
+              <div className="relative h-[260px] md:h-[320px] w-full bg-[#fbfdf7] overflow-hidden p-6 md:p-10 flex items-center justify-center border-b border-[#e5e9db]">
                 
                 <img 
                   src={project.imageUrls[0]} 
@@ -109,25 +109,23 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                   className="w-full h-full object-contain shrink-0 transition-all duration-[800ms] ease-out group-hover:scale-[1.05] relative z-0 filter drop-shadow-2xl" 
                   loading="lazy" 
                 />
-                
-                {/* THE WOW FACTOR Badge OVERLAY */}
-                {project.results[0] && (
-                  <div className="absolute inset-x-4 bottom-4 md:inset-x-8 md:bottom-8 z-20 transform translate-y-4 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <div className="bg-white/70 backdrop-blur-2xl border border-white shadow-[0_15px_30px_rgba(0,0,0,0.1)] rounded-3xl p-5 flex gap-4 items-start group-hover:shadow-[0_20px_50px_rgba(16,185,129,0.2)] transition-shadow duration-500 group-hover:border-emerald-200/50 group-hover:bg-white/90">
-                      <span className="text-emerald-500 text-2xl leading-none mt-0.5 animate-pulse">✨</span>
-                      <p className="text-apple font-bold text-sm md:text-base leading-snug tracking-tight">
-                        {project.results[0]}
-                      </p>
-                    </div>
-                  </div>
-                )}
 
                 {/* Subtler Hover Overlay for the "Click" tint */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
               </div>
 
+              {/* THE WOW FACTOR Dedicated Color Block */}
+              {project.results[0] && (
+                <div className="bg-pistachio-dark group-hover:bg-emerald-500 transition-colors duration-700 px-8 py-5 md:px-10 flex items-center gap-4 relative z-20">
+                  <span className="text-white text-2xl leading-none opacity-90">✨</span>
+                  <p className="text-white font-bold text-sm md:text-base leading-tight tracking-tight drop-shadow-sm">
+                    {project.results[0]}
+                  </p>
+                </div>
+              )}
+
               {/* Text Section - Clean Minimalist Apple-like */}
-              <div className="p-8 md:p-10 flex flex-col gap-3 flex-grow relative bg-white z-20 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-emerald-50/40 transition-colors duration-700">
+              <div className="p-8 md:p-10 flex flex-col gap-3 flex-grow relative bg-white z-20 group-hover:bg-[#fbfdf7] transition-colors duration-700">
                 <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-emerald-600 mb-2 flex items-center gap-2">
                   <span className="text-sm">{getCategoryEmoji(project.category)}</span> {project.category}
                 </span>
