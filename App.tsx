@@ -176,7 +176,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-linguacombo",
     name: "LinguaCombo",
-    category: "Digital Business",
+    category: "Marketing",
     context: "Cursos de idiomas com preços altos e baixa acessibilidade, principalmente para jovens e iniciantes.",
     role: [
       "Definição da proposta de valor focada em educação acessível",
@@ -197,7 +197,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-productmatch",
     name: "Product Match",
-    category: "Product Tooling",
+    category: "Projetos",
     context: "Empresas com dificuldade de posicionamento competitivo mercadológico por falta de visibilidade em escala sobre concorrentes.",
     role: [
       "Definição exata do problema de inteligência competitiva",
@@ -238,7 +238,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-quark-site",
     name: "Quark IT — Site & Portfólio",
-    category: "Digital Business",
+    category: "Marketing",
     context: "Negócios locais com presença digital estagnada e alta dificuldade natural de criar verticais recorrentes na aquisição de clientes.",
     role: [
       "Estruturação direta e assertiva do posicionamento de produto",
@@ -259,7 +259,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-aprender-crescer",
     name: "Landing Page — Aprender para Crescer",
-    category: "Digital Business",
+    category: "Marketing",
     context: "Baixa retenção de atenção e queda perceptível no conversão para produtos voltados estritamente à esfera educacional.",
     role: [
       "Reredação e reestruturação total da proposta de valor exposta",
@@ -279,7 +279,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-grunner-mb",
     name: "Grunner (Mercedes-Benz)",
-    category: "AI Integration",
+    category: "Projetos",
     context: "Elevada necessidade de expansão segura e ágil na adaptação dos ecossistemas de caminhões para uma operação autônoma agrícola.",
     role: [
       "Atuação presente em etapas complexas conectadas e ciclo de produto",
@@ -299,7 +299,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-easytab",
     name: "Easy Tab",
-    category: "AI Integration",
+    category: "Projetos",
     context: "Grande atraso e custo logístico em horas humanas para o registro de tabulações em call centers sob forte demanda.",
     role: [
       "Mapeamento precoce sobre aplicação inteligente de dados LLM",
@@ -319,7 +319,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-calc",
     name: "Calculadora Logística 3D",
-    category: "Product Tooling",
+    category: "Projetos",
     context: "Falta de visibilidade e ineficiência na alocação de espaço e cubagem industrial, gerando encarecimento excessivo e altos custos não otimizados no frete logístico corporativo.",
     role: [
       "Mapeamento estruturado minucioso para as validações da alocação de espaço dos insumos e cargas",
@@ -338,7 +338,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-sullivan",
     name: "Sullivan Connection",
-    category: "Business Management",
+    category: "Projetos",
     context: "Dependência de planilhas complexas, demora excessiva e falha recorrente em dados na coleta de requerimentos de campo das obras, minando orçamento comercial.",
     role: [
       "Avaliação crítica das dependências processuais da equipe de rua com o backend",
@@ -357,7 +357,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-level",
     name: "Level Test AI",
-    category: "AI Integration",
+    category: "Projetos",
     context: "Avaliações monolíticas tradicionais causavam alto índice de erro do nível medido em relação à curva de fluência, estendendo desgastes nos primeiros dias dos estudantes.",
     role: [
       "Revisão integral das métricas preditivas apontando lacunas avaliativas no uso das tecnologias legadas",
@@ -395,7 +395,7 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
   {
     id: "p-styllo",
     name: "Barbearia Novo Styllo",
-    category: "Digital Business",
+    category: "Marketing",
     context: "Negócio local buscando profissionalização de marca e dificuldades em canalizar agendamentos digitalmente de forma escalável.",
     role: [
       "Definição agressiva de estratégia digital local",

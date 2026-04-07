@@ -87,8 +87,8 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-20 md:mb-32">
           <h2 className="section-title mb-6">Projetos & Impacto.</h2>
-          <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-3xl mx-auto leading-relaxed">
-            Abaixo está a seleção dos meus principais <strong className="text-apple font-black">projetos, ferramentas e resultados</strong> construídos na prática.
+          <p className="text-xl md:text-2xl text-gray-500 font-medium max-w-3xl mx-auto leading-relaxed mb-6">
+            Aqui estão meus principais <strong className="text-apple font-black">projetos, abordagens e resultados</strong>.
           </p>
         </div>
 
@@ -98,41 +98,46 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             <button 
               key={project.id}
               onClick={() => openModal(project)}
-              className="group text-left rounded-[2.5rem] bg-[#f1f4ea] backdrop-blur-md border-2 border-pistachio hover:border-emerald-400 overflow-hidden flex flex-col shadow-lg hover:shadow-[0_20px_50px_rgba(110,231,183,0.3)] transition-all duration-500 transform hover:-translate-y-2 h-full relative"
+              className="group text-left rounded-[2.5rem] md:rounded-[3rem] bg-white border border-[#e5e9db] hover:border-emerald-300 overflow-hidden flex flex-col shadow-[0_10px_40px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_80px_rgba(16,185,129,0.15)] transition-all duration-700 transform hover:-translate-y-4 h-full relative"
             >
-              <div className="relative aspect-[4/3] w-full bg-white overflow-hidden p-8 md:p-10 border-b-2 border-pistachio/50">
-                {/* Subtle colorful gradient behind image */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-pistachio/30 to-emerald-100/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              {/* Image Section - BIGGER and BOLDER */}
+              <div className="relative h-[340px] md:h-[400px] w-full bg-[#fbfdf7] overflow-hidden p-6 md:p-10 flex items-center justify-center">
                 
                 <img 
                   src={project.imageUrls[0]} 
                   alt={project.name} 
-                  className="w-full h-full object-contain shrink-0 transition-transform duration-700 group-hover:scale-[1.12] relative z-10 filter drop-shadow-xl" 
+                  className="w-full h-full object-contain shrink-0 transition-all duration-[800ms] ease-out group-hover:scale-[1.05] relative z-0 filter drop-shadow-2xl" 
                   loading="lazy" 
                 />
                 
-                {/* Hover Glass Overlay Button */}
-                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-20">
-                  <span className="text-apple font-black uppercase tracking-[0.2em] text-xs flex items-center gap-2 border-2 border-white px-6 py-4 rounded-full bg-white shadow-2xl transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105">
-                    Detalhes do Case 👀
-                  </span>
-                </div>
+                {/* THE WOW FACTOR Badge OVERLAY */}
+                {project.results[0] && (
+                  <div className="absolute inset-x-4 bottom-4 md:inset-x-8 md:bottom-8 z-20 transform translate-y-4 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                    <div className="bg-white/70 backdrop-blur-2xl border border-white shadow-[0_15px_30px_rgba(0,0,0,0.1)] rounded-3xl p-5 flex gap-4 items-start group-hover:shadow-[0_20px_50px_rgba(16,185,129,0.2)] transition-shadow duration-500 group-hover:border-emerald-200/50 group-hover:bg-white/90">
+                      <span className="text-emerald-500 text-2xl leading-none mt-0.5 animate-pulse">✨</span>
+                      <p className="text-apple font-bold text-sm md:text-base leading-snug tracking-tight">
+                        {project.results[0]}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Subtler Hover Overlay for the "Click" tint */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col gap-4 flex-grow relative bg-white/80 group-hover:bg-gradient-to-r group-hover:from-pistachio/10 group-hover:to-emerald-50/40 transition-colors duration-500">
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 block mb-3 flex items-center gap-1.5">
-                    <span className="text-sm">{getCategoryEmoji(project.category)}</span> {project.category}
-                  </span>
-                  <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-apple leading-tight">{project.name}</h3>
-                </div>
+              {/* Text Section - Clean Minimalist Apple-like */}
+              <div className="p-8 md:p-10 flex flex-col gap-3 flex-grow relative bg-white z-20 group-hover:bg-gradient-to-br group-hover:from-white group-hover:to-emerald-50/40 transition-colors duration-700">
+                <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-emerald-600 mb-2 flex items-center gap-2">
+                  <span className="text-sm">{getCategoryEmoji(project.category)}</span> {project.category}
+                </span>
+                <h3 className="text-2xl md:text-4xl font-black tracking-tight text-apple leading-tight mb-2">{project.name}</h3>
                 
-                {/* Highlight prominent metric if any */}
-                <div className="mt-auto pt-6 border-t border-apple/5">
-                  <p className="text-sm font-semibold text-gray-500 line-clamp-2 leading-relaxed">
-                    <span className="text-pistachio-dark mr-2 text-lg leading-none">↗</span>
-                    {project.results[0] || project.context.substring(0, 60) + '...'}
-                  </p>
+                {/* Clean View Details string */}
+                <div className="mt-auto pt-8 border-t border-gray-100/80">
+                  <span className="text-xs md:text-sm font-bold text-apple/40 group-hover:text-emerald-600 uppercase tracking-widest flex items-center gap-2 transition-colors duration-300">
+                    Abrir Case Completo <span className="text-xl group-hover:translate-x-2 transition-transform duration-300">→</span>
+                  </span>
                 </div>
               </div>
             </button>
