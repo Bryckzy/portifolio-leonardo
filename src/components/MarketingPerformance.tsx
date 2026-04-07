@@ -3,11 +3,11 @@ import React from 'react';
 
 const MarketingPerformance: React.FC = () => {
   const metrics = [
-    { label: "Visualizações", value: "1.5M+", sub: "Ads Impressions", color: "text-pistachio" },
-    { label: "Investimento", value: "R$50k+", sub: "Managed Budget", color: "text-white" },
-    { label: "Engajamento", value: "15k+", sub: "Direct Clicks", color: "text-white" },
-    { label: "Custo Clique", value: "R$0,10", sub: "CPC Strategy", color: "text-white" },
-    { label: "Conversão", value: "R$3,00", sub: "Cost per Conv.", color: "text-white" },
+    { label: "Vis. Globais", value: "1.5M+", sub: "Total Impressions", color: "text-pistachio" },
+    { label: "Volume Gerido", value: "R$50k+", sub: "Total Budget", color: "text-white" },
+    { label: "Engajamento", value: "15k+", sub: "Total Clicks", color: "text-white" },
+    { label: "CPC Médio", value: "R$0,10", sub: "Avg. CPC Strategy", color: "text-white" },
+    { label: "CPA Médio", value: "R$3,00", sub: "Avg. Cost per Conv.", color: "text-white" },
   ];
 
   return (
@@ -49,8 +49,8 @@ const MarketingPerformance: React.FC = () => {
                 </span>
               </div>
               <div>
-                <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">Visualizações Únicas.</h3>
-                <p className="text-xl text-gray-400 font-medium">Alcance massivo gerado através de segmentação precisa e criativos de alta conversão em Meta & Google Ads.</p>
+                <h3 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">Visualizações Globais.</h3>
+                <p className="text-xl text-gray-400 font-medium">Alcance massivo combinado em projetos através de segmentação precisa e criativos de alta conversão em Meta & Google Ads.</p>
               </div>
             </div>
           </div>

@@ -62,12 +62,13 @@ export interface ProjectShowcaseItem {
   id: string;
   name: string;
   category: string; 
-  shortDescription: string;
-  imageUrl: string; 
+  context: string;
+  role: string[];
+  solution: string;
+  results: string[];
+  imageUrls: string[]; 
   techStack?: string[];
   liveLink?: string;
-  impact?: string;
-  metrics?: string[];
 }
 
 export interface NavLink {

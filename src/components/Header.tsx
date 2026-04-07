@@ -78,7 +78,7 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
             ))}
           </nav>
           <div className={`mt-8 pt-6 border-t border-apple/5 flex flex-col items-start transition-all duration-500 delay-200 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex items-center gap-4 mb-6 justify-center md:justify-start text-center md:text-left">
               <img 
                 src={profileImageUrl} 
                 alt="Leonardo Brykcy" 

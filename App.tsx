@@ -11,7 +11,6 @@ import Header from './src/components/Header';
 import MarketingPerformance from './src/components/MarketingPerformance';
 
 const PROFILE_IMAGE_URL = "https://avatars.githubusercontent.com/u/69459277?v=4";
-const PM3_LOGO = "https://media.licdn.com/dms/image/v2/D4D0BAQGQLThpk2gbbQ/company-logo_100_100/B4DZrgcwhBKIAY-/0/1764702227104/escola_pm3_logo?e=1770249600&v=beta&t=EFbJ4d0wtsv-_ksRmUSlfZnYh1ri9qHzl0XEMiCPDcQ";
 
 const navLinksData: NavLink[] = [
   { href: "#overview", label: "Overview" },
@@ -35,7 +34,7 @@ const experienceData: Experience[] = [
     company: "Startools Ferramentas",
     period: "Dezembro 2025 - Presente",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4E0BAQFBbZxaaOmw2w/company-logo_100_100/B4EZY0LW0QG0AU-/0/1744632115253/startoolsferramentas_logo?e=1771459200&v=beta&t=B7Sbg8WjTKkhD4srwsTjEZPVlqhYXW6gnm1qH7ywaJo",
+    logoUrl: "https://i.imgur.com/q7hnTeR.png",
     description: [
       "Focado em operações de produto B2B, atuando na governança de Master Data no ERP.",
       "Otimização do ciclo de vida de dados para compliance fiscal e eficiência logística.",
@@ -49,7 +48,7 @@ const experienceData: Experience[] = [
     company: "Quark-IT",
     period: "Maio 2020 - Presente",
     location: "Brasil",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4E0BAQFdaRd_bx_HPQ/company-logo_100_100/B4EZeXUaeHHsAQ-/0/1750590401271/quark_it_logo?e=1770249600&v=beta&t=IQ5e6PFPH3x8zuL5X_sq3P8ZJ5OLOY7WwwWVIKAOHKw",
+    logoUrl: "https://i.imgur.com/cwCk6d6.png",
     description: [
       "Liderança estratégica impactando +50 empresas com soluções digitais escaláveis.",
       "Desenvolvimento de arquiteturas robustas em Vercel, Supabase e automações com IA.",
@@ -63,7 +62,7 @@ const experienceData: Experience[] = [
     company: "Fluencypass",
     period: "Novembro 2023 - Setembro 2024",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQHFhYD7eWyToQ/company-logo_100_100/company-logo_100_100/0/1630573545660/intercambiodireto_logo?e=1770249600&v=beta&t=1yHY_JvBWNhQ4lLM4gwVr3Dzoh-AGisaiR2EaE1x_qw",
+    logoUrl: "https://i.imgur.com/b83BoxP_d.webp?maxwidth=760&fidelity=grand",
     description: [
       "Orquestração de produtos EdTech integrando Inteligência Artificial Generativa.",
       "Desenvolvimento de protótipos e testes adaptativos (CAT) para escala global.",
@@ -77,7 +76,7 @@ const experienceData: Experience[] = [
     company: "Mercedes-Benz do Brasil",
     period: "Janeiro 2019 - Março 2023",
     location: "SBC, SP",
-    logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQEkDK7TnthtLw/company-logo_100_100/company-logo_100_100/0/1630455336611?e=1770249600&v=beta&t=yEDKuVUvpvspcxXLCTWqbRKJyCHl8nq2F6b9PtcKTuI",
+    logoUrl: "https://i.imgur.com/mFq1vmJ.png",
     description: [
       "Participação no desenvolvimento de veículos elétricos e tecnologias de ponta.",
       "Aplicação de metodologias ágeis em ambientes industriais de alta complexidade.",
@@ -94,7 +93,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia de Gestão",
     period: "2022 - 2027",
     details: "Formação simultânea e interdisciplinar focada em estratégia e otimização de sistemas complexos.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQE5uoSry7ph7A/company-logo_100_100/company-logo_100_100/0/1690208954192/ufabc_logo?e=1770249600&v=beta&t=Kywtl8OWoqZVnvPMp0eWy7k3vNSUfKXf92kH3E9zDcg"
+    logoUrl: "https://i.imgur.com/MiEi4Je.png"
   },
   {
     id: "edu-ufabc-aero",
@@ -102,7 +101,7 @@ const educationData: Education[] = [
     degree: "Bacharelado em Engenharia Aeroespacial",
     period: "2022 - 2027",
     details: "Formação técnica de alta complexidade em paralelo à gestão, unificando precisão técnica e visão estratégica.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQE5uoSry7ph7A/company-logo_100_100/company-logo_100_100/0/1690208954192/ufabc_logo?e=1770249600&v=beta&t=Kywtl8OWoqZVnvPMp0eWy7k3vNSUfKXf92kH3E9zDcg"
+    logoUrl: "https://i.imgur.com/MiEi4Je.png"
   },
   {
     id: "edu-pm3-path",
@@ -110,7 +109,7 @@ const educationData: Education[] = [
     degree: "Formação em Product Management",
     period: "2023",
     details: "Referência em gestão de produtos no Brasil, focando em Discovery, Delivery e Product-Led Growth.",
-    logoUrl: PM3_LOGO
+    logoUrl: "https://i.imgur.com/1NHtBuj.png"
   },
   {
     id: "edu-senai-mb",
@@ -118,62 +117,259 @@ const educationData: Education[] = [
     degree: "Manufatura Automotiva & Mecânica",
     period: "2019 - 2021",
     details: "Base técnica de manufatura de precisão em ambiente corporativo global.",
-    logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQEXQZMYuhyf3A/company-logo_100_100/B4DZfF0q9fGkAU-/0/1751370608886/senaisp_logo?e=1770249600&v=beta&t=GS59LkzmXWat1irm592N8zBv_UL1DOJALR-gKLIzT5k"
+    logoUrl: "https://i.imgur.com/NnL38S1.png"
   }
 ];
 
 const certificationData: Certification[] = [
-  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: PM3_LOGO },
-  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: PM3_LOGO },
-  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://media.licdn.com/dms/image/v2/C4D0BAQHzAFzG6umH9g/company-logo_100_100/company-logo_100_100/0/1630574057001/cambridge_assessment_logo?e=1770249600&v=beta&t=8NpIQ7K_o9is023H1r3McXHBMF0P9AxoyOwTjIcvb_g" },
-  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://media.licdn.com/dms/image/v2/D4D0BAQEXQZMYuhyf3A/company-logo_100_100/B4DZfF0q9fGkAU-/0/1751370608886/senaisp_logo?e=1770249600&v=beta&t=GS59LkzmXWat1irm592N8zBv_UL1DOJALR-gKLIzT5k" },
+  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
+  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
+  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://i.imgur.com/uH5sops.png" },
+  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://i.imgur.com/NnL38S1.png" },
 ];
 
 const projectShowcaseData: ProjectShowcaseItem[] = [
   {
+    id: "p-startools-logistica",
+    name: "Startools Logística",
+    category: "Internal Ops",
+    context: "Falta de controle logístico e visibilidade nas entregas, dificultando a gestão e gerando ineficiências operacionais.",
+    role: [
+      "Discovery completo do fluxo logístico",
+      "Definição de backlog e priorização",
+      "Criação de visão de produto end-to-end"
+    ],
+    solution: "Sistema completo de gestão logística com acompanhamento, etapas e relatórios.",
+    results: [
+      "Redução média de falhas operacionais observada na operação",
+      "Aumento de eficiência média na gestão global de entregas",
+      "Melhoria consolidada na previsibilidade logística"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/Y4WpiHQ.jpeg",
+      "https://i.imgur.com/AVBj6rs.jpeg"
+    ],
+    techStack: ["Product Discovery", "UX Flow", "End-to-End"]
+  },
+  {
+    id: "p-startools-scan",
+    name: "Startools Product Scan",
+    category: "Internal Ops",
+    context: "Dificuldade de acesso rápido a informações de produtos em eventos e showroom pela equipe comercial.",
+    role: [
+      "Identificação de necessidade operacional em campo",
+      "Definição de experiência mobile-first focada em campo",
+      "Priorização de velocidade resolutiva e usabilidade no scan"
+    ],
+    solution: "Sistema leve de leitura de código de barras com retorno instantâneo agilizando a visualização de informações em campo.",
+    results: [
+      "Redução média significativa no tempo de consulta de produtos",
+      "Melhoria média na experiência comercial presencial em eventos"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/2TbAMxX.jpeg",
+      "https://i.imgur.com/dIXJwvy.jpeg"
+    ],
+    techStack: ["Mobile-first", "Operações Comerciais"]
+  },
+  {
+    id: "p-linguacombo",
+    name: "LinguaCombo",
+    category: "Digital Business",
+    context: "Cursos de idiomas com preços altos e baixa acessibilidade, principalmente para jovens e iniciantes.",
+    role: [
+      "Definição da proposta de valor focada em educação acessível",
+      "Estruturação do modelo de pricing com inspiração em combos",
+      "Construção da jornada guiada simplificada de compra",
+      "Validação contínua da oferta baseada em dados de check-out"
+    ],
+    solution: "Criação de uma plataforma online de venda de aulas com um modelo de precificação acessível e comunicação altamente simplificada.",
+    results: [
+      "Aumento médio de conversão observado em landing pages educacionais comparáveis entre 20% e 40%",
+      "Redução média esperada da fricção no checkout em produtos de baixo ticket"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/cPWETJJ.jpeg"
+    ],
+    techStack: ["Growth", "Pricing Strategy", "E-commerce"]
+  },
+  {
+    id: "p-productmatch",
+    name: "Product Match",
+    category: "Product Tooling",
+    context: "Empresas com dificuldade de posicionamento competitivo mercadológico por falta de visibilidade em escala sobre concorrentes.",
+    role: [
+      "Definição exata do problema de inteligência competitiva",
+      "Estruturação lógica do fluxo automatizado de comparação",
+      "Priorização das vitrines e features de análise automática"
+    ],
+    solution: "Sistema corporativo focado em cruzar informações do catálogo interno com as de produtos concorrentes mapeados online.",
+    results: [
+      "Redução média esperada no tempo de análise competitiva podendo chegar a 70%",
+      "Apoio estrutural e melhoria na tomada de decisão comercial de forma holística comparativa"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/M88eZZj.jpeg",
+      "https://i.imgur.com/E2bNbOV.jpeg"
+    ],
+    techStack: ["Competitive Intelligence", "Data Strategy"]
+  },
+  {
+    id: "p-etiquetas-showroom",
+    name: "Etiquetas Showroom",
+    category: "Internal Ops",
+    context: "Processos puramente manuais, gerando inconsistências no padrão e na agilidade de identificação de produtos de showroom.",
+    role: [
+      "Mapeamento imersivo e diagnóstico do fluxo atual",
+      "Identificação tática de gargalos operacionais físicos/digitais",
+      "Definição da padronização sustentável para o ambiente de operação"
+    ],
+    solution: "Criação de sistema coeso para a geração automatizada e ágil de etiquetas baseadas nestes padrões corporativos.",
+    results: [
+      "Acesso e redução média global de erros na cadeia de manuseio e etiquetagem",
+      "Escalabilidade e aumento de eficiência visual na organização do espaço"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/ogcl5OT.jpeg"
+    ],
+    techStack: ["Automação", "Mapeamento Ops"]
+  },
+  {
+    id: "p-quark-site",
+    name: "Quark IT — Site & Portfólio",
+    category: "Digital Business",
+    context: "Negócios locais com presença digital estagnada e alta dificuldade natural de criar verticais recorrentes na aquisição de clientes.",
+    role: [
+      "Estruturação direta e assertiva do posicionamento de produto",
+      "Mapeamento da jornada orgânica até funil em aquisição",
+      "Priorização tática das landing pages com visibilidade em lead generation"
+    ],
+    solution: "Site institucional orientado ao posicionamento profissional de forma contínua para apresentação e onboarding de serviços.",
+    results: [
+      "Suporte vital e aumento médio contínuo nas frentes locais de lead generation",
+      "Atingimento da taxa de conversão média por visitantes otimizada para o setor B2B local"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/hgNEjNj.jpeg",
+      "https://i.imgur.com/hW4l5ba.jpeg"
+    ],
+    techStack: ["Lead Generation", "UX Strategy"]
+  },
+  {
+    id: "p-aprender-crescer",
+    name: "Landing Page — Aprender para Crescer",
+    category: "Digital Business",
+    context: "Baixa retenção de atenção e queda perceptível no conversão para produtos voltados estritamente à esfera educacional.",
+    role: [
+      "Reredação e reestruturação total da proposta de valor exposta",
+      "Desenvolvimento de hierarquização visual pautada em métricas",
+      "Aprovação e testagem com foco exclusivo no tracionamento"
+    ],
+    solution: "Implementação de modelo reestruturado de Landing Page modular com CTAs progressivos direcionando conversão fluida em InfoProdutos.",
+    results: [
+      "Expectativa de aumento e melhoria média em conversão entre 25% e 50% frente aos padrões atuais web",
+      "Ataque a objeções operacionais gerando redução direta no abandono"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/ROtsZyd.jpeg"
+    ],
+    techStack: ["Growth", "CRO", "Copywriting"]
+  },
+  {
+    id: "p-grunner-mb",
+    name: "Grunner (Mercedes-Benz)",
+    category: "AI Integration",
+    context: "Elevada necessidade de expansão segura e ágil na adaptação dos ecossistemas de caminhões para uma operação autônoma agrícola.",
+    role: [
+      "Atuação presente em etapas complexas conectadas e ciclo de produto",
+      "Elaboração como ponte/interface entre divisões técnicas e corporativas",
+      "Forte contribuição transversal nos testes práticos focando segurança"
+    ],
+    solution: "Arquitetura adaptada viabilizando de ponta a ponta que veículos superem interrupções operando em ambiente remoto agrícola autônomo.",
+    results: [
+      "Diminuição robusta na necessidade contínua por interferência manual em ambientes hostis",
+      "Incremento global médio na disponibilidade tática mecânica da operação por escala"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/05SyIoV.jpeg"
+    ],
+    techStack: ["Product Ops", "Integração B2B"]
+  },
+  {
+    id: "p-easytab",
+    name: "Easy Tab",
+    category: "AI Integration",
+    context: "Grande atraso e custo logístico em horas humanas para o registro de tabulações em call centers sob forte demanda.",
+    role: [
+      "Mapeamento precoce sobre aplicação inteligente de dados LLM",
+      "Conectividade de serviços validando uso do modelo focado em voz",
+      "Refinamento das interações modelando processos de escuta em tabulação direta"
+    ],
+    solution: "Implementação combinada integrando conversão Speech-to-Text ao processo de processamento da IA para automatizar resumos dos atendimentos.",
+    results: [
+      "Cenário prospectivo traçando forte redução contínua em tempo manual no processo de chamada",
+      "Impacto positivo provável sobre os limiares de produtividade operacional do turno"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/jMvligm.png"
+    ],
+    techStack: ["LLM", "Automação com IA"]
+  },
+  {
     id: "p-calc",
     name: "Calculadora Logística 3D",
     category: "Product Tooling",
-    shortDescription: "Otimização de cubagem industrial com visualização real-time. Redução direta em custos de frete.",
-    imageUrl: "https://i.imgur.com/Gea7j14.png?w=800&auto=format&q=75",
-    techStack: ["React", "Three.js", "Data Ops"],
-    impact: "+ Efficiency"
-  },
-  {
-    id: "p-labels",
-    name: "SKU Label System",
-    category: "Internal Ops",
-    shortDescription: "Automação de identificação de produtos para ERP. Garantia de integridade de dados na expedição.",
-    imageUrl: "https://i.imgur.com/1RDePwi.png?w=800&auto=format&q=75",
-    techStack: ["React", "Node.js", "SQL"],
-    impact: "+ Efficiency"
-  },
-  {
-    id: "p-styllo",
-    name: "Barbearia Novo Styllo",
-    category: "Digital Business",
-    shortDescription: "Arquitetura de agendamento e SEO local. Focado em UX de alto nível e conversão local.",
-    imageUrl: "https://i.imgur.com/92B9svc.png?w=800&auto=format&q=75",
-    techStack: ["React", "Framer Motion", "Growth"],
-    impact: "Local Growth"
+    context: "Falta de visibilidade e ineficiência na alocação de espaço e cubagem industrial, gerando encarecimento excessivo e altos custos não otimizados no frete logístico corporativo.",
+    role: [
+      "Mapeamento estruturado minucioso para as validações da alocação de espaço dos insumos e cargas",
+      "Gestão do backlog e priorização das visões voltadas a resultados interativos da calculadora no dia-a-dia do operador de pátio"
+    ],
+    solution: "Ferramenta tática e robusta, projetando na tela de forma contínua em 3D o melhor aproveitamento prático gerado pelos limites volumétricos testados.",
+    results: [
+      "Redução média em custos de frete estimada em implementações de 10% e 20%",
+      "Eficácia contínua visando maximização do espaço real nos transportes viários e operacionais"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/Gea7j14.png?w=800&auto=format&q=75"
+    ],
+    techStack: ["Data Ops", "Visão Espacial"]
   },
   {
     id: "p-sullivan",
     name: "Sullivan Connection",
     category: "Business Management",
-    shortDescription: "Sistema mobile de orçamentos e controle de manutenção. Digitalização de processos manuais.",
-    imageUrl: "https://i.imgur.com/B4grnDk.png?w=800&auto=format&q=75",
-    techStack: ["React", "Mobile Architecture"],
-    impact: "+80% Pedidos"
+    context: "Dependência de planilhas complexas, demora excessiva e falha recorrente em dados na coleta de requerimentos de campo das obras, minando orçamento comercial.",
+    role: [
+      "Avaliação crítica das dependências processuais da equipe de rua com o backend",
+      "Orquestração estratégica viabilizando arquitetura para rápida emissão assíncrona por parte da infraestrutura",
+    ],
+    solution: "Estrutura nativamente mobile fornecendo total autonomia na manutenção, e facilitando imersão de preenchimento comercial em linha.",
+    results: [
+      "Expansibilidade de adoção observando em casos correlacionados aumento de aceites próximos de 80% do pipeline médio",
+      "Refinamento da cadência digital desobstruindo tempo precioso do comercial corporativo atuante na região"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/B4grnDk.png?w=800&auto=format&q=75"
+    ],
+    techStack: ["Mobile Architecture", "Agile"]
   },
   {
     id: "p-level",
     name: "Level Test AI",
     category: "AI Integration",
-    shortDescription: "Teste adaptativo de idiomas (CAT) movido por modelos de linguagem. Avaliação dinâmica e precisa.",
-    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=70",
-    techStack: ["AI Models", "Python", "Linguistics"],
-    impact: "AI Driven"
+    context: "Avaliações monolíticas tradicionais causavam alto índice de erro do nível medido em relação à curva de fluência, estendendo desgastes nos primeiros dias dos estudantes.",
+    role: [
+      "Revisão integral das métricas preditivas apontando lacunas avaliativas no uso das tecnologias legadas",
+      "Design de lógica pautado no formato 'Item Response Theory', balanceando IA para personalização fluida e de baixa frustração na avaliação"
+    ],
+    solution: "Prova modular orientada e adaptada em tempo de execução via GenAI para medir fluência real dos candidados baseada puramente na curva cognitiva.",
+    results: [
+      "Saltos nos níveis e melhoria em escalabilidade resultando em redução drástica no tempo médio da checagem em paralelo de perfis do fluxo central edtech"
+    ],
+    imageUrls: [
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=70"
+    ],
+    techStack: ["AI Models", "Linguistics"]
   }
 ];
 
@@ -212,7 +408,7 @@ const App: React.FC = () => {
         {/* HERO SECTION */}
         <section id="overview" className="bg-linen-texture pt-32 pb-24 md:pt-48 md:pb-32 px-6">
           <div className="max-w-6xl mx-auto text-center">
-            <div className="mb-10 inline-block mx-auto relative group">
+            <div className="mb-10 flex flex-col items-center relative group">
               <div className="absolute inset-0 rounded-[2.5rem] bg-pistachio blur-3xl opacity-30 -z-10 transition-all group-hover:opacity-50 scale-125 animate-pulse"></div>
               <img 
                 src={PROFILE_IMAGE_URL} 
@@ -332,24 +528,73 @@ const App: React.FC = () => {
         <section id="projetos" className="py-32 md:py-48 px-6 bg-white">
           <div className="max-w-6xl mx-auto">
             <h2 className="section-title mb-20 text-center">Projetos & Impacto.</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-14">
               {projectShowcaseData.map((project) => (
-                <div key={project.id} className="group flex flex-col bg-linen rounded-[3rem] overflow-hidden border border-apple/5 hover:border-pistachio transition-all duration-500 shadow-sm hover:shadow-xl">
-                  <div className="aspect-[16/10] overflow-hidden relative">
-                    <img src={project.imageUrl} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={project.name} loading="lazy" />
-                    {project.impact && (
-                      <div className="absolute top-6 right-6 bg-apple text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">
-                        {project.impact}
+                <div key={project.id} className="group flex flex-col bg-linen rounded-[3rem] overflow-hidden border border-apple/5 hover:border-pistachio transition-all duration-500 shadow-sm hover:shadow-xl relative">
+                  {/* Image Gallery */}
+                  <div className="aspect-[16/10] overflow-x-auto flex snap-x snap-mandatory relative scrollbar-hide shrink-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                    {project.imageUrls.map((url, idx) => (
+                      <img key={idx} src={url} className="w-full h-full object-cover shrink-0 snap-center transition-transform duration-700 group-hover:scale-105" alt={`${project.name} preview`} loading="lazy" />
+                    ))}
+                    {project.imageUrls.length > 1 && (
+                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                         {project.imageUrls.map((_, idx) => (
+                           <div key={idx} className="w-2 h-2 rounded-full bg-white/70 shadow-sm" />
+                         ))}
                       </div>
                     )}
                   </div>
-                  <div className="p-8 md:p-14">
-                    <span className="text-[10px] font-black uppercase tracking-[0.3em] text-pistachio-dark mb-4 block">{project.category}</span>
-                    <h3 className="text-3xl font-black mb-6 tracking-tighter leading-tight">{project.name}</h3>
-                    <p className="text-gray-500 text-lg leading-relaxed mb-8">{project.shortDescription}</p>
-                    <div className="flex flex-wrap gap-2">
+                  
+                  {/* Content Content Content */}
+                  <div className="p-8 md:p-10 lg:p-12 flex flex-col gap-8 flex-grow">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-pistachio-dark mb-3 block">{project.category}</span>
+                      <h3 className="text-3xl font-black tracking-tighter leading-tight text-apple">{project.name}</h3>
+                    </div>
+
+                    <div className="space-y-8">
+                      <div>
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-apple/40 mb-3 ml-1 block">Contexto / Problema</h4>
+                        <p className="text-gray-600 font-medium text-sm lg:text-base leading-relaxed">{project.context}</p>
+                      </div>
+
+                      <div className="bg-white/60 p-6 rounded-[2rem] border border-white/50 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.03)]">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-pistachio-dark mb-4 block">Minha Atuação como PM</h4>
+                        <ul className="space-y-3">
+                          {project.role.map((r, i) => (
+                            <li key={i} className="text-sm text-gray-600 font-medium flex items-start gap-3">
+                              <span className="text-pistachio flex-shrink-0 mt-0.5">✦</span>
+                              <span className="leading-relaxed">{r}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-apple/40 mb-3 ml-1 block">Solução</h4>
+                        <p className="text-gray-600 font-medium text-sm lg:text-base leading-relaxed">{project.solution}</p>
+                      </div>
+
+                      <div className="bg-[#edf0e6] p-6 lg:p-8 rounded-[2rem] border border-pistachio/50 group-hover:border-pistachio transition-colors shadow-sm">
+                        <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-apple mb-4 block">Impacto / Resultados</h4>
+                        <ul className="space-y-3">
+                          {project.results.map((res, i) => (
+                            <li key={i} className="text-sm font-semibold text-apple flex items-start gap-3">
+                              <span className="text-pistachio-dark flex-shrink-0 mt-0.5 text-lg leading-none">↗</span>
+                              <span className="leading-snug">{res}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  
+                    {/* Spacer */}
+                    <div className="flex-grow"></div>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-apple/5">
                        {project.techStack?.map(t => (
-                         <span key={t} className="text-[9px] font-black uppercase tracking-widest bg-pistachio/40 text-apple px-4 py-2 rounded-xl">
+                         <span key={t} className="text-[9px] font-black uppercase tracking-widest bg-white border border-apple/5 text-gray-500 px-4 py-2 rounded-xl">
                            {t}
                          </span>
                        ))}
