@@ -371,6 +371,46 @@ const projectShowcaseData: ProjectShowcaseItem[] = [
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=70"
     ],
     techStack: ["AI Models", "Linguistics"]
+  },
+  {
+    id: "p-labels",
+    name: "SKU Label System",
+    category: "Internal Ops",
+    context: "Gargalos e erros na identificação de produtos para ERP no momento da expedição, gerando problemas de integridade de dados.",
+    role: [
+      "Identificação das necessidades na expedição",
+      "Definição do fluxo de automação",
+      "Acompanhamento da implantação do sistema corporativo"
+    ],
+    solution: "Sistema ágil para geração e identificação automatizada de labels/etiquetas integradas ao ERP.",
+    results: [
+      "Redução média sensível de falhas na identificação de produtos",
+      "Aumento médio de integridade dos dados operacionais logísticos"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/1RDePwi.png?w=800&auto=format&q=75"
+    ],
+    techStack: ["React", "Node.js", "SQL"]
+  },
+  {
+    id: "p-styllo",
+    name: "Barbearia Novo Styllo",
+    category: "Digital Business",
+    context: "Negócio local buscando profissionalização de marca e dificuldades em canalizar agendamentos digitalmente de forma escalável.",
+    role: [
+      "Definição agressiva de estratégia digital local",
+      "Estruturação de funil orgânico de conversão cruzada",
+      "Implementação forte do SEO local map centric"
+    ],
+    solution: "Plataforma de presença digital com agenda unificada e otimização visando conversão e aquisição via buscas locais.",
+    results: [
+      "Aumento médio expressivo na geração de marcações orgânicas",
+      "Melhoria contínua média no posicionamento de buscas na região de atuação principal"
+    ],
+    imageUrls: [
+      "https://i.imgur.com/92B9svc.png?w=800&auto=format&q=75"
+    ],
+    techStack: ["React", "Framer Motion", "Growth"]
   }
 ];
 
