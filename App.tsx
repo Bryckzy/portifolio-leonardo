@@ -9,6 +9,7 @@ import {
 } from './components/Icons';
 import Header from './src/components/Header';
 import MarketingPerformance from './src/components/MarketingPerformance';
+import ProjectSection from './src/components/ProjectSection';
 
 const PROFILE_IMAGE_URL = "https://avatars.githubusercontent.com/u/69459277?v=4";
 
@@ -524,87 +525,7 @@ const App: React.FC = () => {
 
         <MarketingPerformance />
 
-        {/* PROJETOS */}
-        <section id="projetos" className="py-32 md:py-48 px-6 bg-white">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="section-title mb-20 text-center">Projetos & Impacto.</h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-              {projectShowcaseData.map((project) => (
-                <div key={project.id} className="group flex flex-col bg-linen rounded-[2rem] overflow-hidden border border-apple/5 hover:border-pistachio transition-all duration-500 shadow-sm hover:shadow-xl relative">
-                  {/* Image Gallery */}
-                  <div className="aspect-[16/10] bg-white overflow-x-auto flex snap-x snap-mandatory relative scrollbar-hide shrink-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                    {project.imageUrls.map((url, idx) => (
-                      <img key={idx} src={url} className="w-full h-full object-contain p-4 shrink-0 snap-center transition-transform duration-700 group-hover:scale-105" alt={`${project.name} preview`} loading="lazy" />
-                    ))}
-                    {project.imageUrls.length > 1 && (
-                      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                         {project.imageUrls.map((_, idx) => (
-                           <div key={idx} className="w-2 h-2 rounded-full bg-apple/20 shadow-sm backdrop-blur-md" />
-                         ))}
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Content Content Content */}
-                  <div className="p-6 md:p-8 flex flex-col gap-6 flex-grow">
-                    <div className="flex flex-col">
-                      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-pistachio-dark mb-2 block">{project.category}</span>
-                      <h3 className="text-2xl md:text-3xl font-black tracking-tighter leading-tight text-apple">{project.name}</h3>
-                    </div>
-
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-apple/40 mb-2 ml-1 block">Contexto / Problema</h4>
-                        <p className="text-gray-600 font-medium text-sm leading-relaxed">{project.context}</p>
-                      </div>
-
-                      <div className="bg-white/60 p-5 rounded-2xl border border-white/50 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.03)]">
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-pistachio-dark mb-3 block">Minha Atuação como PM</h4>
-                        <ul className="space-y-2">
-                          {project.role.map((r, i) => (
-                            <li key={i} className="text-sm text-gray-600 font-medium flex items-start gap-3">
-                              <span className="text-pistachio flex-shrink-0 mt-0.5">✦</span>
-                              <span className="leading-relaxed">{r}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-apple/40 mb-2 ml-1 block">Solução</h4>
-                        <p className="text-gray-600 font-medium text-sm leading-relaxed">{project.solution}</p>
-                      </div>
-
-                      <div className="bg-[#edf0e6] p-5 rounded-2xl border border-pistachio/50 group-hover:border-pistachio transition-colors shadow-sm">
-                        <h4 className="text-[9px] font-black uppercase tracking-[0.2em] text-apple mb-3 block">Impacto / Resultados</h4>
-                        <ul className="space-y-2">
-                          {project.results.map((res, i) => (
-                            <li key={i} className="text-sm font-semibold text-apple flex items-start gap-3">
-                              <span className="text-pistachio-dark flex-shrink-0 mt-[2px] text-base leading-none">↗</span>
-                              <span className="leading-snug">{res}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  
-                    {/* Spacer */}
-                    <div className="flex-grow"></div>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 pt-4 border-t border-apple/5">
-                       {project.techStack?.map(t => (
-                         <span key={t} className="text-[9px] font-black uppercase tracking-widest bg-white border border-apple/5 text-gray-500 px-4 py-2 rounded-xl">
-                           {t}
-                         </span>
-                       ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ProjectSection projects={projectShowcaseData} />
 
         {/* FORMAÇÃO E CERTIFICADOS */}
         <section id="formacao" className="py-32 md:py-48 px-6 bg-linen-texture">
