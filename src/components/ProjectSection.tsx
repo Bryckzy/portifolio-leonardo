@@ -18,6 +18,16 @@ interface ProjectSectionProps {
   projects: ProjectShowcaseItem[];
 }
 
+const getCategoryEmoji = (category: string) => {
+  const cat = category.toLowerCase();
+  if (cat.includes('ai')) return '🤖';
+  if (cat.includes('business') || cat.includes('growth')) return '💼';
+  if (cat.includes('ops') || cat.includes('interno')) return '⚙️';
+  if (cat.includes('data')) return '📊';
+  if (cat.includes('tooling')) return '🛠️';
+  return '✨';
+};
+
 const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
   const [selectedProject, setSelectedProject] = useState<ProjectShowcaseItem | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -72,8 +82,9 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
     <section id="projetos" className="py-32 md:py-48 px-6 bg-[#f9f7f2] relative overflow-hidden">
       {/* Background Blobs for life and color */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[10%] left-[20%] w-[30vw] h-[30vw] min-w-[300px] min-h-[300px] bg-pistachio/30 rounded-full blur-[100px] animate-pulse mix-blend-multiply"></div>
-        <div className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] bg-white/60 rounded-full blur-[120px] mix-blend-overlay"></div>
+        <div className="absolute top-[5%] left-[5%] w-[40vw] h-[40vw] min-w-[400px] min-h-[400px] bg-pistachio/60 rounded-full blur-[120px] animate-pulse mix-blend-multiply duration-1000"></div>
+        <div className="absolute bottom-[5%] right-[5%] w-[45vw] h-[45vw] min-w-[400px] min-h-[400px] bg-emerald-300/30 rounded-full blur-[130px] mix-blend-multiply duration-1000"></div>
+        <div className="absolute top-[40%] left-[50%] w-[35vw] h-[35vw] min-w-[350px] min-h-[350px] bg-amber-200/40 rounded-full blur-[100px] animate-pulse mix-blend-multiply" style={{animationDelay: '1.5s', animationDuration: '4s'}}></div>
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
@@ -90,16 +101,16 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
             <button 
               key={project.id}
               onClick={() => openModal(project)}
-              className="group text-left rounded-[2.5rem] bg-white/40 backdrop-blur-md border border-white hover:border-pistachio overflow-hidden flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(215,228,194,0.4)] transition-all duration-500 transform hover:-translate-y-2 h-full relative"
+              className="group text-left rounded-[2.5rem] bg-white/60 backdrop-blur-md border border-white hover:border-emerald-300 overflow-hidden flex flex-col shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:shadow-[0_20px_50px_rgba(110,231,183,0.3)] transition-all duration-500 transform hover:-translate-y-2 h-full relative"
             >
               <div className="relative aspect-[4/3] w-full bg-white overflow-hidden p-8 md:p-10 border-b border-white/50">
-                {/* Subtle gradient behind image */}
-                <div className="absolute inset-0 bg-gradient-to-br from-pistachio/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                {/* Subtle colorful gradient behind image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-100/60 via-pistachio/30 to-emerald-100/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                 
                 <img 
                   src={project.imageUrls[0]} 
                   alt={project.name} 
-                  className="w-full h-full object-contain shrink-0 transition-transform duration-700 group-hover:scale-[1.15] relative z-10 filter drop-shadow-xl" 
+                  className="w-full h-full object-contain shrink-0 transition-transform duration-700 group-hover:scale-[1.12] relative z-10 filter drop-shadow-xl" 
                   loading="lazy" 
                 />
                 
@@ -111,9 +122,11 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                 </div>
               </div>
 
-              <div className="p-8 md:p-10 flex flex-col gap-4 flex-grow relative bg-white/20 group-hover:bg-pistachio/10 transition-colors duration-500">
+              <div className="p-8 md:p-10 flex flex-col gap-4 flex-grow relative bg-white/40 group-hover:bg-gradient-to-r group-hover:from-pistachio/20 group-hover:to-emerald-50/50 transition-colors duration-500">
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-pistachio-dark block mb-3">{project.category}</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-600 block mb-3 flex items-center gap-1.5">
+                    <span className="text-sm">{getCategoryEmoji(project.category)}</span> {project.category}
+                  </span>
                   <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-apple leading-tight">{project.name}</h3>
                 </div>
                 
@@ -190,27 +203,29 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
 
             {/* Right Column: Case Details */}
             <div className="w-full lg:w-1/2 bg-linen-texture overflow-y-auto p-8 md:p-14 lg:p-20 custom-scrollbar h-[60vh] lg:h-[85vh] relative">
-              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-pistachio-dark mb-4 block">{selectedProject.category}</span>
+              <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.3em] text-emerald-600 mb-4 block flex items-center gap-2">
+                <span className="text-lg">{getCategoryEmoji(selectedProject.category)}</span> {selectedProject.category}
+              </span>
               <h2 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9] text-apple mb-12">{selectedProject.name}</h2>
 
               <div className="space-y-12">
                 {/* Contexto */}
                 <div>
                   <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-apple/40 mb-4 block flex items-center gap-2">
-                    <span className="w-6 h-px bg-apple/20 block"></span> Contexto / Problema
+                    <span className="text-lg mr-1">🎯</span> Contexto / Problema
                   </h4>
                   <p className="text-gray-600 font-medium text-base md:text-xl leading-relaxed">{selectedProject.context}</p>
                 </div>
 
                 {/* Minha Atuação */}
-                <div className="bg-white/80 p-8 md:p-12 rounded-[2.5rem] border border-white hover:border-pistachio transition-colors shadow-2xl shadow-apple/5">
-                  <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-pistachio-dark mb-6 block flex items-center gap-2">
-                     <span className="w-6 h-px bg-pistachio-dark block"></span> Minha Atuação como PM
+                <div className="bg-white/80 p-8 md:p-12 rounded-[2.5rem] border border-white hover:border-emerald-300 transition-colors shadow-2xl shadow-emerald-900/5">
+                  <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-emerald-600 mb-6 block flex items-center gap-2">
+                     <span className="text-lg mr-1">🚀</span> Minha Atuação como PM
                   </h4>
                   <ul className="space-y-5">
                     {selectedProject.role.map((r, i) => (
                       <li key={i} className="text-base md:text-lg text-gray-700 font-medium flex items-start gap-4">
-                        <span className="text-pistachio flex-shrink-0 mt-0.5 text-2xl">✦</span>
+                        <span className="text-emerald-400 flex-shrink-0 mt-0.5 text-2xl">✦</span>
                         <span className="leading-relaxed">{r}</span>
                       </li>
                     ))}
@@ -220,7 +235,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                 {/* Solução */}
                 <div>
                   <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-apple/40 mb-4 block flex items-center gap-2">
-                    <span className="w-6 h-px bg-apple/20 block"></span> Solução Descrita
+                    <span className="text-lg mr-1">💡</span> Solução Descrita
                   </h4>
                   <p className="text-gray-600 font-medium text-base md:text-xl leading-relaxed">{selectedProject.solution}</p>
                 </div>
@@ -228,15 +243,15 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                 {/* Impacto / Resultados */}
                 <div className="bg-[#edf0e6] p-8 md:p-12 rounded-[2.5rem] border border-pistachio/50 shadow-inner overflow-hidden relative">
                   {/* Decorative faint glow */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-pistachio/40 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-pistachio/60 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
 
                   <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-apple mb-6 block flex items-center gap-2 relative z-10">
-                    <span className="w-6 h-px bg-apple/40 block"></span> Impacto / Resultados
+                    <span className="text-lg mr-1">📈</span> Impacto / Resultados
                   </h4>
                   <ul className="space-y-5 relative z-10">
                     {selectedProject.results.map((res, i) => (
                       <li key={i} className="text-base md:text-xl font-semibold text-apple flex items-start gap-4">
-                        <span className="text-pistachio-dark flex-shrink-0 mt-0.5 text-3xl leading-none">↗</span>
+                        <span className="text-emerald-600 flex-shrink-0 mt-0.5 text-3xl leading-none">↗</span>
                         <span className="leading-snug">{res}</span>
                       </li>
                     ))}
@@ -246,7 +261,9 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({ projects }) => {
                 {/* Tech Stack */}
                 {selectedProject.techStack && (
                   <div className="pt-8 mb-8 border-t border-apple/5">
-                    <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-apple/30 mb-6 block mt-8">Tech Stack Utilizada</h4>
+                    <h4 className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-apple/30 mb-6 block mt-8 flex items-center gap-2">
+                      <span className="text-lg mr-1">🛠️</span> Tech Stack Utilizada
+                    </h4>
                     <div className="flex flex-wrap gap-2">
                        {selectedProject.techStack.map(t => (
                          <span key={t} className="text-[10px] md:text-xs font-black uppercase tracking-widest bg-white border border-apple/10 text-gray-500 hover:text-apple px-6 py-3 rounded-full transition-colors cursor-default shadow-sm hover:shadow-md">
