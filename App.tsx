@@ -447,18 +447,18 @@ const App: React.FC = () => {
       
       <main className="flex-grow">
         {/* HERO SECTION */}
-        <section id="overview" className="bg-linen-texture pt-32 pb-24 md:pt-48 md:pb-32 px-6">
-          <div className="max-w-6xl mx-auto text-center">
-            <div className="mb-10 flex flex-col items-center relative group">
+        <section id="overview" className="bg-linen-texture pt-24 pb-16 md:pt-32 md:pb-20 px-6 min-h-[90vh] flex flex-col justify-center">
+          <div className="max-w-6xl mx-auto text-center w-full">
+            <div className="mb-8 flex flex-col items-center relative group">
               <div className="absolute inset-0 rounded-[2.5rem] bg-pistachio blur-3xl opacity-30 -z-10 transition-all group-hover:opacity-50 scale-125 animate-pulse"></div>
               <img 
                 src={PROFILE_IMAGE_URL} 
                 alt="Leonardo Brykcy" 
-                className="w-40 h-40 md:w-56 md:h-56 rounded-[3rem] shadow-2xl border-4 border-white/50 object-cover transform transition-transform hover:rotate-3 duration-500"
+                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[3rem] shadow-2xl border-4 border-white/50 object-cover transform transition-transform hover:rotate-3 duration-500"
               />
               
               {/* Floating Social Buttons - Home Primary Action */}
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-12 px-4">
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-8 px-4">
                  <a 
                    href="https://www.linkedin.com/in/leonardo-brykcy" 
                    target="_blank" 
@@ -487,7 +487,7 @@ const App: React.FC = () => {
               </div>
             </div>
             
-            <h1 className="text-6xl md:text-[10rem] font-black mb-8 tracking-tighter text-apple leading-[0.8] animate-fade-in">
+            <h1 className="text-6xl sm:text-7xl md:text-[8rem] lg:text-[10rem] font-black mb-6 tracking-tighter text-apple leading-[0.85] animate-fade-in">
               Leonardo <br className="md:hidden" /> Brykcy.
             </h1>
             <p className="text-xl md:text-3xl font-medium text-gray-500 max-w-4xl mx-auto leading-tight mb-20 px-4">
