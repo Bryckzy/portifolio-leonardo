@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './src/components/MobileRefractionV2.css';
 import './src/components/MobileRefractionClamp.css';
+import './src/components/MobileRefractionSafari.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
