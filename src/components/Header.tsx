@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { NavLink, ContactLink } from '../../types';
-import { MenuIcon } from '../../components/Icons';
 
 interface HeaderProps {
   navLinks: NavLink[];
@@ -8,161 +7,164 @@ interface HeaderProps {
   contactLinks: ContactLink[];
 }
 
+type DockItem = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+};
+
+const HomeIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="ios-dock-icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3.8 10.4 12 3.8l8.2 6.6" />
+    <path d="M5.8 9.4v10.2h12.4V9.4" />
+    <path d="M9.5 19.6v-5.8h5v5.8" />
+  </svg>
+);
+
+const BriefcaseIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="ios-dock-icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="7" width="18" height="12" rx="3" />
+    <path d="M8.5 7V5.7A1.7 1.7 0 0 1 10.2 4h3.6a1.7 1.7 0 0 1 1.7 1.7V7" />
+    <path d="M3.4 11.5c2.5 1.6 5.4 2.4 8.6 2.4s6.1-.8 8.6-2.4" />
+  </svg>
+);
+
+const ProjectsIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="ios-dock-icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3.5" y="3.5" width="7" height="7" rx="2" />
+    <rect x="13.5" y="3.5" width="7" height="7" rx="2" />
+    <rect x="3.5" y="13.5" width="7" height="7" rx="2" />
+    <rect x="13.5" y="13.5" width="7" height="7" rx="2" />
+  </svg>
+);
+
+const EducationIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="ios-dock-icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m3 9 9-4.5L21 9l-9 4.5L3 9Z" />
+    <path d="M6.3 10.7v4.7c2.9 2.3 8.5 2.3 11.4 0v-4.7" />
+    <path d="M21 9v6" />
+  </svg>
+);
+
+const ContactIcon = () => (
+  <svg viewBox="0 0 24 24" aria-hidden="true" className="ios-dock-icon" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="4.5" width="18" height="15" rx="3" />
+    <path d="m4.5 7 7.5 6 7.5-6" />
+  </svg>
+);
+
 const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeHref, setActiveHref] = useState('#overview');
   const [isScrolled, setIsScrolled] = useState(false);
-  const shellRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
+
+  const mobileItems: DockItem[] = useMemo(() => [
+    { href: '#overview', label: 'Início', icon: <HomeIcon /> },
+    { href: '#experiencia', label: 'Carreira', icon: <BriefcaseIcon /> },
+    { href: '#projetos', label: 'Projetos', icon: <ProjectsIcon /> },
+    { href: '#formacao', label: 'Formação', icon: <EducationIcon /> },
+    { href: '#contato', label: 'Contato', icon: <ContactIcon /> },
+  ], []);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    const sections = navLinks
+      .map((link) => document.querySelector<HTMLElement>(link.href))
+      .filter((section): section is HTMLElement => Boolean(section));
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMenuOpen(false);
-    };
+    if (!sections.length) return;
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isMenuOpen]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-  const toggleMenu = () => setIsMenuOpen((open) => !open);
+        if (visible?.target?.id) setActiveHref(`#${visible.target.id}`);
+      },
+      {
+        rootMargin: '-26% 0px -58% 0px',
+        threshold: [0.05, 0.2, 0.45, 0.7],
+      },
+    );
 
-  const updateGlassFocus = (element: HTMLElement, clientX: number, clientY: number) => {
-    const rect = element.getBoundingClientRect();
-    const x = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
-    const y = Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100));
-    element.style.setProperty('--glass-x', `${x}%`);
-    element.style.setProperty('--glass-y', `${y}%`);
-    element.style.setProperty('--glass-rx', `${(y - 50) / 40}deg`);
-    element.style.setProperty('--glass-ry', `${(50 - x) / 48}deg`);
-  };
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [navLinks]);
 
-  const moveHighlight = (event: React.PointerEvent<HTMLDivElement>) => {
-    updateGlassFocus(event.currentTarget, event.clientX, event.clientY);
-  };
-
-  const resetHighlight = (ref: React.RefObject<HTMLDivElement | null>, y = '22%') => {
-    ref.current?.style.setProperty('--glass-x', '50%');
-    ref.current?.style.setProperty('--glass-y', y);
-    ref.current?.style.setProperty('--glass-rx', '0deg');
-    ref.current?.style.setProperty('--glass-ry', '0deg');
-  };
+  const mobileActiveHref = useMemo(() => {
+    if (activeHref === '#marketing') return '#projetos';
+    if (mobileItems.some((item) => item.href === activeHref)) return activeHref;
+    return '#overview';
+  }, [activeHref, mobileItems]);
 
   return (
     <>
-      <header
-        className={`liquid-glass-header fixed top-0 left-0 right-0 z-[110] transition-all duration-300 apple-header-blur border-b ${isScrolled ? 'is-scrolled border-apple/5 shadow-sm h-14' : 'border-transparent h-20'}`}
-      >
-        <div className="container mx-auto px-6 h-full flex items-center justify-between">
-          <div
-            ref={shellRef}
-            onPointerMove={moveHighlight}
-            onPointerLeave={() => resetHighlight(shellRef, '20%')}
-            className="liquid-glass-nav-shell w-full h-full flex items-center justify-between"
-          >
-            <span className="liquid-glass-caustic" aria-hidden="true" />
-            <span className="liquid-glass-refraction" aria-hidden="true" />
-            <span className="liquid-glass-specular" aria-hidden="true" />
+      <header className={`identity-header fixed inset-x-0 top-0 z-[110] ${isScrolled ? 'is-scrolled' : ''}`}>
+        <div className="identity-header-inner container mx-auto px-4 sm:px-6">
+          <a href="#overview" className="identity-brand" aria-label="Ir para o início do portfólio">
+            L.BRYKCY<span>_PRODUCT</span>
+          </a>
 
-            <a
-              href="#overview"
-              className="relative z-10 text-sm font-black tracking-[0.2em] text-apple group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 rounded-md"
-              aria-label="Ir para o início do portfólio"
-            >
-              L.BRYKCY
-              <span className="text-pistachio-dark font-medium transition-colors group-hover:text-apple">_PRODUCT</span>
-            </a>
-
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="liquid-glass-menu-button relative z-10 p-2 focus:outline-none flex items-center justify-center transition-transform active:scale-90"
-              aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-              aria-expanded={isMenuOpen}
-              aria-controls="portfolio-navigation"
-            >
-              <span className="liquid-glass-button-shine" aria-hidden="true" />
-              <MenuIcon isOpen={isMenuOpen} className="relative z-10 w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div
-        className={`liquid-glass-overlay fixed inset-0 z-[105] transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
-        onClick={() => setIsMenuOpen(false)}
-        aria-hidden="true"
-      />
-
-      <div
-        ref={panelRef}
-        id="portfolio-navigation"
-        onPointerMove={moveHighlight}
-        onPointerLeave={() => resetHighlight(panelRef, '8%')}
-        className={`liquid-glass-menu-panel fixed ${isScrolled ? 'top-14' : 'top-20'} left-0 right-0 border-b border-apple/5 shadow-lg transition-all duration-300 z-[106] max-h-[calc(100vh-5rem)] overflow-y-auto ${isMenuOpen ? 'opacity-100 visible translate-y-0 scale-100' : 'opacity-0 invisible -translate-y-2 scale-[0.985] pointer-events-none'}`}
-        aria-hidden={!isMenuOpen}
-      >
-        <span className="liquid-glass-caustic liquid-glass-caustic-panel" aria-hidden="true" />
-        <span className="liquid-glass-refraction" aria-hidden="true" />
-        <span className="liquid-glass-specular liquid-glass-specular-panel" aria-hidden="true" />
-
-        <div className="container relative z-10 mx-auto px-6 py-7 md:py-8">
-          <nav className="flex flex-col" aria-label="Navegação principal">
-            {navLinks.map((link, idx) => (
+          <nav className="identity-desktop-nav" aria-label="Navegação principal">
+            {navLinks.map((link) => (
               <a
-                key={link.label}
+                key={link.href}
                 href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                style={{ transitionDelay: `${idx * 34}ms` }}
-                className={`liquid-glass-menu-link text-2xl font-black tracking-tighter text-apple transition-all duration-300 group ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
+                className={activeHref === link.href ? 'is-active' : ''}
+                aria-current={activeHref === link.href ? 'page' : undefined}
               >
-                <span className="relative z-10">{link.label}</span>
-                <span className="text-pistachio-dark ml-1 inline-block transform group-hover:scale-150 transition-transform duration-300">.</span>
+                {link.label}
               </a>
             ))}
           </nav>
 
-          <div className={`mt-7 pt-6 border-t border-white/45 flex flex-col items-start transition-all duration-500 delay-150 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-            <div className="flex items-center gap-4 mb-6">
-              <img
-                src={profileImageUrl}
-                alt="Leonardo Brykcy"
-                className="liquid-glass-avatar w-12 h-12 rounded-2xl object-cover"
-                loading="lazy"
-              />
-              <div>
-                <p className="text-sm font-black text-apple tracking-widest uppercase leading-none">Leonardo Brykcy</p>
-                <p className="text-[10px] font-medium text-gray-500 mt-1.5 uppercase tracking-widest">Product Strategy & Ops</p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              {contactLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith('http') ? '_blank' : undefined}
-                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="liquid-glass-contact-button w-10 h-10 rounded-2xl flex items-center justify-center text-apple/60 hover:text-apple transform hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-                  aria-label={link.ariaLabel}
-                >
-                  {React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5' })}
-                </a>
-              ))}
-            </div>
+          <div className="identity-header-actions">
+            {contactLinks.slice(0, 2).map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                aria-label={link.ariaLabel}
+                className="identity-header-action"
+              >
+                {React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, { className: 'w-4 h-4' })}
+              </a>
+            ))}
+            <img className="identity-header-avatar" src={profileImageUrl} alt="" aria-hidden="true" />
           </div>
         </div>
-      </div>
+      </header>
+
+      <nav className="ios-liquid-dock" aria-label="Navegação principal no celular">
+        <span className="ios-dock-surface" aria-hidden="true" />
+        {mobileItems.map((item) => {
+          const active = mobileActiveHref === item.href;
+          return (
+            <a
+              key={item.href}
+              href={item.href}
+              className={`ios-dock-tab ${active ? 'is-active' : ''}`}
+              aria-current={active ? 'page' : undefined}
+            >
+              <span className="ios-dock-lens" aria-hidden="true">
+                <span className="ios-dock-lens-spectrum" />
+                <span className="ios-dock-lens-highlight" />
+              </span>
+              <span className="ios-dock-content">
+                {item.icon}
+                <span className="ios-dock-label">{item.label}</span>
+              </span>
+            </a>
+          );
+        })}
+      </nav>
     </>
   );
 };
