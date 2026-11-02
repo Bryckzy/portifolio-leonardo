@@ -1,0 +1,60 @@
+/* Non-invasive polish: improves feel and accessibility without changing the visual identity. */
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+section[id] {
+  scroll-margin-top: 82px;
+}
+
+a, button {
+  touch-action: manipulation;
+}
+
+button, a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(185, 204, 157, .75);
+  outline-offset: 4px;
+}
+
+img {
+  max-width: 100%;
+}
+
+@supports (content-visibility: auto) {
+  main > section:not(#overview) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
+
+@media (max-width: 767px) {
+  section[id] {
+    scroll-margin-top: 70px;
+  }
+
+  /* Prevent desktop-style hover tricks from feeling sticky on touch screens. */
+  @media (hover: none) {
+    .group:hover,
+    [class*="hover:-translate-y"]:hover,
+    [class*="hover:rotate"]:hover {
+      transform: none;
+    }
+  }
+}
