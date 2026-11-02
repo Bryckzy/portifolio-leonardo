@@ -1,0 +1,202 @@
+/* Mobile optical pass --------------------------------------------------------
+   Matches the reference more closely: a smoked glass rail, an oversized active
+   lens that protrudes beyond the rail, and chromatic aberration concentrated on
+   the lens rim instead of tinting the whole control. */
+
+@media (max-width: 767px) {
+  .mobile-glass-tabbar {
+    --lens-width: calc(var(--step) * 1.46);
+    height: 64px;
+    max-width: 408px;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    border-radius: 32px;
+    contain: layout;
+    overflow: visible;
+  }
+
+  .mobile-glass-tabbar__surface {
+    inset: 0;
+    overflow: hidden;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,.18);
+    background:
+      radial-gradient(120% 95% at 50% -32%, rgba(255,255,255,.18), transparent 56%),
+      linear-gradient(180deg, rgba(42,48,59,.82), rgba(19,23,30,.83)),
+      rgba(16,20,27,.74);
+    -webkit-backdrop-filter: blur(18px) saturate(155%) contrast(1.04);
+    backdrop-filter: blur(18px) saturate(155%) contrast(1.04);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.24),
+      inset 0 -1px 0 rgba(0,0,0,.42),
+      0 18px 42px rgba(10,13,18,.30),
+      0 3px 10px rgba(10,13,18,.22);
+  }
+
+  .mobile-glass-tabbar__surface::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(67,178,255,.08) 12%,
+      rgba(75,190,255,.38) 25%,
+      rgba(101,255,170,.20) 39%,
+      rgba(255,213,85,.16) 57%,
+      rgba(255,81,145,.30) 76%,
+      transparent 100%
+    );
+    filter: blur(.45px) saturate(160%);
+    opacity: .82;
+    pointer-events: none;
+  }
+
+  .mobile-glass-tabbar__surface::after {
+    inset: 2px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow: inset 0 0 18px rgba(255,255,255,.025);
+  }
+
+  .mobile-glass-tabbar__lens {
+    left: calc(4px + (var(--step) - var(--lens-width)) / 2);
+    top: -7px;
+    width: var(--lens-width);
+    height: 78px;
+    border-radius: 30px;
+    overflow: visible;
+    transform: translate3d(calc(var(--active-index) * var(--step)), 0, 0);
+    transition: transform 330ms cubic-bezier(.2,.82,.2,1);
+    background:
+      radial-gradient(100% 62% at 50% -5%, rgba(255,255,255,.26), transparent 58%),
+      radial-gradient(85% 110% at 50% 115%, rgba(115,144,179,.13), transparent 66%),
+      linear-gradient(180deg, rgba(55,63,76,.52), rgba(23,28,36,.58));
+    border: 1px solid rgba(236,246,255,.29);
+    -webkit-backdrop-filter: blur(9px) saturate(190%) contrast(1.13) brightness(1.06);
+    backdrop-filter: blur(9px) saturate(190%) contrast(1.13) brightness(1.06);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.43),
+      inset 0 -1px 0 rgba(0,0,0,.46),
+      inset 10px 0 18px rgba(80,168,255,.035),
+      inset -10px 0 18px rgba(255,82,137,.035),
+      0 12px 28px rgba(5,8,13,.34),
+      0 0 0 1px rgba(255,255,255,.035);
+    filter:
+      drop-shadow(-1.5px 0 1.2px rgba(55,166,255,.30))
+      drop-shadow(1.5px 0 1.2px rgba(255,70,128,.25));
+    will-change: transform;
+  }
+
+  /* Chromatic rim: transparent center, color only where a refractive edge
+     would split the light. */
+  .mobile-glass-tabbar__lens::before {
+    content: "";
+    position: absolute;
+    inset: -1.5px;
+    padding: 1.7px;
+    border-radius: 31px;
+    background: conic-gradient(
+      from 206deg,
+      rgba(55,154,255,.95) 0deg,
+      rgba(80,226,255,.76) 32deg,
+      rgba(82,255,159,.58) 72deg,
+      rgba(255,228,89,.52) 122deg,
+      rgba(255,112,86,.62) 170deg,
+      rgba(255,55,135,.86) 218deg,
+      rgba(150,82,255,.70) 268deg,
+      rgba(65,170,255,.92) 332deg,
+      rgba(55,154,255,.95) 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: .86;
+    filter: blur(.38px) saturate(175%);
+    pointer-events: none;
+  }
+
+  /* Local caustics at the four high-curvature zones.  Keeping them near the
+     edge makes the lens read as refractive rather than as a rainbow button. */
+  .mobile-glass-tabbar__lens::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 32px;
+    background:
+      radial-gradient(22% 54% at 1% 56%, rgba(47,158,255,.88), rgba(62,210,255,.34) 32%, transparent 72%),
+      radial-gradient(22% 54% at 99% 58%, rgba(255,55,122,.80), rgba(255,132,72,.27) 34%, transparent 72%),
+      radial-gradient(46% 17% at 50% 1%, rgba(88,255,165,.42), rgba(66,185,255,.16) 42%, transparent 78%),
+      radial-gradient(44% 16% at 50% 99%, rgba(255,206,77,.30), rgba(255,75,142,.13) 43%, transparent 80%);
+    mix-blend-mode: screen;
+    filter: blur(1.1px) saturate(170%);
+    opacity: .82;
+    pointer-events: none;
+  }
+
+  .mobile-glass-tabbar__tabs {
+    inset: 3px 4px;
+  }
+
+  .mobile-glass-tabbar__tab {
+    min-height: 58px;
+    color: rgba(244,247,252,.68);
+    text-shadow: 0 1px 2px rgba(0,0,0,.28);
+  }
+
+  .mobile-glass-tabbar__tab.is-active {
+    color: #f8fbff;
+    text-shadow:
+      -0.45px 0 rgba(75,177,255,.54),
+      0.45px 0 rgba(255,85,137,.38),
+      0 1px 2px rgba(0,0,0,.35);
+  }
+
+  .mobile-glass-tabbar__icon {
+    width: 21px;
+    height: 21px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
+  }
+
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__icon {
+    transform: translateY(-1px) scale(1.10);
+    filter:
+      drop-shadow(-.55px 0 rgba(65,170,255,.48))
+      drop-shadow(.55px 0 rgba(255,73,131,.34))
+      drop-shadow(0 1px 1px rgba(0,0,0,.25));
+  }
+
+  .mobile-glass-tabbar__label {
+    font-size: 8.3px;
+    font-weight: 650;
+    letter-spacing: -.015em;
+  }
+
+  .mobile-glass-tabbar__tab:focus-visible::after {
+    inset: 5px;
+    box-shadow: 0 0 0 2px rgba(184,220,255,.78);
+  }
+}
+
+@media (max-width: 370px) {
+  .mobile-glass-tabbar {
+    --lens-width: calc(var(--step) * 1.42);
+    height: 62px;
+  }
+
+  .mobile-glass-tabbar__lens {
+    top: -6px;
+    height: 74px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-glass-tabbar__lens {
+    transition-duration: .01ms !important;
+  }
+}
