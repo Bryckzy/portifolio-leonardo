@@ -1,168 +1,147 @@
-import React, { useEffect, useRef, useState } from 'react';
-import type { NavLink, ContactLink } from '../../types';
-import { MenuIcon } from '../../components/Icons';
+import React, { useEffect, useState } from 'react';
+import type { NavLink } from '../../types';
 
 interface HeaderProps {
   navLinks: NavLink[];
-  profileImageUrl: string;
-  contactLinks: ContactLink[];
 }
 
-const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const NavGlyph: React.FC<{ href: string }> = ({ href }) => {
+  if (href === '#overview') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M3.5 10.7 12 3.8l8.5 6.9v8.1a1.7 1.7 0 0 1-1.7 1.7h-4.6v-6.2H9.8v6.2H5.2a1.7 1.7 0 0 1-1.7-1.7v-8.1Z" />
+      </svg>
+    );
+  }
+
+  if (href === '#experiencia') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8.2 6.2V4.9c0-1 .8-1.8 1.8-1.8h4c1 0 1.8.8 1.8 1.8v1.3" />
+        <path d="M4.5 6.2h15A1.8 1.8 0 0 1 21.3 8v9.9a2 2 0 0 1-2 2H4.7a2 2 0 0 1-2-2V8a1.8 1.8 0 0 1 1.8-1.8Z" />
+        <path d="M2.8 11.7c2.5 1.2 5.6 1.8 9.2 1.8s6.7-.6 9.2-1.8" />
+        <path d="M10.2 12.3h3.6v2.5h-3.6z" />
+      </svg>
+    );
+  }
+
+  if (href === '#projetos') {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="7.4" height="7.4" rx="2" />
+        <rect x="13.6" y="3" width="7.4" height="7.4" rx="2" />
+        <rect x="3" y="13.6" width="7.4" height="7.4" rx="2" />
+        <rect x="13.6" y="13.6" width="7.4" height="7.4" rx="2" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 5.8h16v12.4H4z" />
+      <path d="m4.8 7 7.2 5.7L19.2 7" />
+    </svg>
+  );
+};
+
+const Header: React.FC<HeaderProps> = ({ navLinks }) => {
+  const [activeHref, setActiveHref] = useState('#overview');
   const [isScrolled, setIsScrolled] = useState(false);
-  const shellRef = useRef<HTMLDivElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setIsScrolled(window.scrollY > 36);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    const sections = navLinks
+      .map((link) => document.querySelector<HTMLElement>(link.href))
+      .filter((section): section is HTMLElement => Boolean(section));
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMenuOpen(false);
-    };
+    if (!sections.length) return;
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isMenuOpen]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-  const toggleMenu = () => setIsMenuOpen((open) => !open);
+        if (visible?.target?.id) setActiveHref(`#${visible.target.id}`);
+      },
+      { rootMargin: '-28% 0px -58% 0px', threshold: [0.01, 0.2, 0.45, 0.7] },
+    );
 
-  const updateGlassFocus = (element: HTMLElement, clientX: number, clientY: number) => {
-    const rect = element.getBoundingClientRect();
-    const x = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
-    const y = Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100));
-    element.style.setProperty('--glass-x', `${x}%`);
-    element.style.setProperty('--glass-y', `${y}%`);
-    element.style.setProperty('--glass-rx', `${(y - 50) / 40}deg`);
-    element.style.setProperty('--glass-ry', `${(50 - x) / 48}deg`);
-  };
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [navLinks]);
 
-  const moveHighlight = (event: React.PointerEvent<HTMLDivElement>) => {
-    updateGlassFocus(event.currentTarget, event.clientX, event.clientY);
-  };
-
-  const resetHighlight = (ref: React.RefObject<HTMLDivElement | null>, y = '22%') => {
-    ref.current?.style.setProperty('--glass-x', '50%');
-    ref.current?.style.setProperty('--glass-y', y);
-    ref.current?.style.setProperty('--glass-rx', '0deg');
-    ref.current?.style.setProperty('--glass-ry', '0deg');
+  const handleNav = (href: string) => {
+    setActiveHref(href);
   };
 
   return (
     <>
-      <header
-        className={`liquid-glass-header fixed top-0 left-0 right-0 z-[110] transition-all duration-300 apple-header-blur border-b ${isScrolled ? 'is-scrolled border-apple/5 shadow-sm h-14' : 'border-transparent h-20'}`}
-      >
-        <div className="container mx-auto px-6 h-full flex items-center justify-between">
-          <div
-            ref={shellRef}
-            onPointerMove={moveHighlight}
-            onPointerLeave={() => resetHighlight(shellRef, '20%')}
-            className="liquid-glass-nav-shell w-full h-full flex items-center justify-between"
-          >
-            <span className="liquid-glass-caustic" aria-hidden="true" />
-            <span className="liquid-glass-refraction" aria-hidden="true" />
-            <span className="liquid-glass-specular" aria-hidden="true" />
+      <header className={`desktop-header ${isScrolled ? 'is-scrolled' : ''}`}>
+        <a className="desktop-brand" href="#overview" onClick={() => handleNav('#overview')} aria-label="Leonardo Brykcy — início">
+          <span className="brand-mark">LB</span>
+          <span className="brand-copy">
+            <strong>Leonardo Brykcy</strong>
+            <small>Product · Systems · AI</small>
+          </span>
+        </a>
 
-            <a
-              href="#overview"
-              className="relative z-10 text-sm font-black tracking-[0.2em] text-apple group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 rounded-md"
-              aria-label="Ir para o início do portfólio"
-            >
-              L.BRYKCY
-              <span className="text-pistachio-dark font-medium transition-colors group-hover:text-apple">_PRODUCT</span>
-            </a>
+        <nav className="desktop-liquid-nav" aria-label="Navegação principal">
+          {navLinks.map((link) => {
+            const active = activeHref === link.href;
+            return (
+              <a
+                key={link.href}
+                className={`desktop-nav-item ${active ? 'is-active' : ''}`}
+                href={link.href}
+                onClick={() => handleNav(link.href)}
+                aria-current={active ? 'page' : undefined}
+              >
+                <span>{link.label}</span>
+              </a>
+            );
+          })}
+        </nav>
 
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="liquid-glass-menu-button relative z-10 p-2 focus:outline-none flex items-center justify-center transition-transform active:scale-90"
-              aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-              aria-expanded={isMenuOpen}
-              aria-controls="portfolio-navigation"
-            >
-              <span className="liquid-glass-button-shine" aria-hidden="true" />
-              <MenuIcon isOpen={isMenuOpen} className="relative z-10 w-6 h-6" />
-            </button>
-          </div>
-        </div>
+        <a className="desktop-contact" href="#contato" onClick={() => handleNav('#contato')}>
+          Falar comigo <span aria-hidden="true">↗</span>
+        </a>
       </header>
 
-      <div
-        className={`liquid-glass-overlay fixed inset-0 z-[105] transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}
-        onClick={() => setIsMenuOpen(false)}
-        aria-hidden="true"
-      />
-
-      <div
-        ref={panelRef}
-        id="portfolio-navigation"
-        onPointerMove={moveHighlight}
-        onPointerLeave={() => resetHighlight(panelRef, '8%')}
-        className={`liquid-glass-menu-panel fixed ${isScrolled ? 'top-14' : 'top-20'} left-0 right-0 border-b border-apple/5 shadow-lg transition-all duration-300 z-[106] max-h-[calc(100vh-5rem)] overflow-y-auto ${isMenuOpen ? 'opacity-100 visible translate-y-0 scale-100' : 'opacity-0 invisible -translate-y-2 scale-[0.985] pointer-events-none'}`}
-        aria-hidden={!isMenuOpen}
-      >
-        <span className="liquid-glass-caustic liquid-glass-caustic-panel" aria-hidden="true" />
-        <span className="liquid-glass-refraction" aria-hidden="true" />
-        <span className="liquid-glass-specular liquid-glass-specular-panel" aria-hidden="true" />
-
-        <div className="container relative z-10 mx-auto px-6 py-7 md:py-8">
-          <nav className="flex flex-col" aria-label="Navegação principal">
-            {navLinks.map((link, idx) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                style={{ transitionDelay: `${idx * 34}ms` }}
-                className={`liquid-glass-menu-link text-2xl font-black tracking-tighter text-apple transition-all duration-300 group ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
-              >
-                <span className="relative z-10">{link.label}</span>
-                <span className="text-pistachio-dark ml-1 inline-block transform group-hover:scale-150 transition-transform duration-300">.</span>
-              </a>
-            ))}
-          </nav>
-
-          <div className={`mt-7 pt-6 border-t border-white/45 flex flex-col items-start transition-all duration-500 delay-150 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
-            <div className="flex items-center gap-4 mb-6">
-              <img
-                src={profileImageUrl}
-                alt="Leonardo Brykcy"
-                className="liquid-glass-avatar w-12 h-12 rounded-2xl object-cover"
-                loading="lazy"
-              />
-              <div>
-                <p className="text-sm font-black text-apple tracking-widest uppercase leading-none">Leonardo Brykcy</p>
-                <p className="text-[10px] font-medium text-gray-500 mt-1.5 uppercase tracking-widest">Product Strategy & Ops</p>
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              {contactLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  target={link.href.startsWith('http') ? '_blank' : undefined}
-                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="liquid-glass-contact-button w-10 h-10 rounded-2xl flex items-center justify-center text-apple/60 hover:text-apple transform hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-                  aria-label={link.ariaLabel}
-                >
-                  {React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5' })}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div className="mobile-brandbar" aria-hidden="true">
+        <span>Leonardo Brykcy</span>
+        <span>Product · Systems · AI</span>
       </div>
+
+      <nav className={`mobile-liquid-nav ${isScrolled ? 'is-scrolled' : ''}`} aria-label="Navegação principal mobile">
+        <span className="liquid-rim liquid-rim-top" aria-hidden="true" />
+        <span className="liquid-rim liquid-rim-bottom" aria-hidden="true" />
+        {navLinks.map((link) => {
+          const active = activeHref === link.href;
+          return (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`mobile-nav-item ${active ? 'is-active' : ''}`}
+              onClick={() => handleNav(link.href)}
+              aria-current={active ? 'page' : undefined}
+            >
+              <span className="mobile-nav-lens" aria-hidden="true">
+                <span className="lens-specular" />
+                <span className="lens-refraction" />
+              </span>
+              <span className="mobile-nav-icon"><NavGlyph href={link.href} /></span>
+              <span className="mobile-nav-label">{link.label}</span>
+            </a>
+          );
+        })}
+      </nav>
     </>
   );
 };
