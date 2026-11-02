@@ -1,0 +1,308 @@
+/* Full-site iOS 27-inspired Liquid Glass experiment --------------------------
+   The content stays primary; navigation, cards, controls and large containers
+   become optical layers floating over a living background. */
+
+body.liquid-experiment {
+  --lg-clear: rgba(255,255,255,.26);
+  --lg-clear-strong: rgba(255,255,255,.36);
+  --lg-tint: rgba(235,242,229,.24);
+  --lg-border: rgba(255,255,255,.72);
+  --lg-border-soft: rgba(255,255,255,.44);
+  --lg-shadow: rgba(38,45,35,.16);
+  --lg-shadow-soft: rgba(38,45,35,.08);
+  min-height: 100%;
+  overflow-x: hidden;
+  background:
+    radial-gradient(85vw 70vw at -8% 8%, rgba(188,218,178,.72), transparent 62%),
+    radial-gradient(75vw 70vw at 108% 12%, rgba(186,213,236,.58), transparent 64%),
+    radial-gradient(70vw 70vw at 70% 62%, rgba(250,221,181,.46), transparent 64%),
+    radial-gradient(88vw 75vw at 0% 100%, rgba(213,195,236,.38), transparent 66%),
+    linear-gradient(145deg, #eaf0e7 0%, #f5f2ec 46%, #e5ece5 100%);
+  background-attachment: fixed;
+}
+
+body.liquid-experiment::before,
+body.liquid-experiment::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+  z-index: -2;
+}
+
+body.liquid-experiment::before {
+  inset: -15vh -10vw;
+  background:
+    radial-gradient(circle at 15% 22%, rgba(255,255,255,.52) 0 2%, transparent 24%),
+    radial-gradient(circle at 82% 16%, rgba(145,198,236,.24), transparent 24%),
+    radial-gradient(circle at 75% 76%, rgba(255,194,132,.20), transparent 27%),
+    radial-gradient(circle at 18% 82%, rgba(185,157,229,.17), transparent 26%);
+  filter: blur(14px) saturate(115%);
+  animation: liquidAmbientDrift 18s ease-in-out infinite alternate;
+}
+
+body.liquid-experiment::after {
+  inset: 0;
+  z-index: 1000;
+  opacity: .16;
+  mix-blend-mode: soft-light;
+  background-image:
+    radial-gradient(rgba(255,255,255,.95) .45px, transparent .7px),
+    radial-gradient(rgba(30,40,30,.18) .35px, transparent .65px);
+  background-position: 0 0, 7px 9px;
+  background-size: 13px 13px, 17px 17px;
+}
+
+@keyframes liquidAmbientDrift {
+  from { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  to { transform: translate3d(1.5%, 1%, 0) scale(1.035); }
+}
+
+body.liquid-experiment #root,
+body.liquid-experiment main,
+body.liquid-experiment main > section,
+body.liquid-experiment footer,
+body.liquid-experiment .bg-linen-texture {
+  background: transparent !important;
+}
+
+body.liquid-experiment #root {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Large section sheets ------------------------------------------------------- */
+body.liquid-experiment main > section[id] > div[class*="max-w-"]:not(.absolute) {
+  position: relative;
+  border: 1px solid rgba(255,255,255,.46);
+  border-radius: clamp(28px, 4vw, 52px);
+  background:
+    radial-gradient(110% 80% at 6% -8%, rgba(255,255,255,.32), transparent 58%),
+    linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.07) 48%, rgba(216,229,207,.08)),
+    rgba(255,255,255,.055);
+  -webkit-backdrop-filter: blur(8px) saturate(118%);
+  backdrop-filter: blur(8px) saturate(118%);
+  box-shadow:
+    0 26px 90px rgba(45,52,42,.055),
+    inset 0 1px 0 rgba(255,255,255,.52);
+  padding-top: clamp(1.5rem, 3vw, 3rem);
+  padding-bottom: clamp(1.5rem, 3vw, 3rem);
+}
+
+body.liquid-experiment #overview > div[class*="max-w-"] {
+  background:
+    radial-gradient(80% 90% at 50% -20%, rgba(255,255,255,.48), transparent 62%),
+    linear-gradient(135deg, rgba(255,255,255,.18), rgba(236,244,232,.08)),
+    rgba(255,255,255,.06);
+  -webkit-backdrop-filter: blur(11px) saturate(125%);
+  backdrop-filter: blur(11px) saturate(125%);
+}
+
+/* Glass cards --------------------------------------------------------------- */
+body.liquid-experiment main :is(div, article, button, a)[class*="rounded-"][class*="bg-white"],
+body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-fiber"],
+body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-linen"],
+body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-[#edf0e6]"],
+body.liquid-experiment footer [class*="rounded-"][class*="bg-white"] {
+  border-color: var(--lg-border) !important;
+  background:
+    radial-gradient(100% 70% at 10% 0%, rgba(255,255,255,.48), transparent 58%),
+    linear-gradient(150deg, rgba(255,255,255,.29), rgba(255,255,255,.13) 46%, rgba(213,229,202,.11)),
+    rgba(248,250,246,.17) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) contrast(106%) brightness(1.02);
+  backdrop-filter: blur(28px) saturate(180%) contrast(106%) brightness(1.02);
+  box-shadow:
+    0 24px 66px var(--lg-shadow-soft),
+    0 3px 12px rgba(40,47,37,.045),
+    inset 0 1px 0 rgba(255,255,255,.90),
+    inset 0 -1px 0 rgba(74,86,67,.07),
+    inset 1px 0 0 rgba(255,255,255,.28) !important;
+}
+
+body.liquid-experiment main button[class*="rounded-"]:hover,
+body.liquid-experiment main a[class*="rounded-"]:hover {
+  border-color: rgba(255,255,255,.92) !important;
+  box-shadow:
+    0 30px 78px rgba(42,50,38,.13),
+    0 4px 14px rgba(42,50,38,.055),
+    inset 0 1px 0 rgba(255,255,255,.96) !important;
+}
+
+/* Project cards: remove opaque internal layers so the glass reads as one lens */
+body.liquid-experiment #projetos button[class*="rounded-"] > div[class*="bg-white"],
+body.liquid-experiment #projetos button[class*="rounded-"] > div[class*="bg-[#fbfdf7]"] {
+  background: rgba(255,255,255,.10) !important;
+  border-color: rgba(255,255,255,.38) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none !important;
+}
+
+body.liquid-experiment #projetos button[class*="rounded-"] > div[class*="bg-pistachio-dark"] {
+  background:
+    linear-gradient(135deg, rgba(118,165,115,.72), rgba(74,143,108,.65)),
+    rgba(98,154,103,.60) !important;
+  border-top: 1px solid rgba(255,255,255,.34);
+  border-bottom: 1px solid rgba(35,76,45,.12);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
+}
+
+/* Buttons and chips --------------------------------------------------------- */
+body.liquid-experiment main a[class*="rounded-full"],
+body.liquid-experiment main button[class*="rounded-full"],
+body.liquid-experiment main [class*="rounded-xl"][class*="border"] {
+  border-color: rgba(255,255,255,.72) !important;
+  background:
+    radial-gradient(90% 65% at 25% 0%, rgba(255,255,255,.58), transparent 68%),
+    linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.11)),
+    rgba(255,255,255,.13) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(178%) contrast(105%);
+  backdrop-filter: blur(22px) saturate(178%) contrast(105%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.90),
+    inset 0 -1px 0 rgba(63,74,58,.08),
+    0 9px 24px rgba(41,48,38,.08) !important;
+}
+
+/* Preserve intentionally dark CTAs, but turn them into tinted glass */
+body.liquid-experiment main [class*="bg-apple"][class*="rounded-"],
+body.liquid-experiment footer [class*="bg-apple"][class*="rounded-"] {
+  color: white !important;
+  border: 1px solid rgba(255,255,255,.28) !important;
+  background:
+    radial-gradient(100% 80% at 25% -15%, rgba(255,255,255,.22), transparent 58%),
+    linear-gradient(145deg, rgba(36,42,34,.88), rgba(22,26,21,.77)),
+    rgba(29,29,31,.78) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+  backdrop-filter: blur(24px) saturate(145%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.26),
+    0 14px 36px rgba(20,24,19,.20) !important;
+}
+
+/* Images behave like media embedded under polished glass -------------------- */
+body.liquid-experiment main img[class*="rounded-"] {
+  border: 1px solid rgba(255,255,255,.70);
+  box-shadow:
+    0 18px 50px rgba(37,45,34,.12),
+    inset 0 1px 0 rgba(255,255,255,.34);
+}
+
+/* Timeline / experience surfaces ------------------------------------------- */
+body.liquid-experiment #experiencia [class*="border-"],
+body.liquid-experiment #formacao [class*="border-"],
+body.liquid-experiment #contato [class*="border-"] {
+  border-color: rgba(255,255,255,.34) !important;
+}
+
+/* Performance section: keep color, add optical translucency ---------------- */
+body.liquid-experiment #marketing [class*="rounded-"] {
+  -webkit-backdrop-filter: blur(25px) saturate(165%);
+  backdrop-filter: blur(25px) saturate(165%);
+}
+
+body.liquid-experiment #marketing [class*="bg-pistachio"],
+body.liquid-experiment #marketing [class*="bg-emerald"],
+body.liquid-experiment #marketing [class*="bg-amber"] {
+  opacity: .94;
+  border: 1px solid rgba(255,255,255,.44);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    0 14px 40px rgba(43,51,39,.08);
+}
+
+/* Modal becomes a true floating glass sheet -------------------------------- */
+body.liquid-experiment #projetos .fixed.inset-0[class*="backdrop-blur"] {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255,255,255,.10), transparent 42%),
+    rgba(24,29,23,.24) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(130%) !important;
+  backdrop-filter: blur(14px) saturate(130%) !important;
+}
+
+body.liquid-experiment #projetos .fixed.inset-0 > div[class*="max-w-"] {
+  border: 1px solid rgba(255,255,255,.68) !important;
+  background:
+    radial-gradient(120% 80% at 5% -5%, rgba(255,255,255,.42), transparent 58%),
+    linear-gradient(145deg, rgba(255,255,255,.25), rgba(246,247,242,.17) 50%, rgba(211,228,202,.10)),
+    rgba(244,247,241,.20) !important;
+  -webkit-backdrop-filter: blur(38px) saturate(185%) contrast(106%);
+  backdrop-filter: blur(38px) saturate(185%) contrast(106%);
+  box-shadow:
+    0 40px 120px rgba(18,23,17,.35),
+    inset 0 1px 0 rgba(255,255,255,.88) !important;
+}
+
+body.liquid-experiment #projetos .fixed.inset-0 > div[class*="max-w-"] > div {
+  background-color: rgba(255,255,255,.06) !important;
+}
+
+/* Typography contrast inspired by iOS 27's stronger legibility ------------- */
+body.liquid-experiment .text-gray-400 { color: rgba(52,59,49,.58) !important; }
+body.liquid-experiment .text-gray-500 { color: rgba(46,54,44,.67) !important; }
+body.liquid-experiment .text-gray-600 { color: rgba(38,45,36,.76) !important; }
+body.liquid-experiment .text-gray-700 { color: rgba(30,37,29,.83) !important; }
+
+body.liquid-experiment .section-title {
+  text-shadow: 0 1px 0 rgba(255,255,255,.38), 0 12px 45px rgba(58,67,52,.06);
+}
+
+/* Footer -------------------------------------------------------------------- */
+body.liquid-experiment footer {
+  position: relative;
+  border-top-color: rgba(255,255,255,.32) !important;
+}
+
+/* Scrollbar ----------------------------------------------------------------- */
+body.liquid-experiment::-webkit-scrollbar-track { background: rgba(255,255,255,.12); }
+body.liquid-experiment::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.46);
+  border: 1px solid rgba(255,255,255,.62);
+}
+
+/* Mobile tuning ------------------------------------------------------------- */
+@media (max-width: 767px) {
+  body.liquid-experiment {
+    background:
+      radial-gradient(115vw 100vw at -18% 8%, rgba(188,218,178,.72), transparent 63%),
+      radial-gradient(105vw 95vw at 118% 18%, rgba(186,213,236,.54), transparent 64%),
+      radial-gradient(100vw 95vw at 78% 67%, rgba(250,221,181,.40), transparent 66%),
+      radial-gradient(110vw 95vw at -10% 100%, rgba(213,195,236,.32), transparent 68%),
+      linear-gradient(145deg, #e8efe5 0%, #f5f2ec 48%, #e4ebe3 100%);
+    background-attachment: fixed;
+  }
+
+  body.liquid-experiment main > section[id] > div[class*="max-w-"]:not(.absolute) {
+    border-radius: 30px;
+    margin-left: -4px;
+    margin-right: -4px;
+    border-color: rgba(255,255,255,.40);
+    background: rgba(255,255,255,.035);
+    -webkit-backdrop-filter: blur(5px) saturate(112%);
+    backdrop-filter: blur(5px) saturate(112%);
+  }
+
+  body.liquid-experiment main :is(div, article, button, a)[class*="rounded-"][class*="bg-white"],
+  body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-fiber"],
+  body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-linen"],
+  body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-[#edf0e6]"] {
+    -webkit-backdrop-filter: blur(25px) saturate(185%) contrast(106%);
+    backdrop-filter: blur(25px) saturate(185%) contrast(106%);
+    box-shadow:
+      0 18px 48px rgba(38,45,35,.11),
+      inset 0 1px 0 rgba(255,255,255,.88),
+      inset 0 -1px 0 rgba(75,87,67,.06) !important;
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  body.liquid-experiment main :is(div, article, button, a)[class*="rounded-"][class*="bg-white"],
+  body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-fiber"],
+  body.liquid-experiment main :is(div, article, button)[class*="rounded-"][class*="bg-linen"] {
+    background: rgba(248,249,245,.93) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.liquid-experiment::before { animation: none; }
+}
