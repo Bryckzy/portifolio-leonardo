@@ -1,8 +1,9 @@
 /* Mobile optical pass --------------------------------------------------------
    Rebuilds the mobile dock around the supplied reference: smoked glass rail,
    oversized lens, clipped magnified duplicate content, and chromatic edge split.
-   Motion of the lens itself is driven by Web Animations in Header.tsx so Safari
-   receives explicit pixel keyframes instead of interpolating a custom property. */
+   The lens moves with pixel-based `left` transitions. This is intentionally less
+   clever than animating a transform fed by custom properties, but it is markedly
+   more stable on iOS/WebKit and the dock is small enough that layout cost is tiny. */
 
 @media (max-width: 767px) {
   .mobile-glass-tabbar {
@@ -64,14 +65,14 @@
   }
 
   .mobile-glass-tabbar__lens {
-    left: calc(4px + (var(--step) - var(--lens-width)) / 2);
+    left: 4px;
     top: -8px;
     width: var(--lens-width);
     height: 80px;
     border-radius: 31px;
     overflow: visible;
-    transform: translate3d(calc(var(--active-index) * var(--step)), 0, 0);
-    transition: none;
+    transform: none;
+    transition: left 560ms cubic-bezier(.22,1.28,.36,1);
     background:
       radial-gradient(108% 64% at 50% -8%, rgba(255,255,255,.25), transparent 58%),
       radial-gradient(88% 120% at 50% 114%, rgba(113,151,193,.10), transparent 66%),
@@ -89,7 +90,7 @@
     filter:
       drop-shadow(-1.2px 0 1px rgba(48,161,255,.24))
       drop-shadow(1.2px 0 1px rgba(255,61,119,.21));
-    will-change: transform;
+    will-change: left;
     pointer-events: none;
   }
 
@@ -112,19 +113,15 @@
     height: 100%;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    transform: translate3d(
-      calc((var(--lens-width) - var(--step)) / 2 - var(--active-index) * var(--step)),
-      0,
-      0
-    );
-    transition: none;
+    transform: none;
+    transition: left 560ms cubic-bezier(.22,1.28,.36,1);
     opacity: .90;
     filter:
       saturate(145%)
       contrast(1.10)
       drop-shadow(-.9px 0 rgba(45,164,255,.43))
       drop-shadow(.9px 0 rgba(255,58,121,.34));
-    will-change: transform;
+    will-change: left;
   }
 
   .mobile-glass-tabbar__refract-item {
@@ -239,11 +236,11 @@
   }
 
   .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
-    animation: mobile-prism-pulse 520ms cubic-bezier(.18,.84,.24,1) both;
+    animation: mobile-prism-pulse 560ms cubic-bezier(.22,1.12,.36,1) both;
   }
 
   .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before {
-    animation: mobile-rim-pulse 520ms cubic-bezier(.18,.84,.24,1) both;
+    animation: mobile-rim-pulse 560ms cubic-bezier(.22,1.12,.36,1) both;
   }
 
   .mobile-glass-tabbar__tabs {
@@ -272,7 +269,7 @@
   .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content {
     transform: scale(1.12);
     filter: brightness(1.07) saturate(1.08);
-    animation: mobile-tab-settle 520ms cubic-bezier(.18,.84,.24,1) both;
+    animation: mobile-tab-settle 560ms cubic-bezier(.22,1.12,.36,1) both;
   }
 
   .mobile-glass-tabbar__icon {
@@ -322,6 +319,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .mobile-glass-tabbar__lens,
+  .mobile-glass-tabbar__refract-track {
+    transition-duration: 220ms !important;
+    transition-timing-function: ease-out !important;
+  }
+
   .mobile-glass-tabbar__content {
     transition-duration: 160ms !important;
   }
@@ -329,6 +332,7 @@
   .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content,
   .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before,
   .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
-    animation-duration: 190ms !important;
+    animation-duration: 220ms !important;
+    animation-timing-function: ease-out !important;
   }
 }
