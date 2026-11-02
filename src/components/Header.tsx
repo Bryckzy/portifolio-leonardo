@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import type { NavLink, ContactLink } from '../../types';
 import { MenuIcon } from '../../components/Icons';
@@ -13,6 +12,7 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const shellRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -37,17 +37,25 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
   const toggleMenu = () => setIsMenuOpen((open) => !open);
 
-  const moveHighlight = (event: React.PointerEvent<HTMLDivElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    event.currentTarget.style.setProperty('--glass-x', `${x}%`);
-    event.currentTarget.style.setProperty('--glass-y', `${y}%`);
+  const updateGlassFocus = (element: HTMLElement, clientX: number, clientY: number) => {
+    const rect = element.getBoundingClientRect();
+    const x = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+    const y = Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100));
+    element.style.setProperty('--glass-x', `${x}%`);
+    element.style.setProperty('--glass-y', `${y}%`);
+    element.style.setProperty('--glass-rx', `${(y - 50) / 40}deg`);
+    element.style.setProperty('--glass-ry', `${(50 - x) / 48}deg`);
   };
 
-  const resetHighlight = () => {
-    shellRef.current?.style.setProperty('--glass-x', '50%');
-    shellRef.current?.style.setProperty('--glass-y', '18%');
+  const moveHighlight = (event: React.PointerEvent<HTMLDivElement>) => {
+    updateGlassFocus(event.currentTarget, event.clientX, event.clientY);
+  };
+
+  const resetHighlight = (ref: React.RefObject<HTMLDivElement | null>, y = '22%') => {
+    ref.current?.style.setProperty('--glass-x', '50%');
+    ref.current?.style.setProperty('--glass-y', y);
+    ref.current?.style.setProperty('--glass-rx', '0deg');
+    ref.current?.style.setProperty('--glass-ry', '0deg');
   };
 
   return (
@@ -59,12 +67,16 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
           <div
             ref={shellRef}
             onPointerMove={moveHighlight}
-            onPointerLeave={resetHighlight}
+            onPointerLeave={() => resetHighlight(shellRef, '20%')}
             className="liquid-glass-nav-shell w-full h-full flex items-center justify-between"
           >
+            <span className="liquid-glass-caustic" aria-hidden="true" />
+            <span className="liquid-glass-refraction" aria-hidden="true" />
+            <span className="liquid-glass-specular" aria-hidden="true" />
+
             <a
               href="#overview"
-              className="text-sm font-black tracking-[0.2em] text-apple group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pistachio-dark/50 focus-visible:ring-offset-2 rounded-md"
+              className="relative z-10 text-sm font-black tracking-[0.2em] text-apple group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 rounded-md"
               aria-label="Ir para o início do portfólio"
             >
               L.BRYKCY
@@ -74,12 +86,13 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
             <button
               type="button"
               onClick={toggleMenu}
-              className="liquid-glass-menu-button p-2 focus:outline-none flex items-center justify-center transition-transform active:scale-90"
+              className="liquid-glass-menu-button relative z-10 p-2 focus:outline-none flex items-center justify-center transition-transform active:scale-90"
               aria-label={isMenuOpen ? 'Fechar menu' : 'Abrir menu'}
               aria-expanded={isMenuOpen}
               aria-controls="portfolio-navigation"
             >
-              <MenuIcon isOpen={isMenuOpen} className="w-6 h-6" />
+              <span className="liquid-glass-button-shine" aria-hidden="true" />
+              <MenuIcon isOpen={isMenuOpen} className="relative z-10 w-6 h-6" />
             </button>
           </div>
         </div>
@@ -92,18 +105,25 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
       />
 
       <div
+        ref={panelRef}
         id="portfolio-navigation"
+        onPointerMove={moveHighlight}
+        onPointerLeave={() => resetHighlight(panelRef, '8%')}
         className={`liquid-glass-menu-panel fixed ${isScrolled ? 'top-14' : 'top-20'} left-0 right-0 border-b border-apple/5 shadow-lg transition-all duration-300 z-[106] max-h-[calc(100vh-5rem)] overflow-y-auto ${isMenuOpen ? 'opacity-100 visible translate-y-0 scale-100' : 'opacity-0 invisible -translate-y-2 scale-[0.985] pointer-events-none'}`}
         aria-hidden={!isMenuOpen}
       >
-        <div className="container mx-auto px-6 py-7 md:py-8">
+        <span className="liquid-glass-caustic liquid-glass-caustic-panel" aria-hidden="true" />
+        <span className="liquid-glass-refraction" aria-hidden="true" />
+        <span className="liquid-glass-specular liquid-glass-specular-panel" aria-hidden="true" />
+
+        <div className="container relative z-10 mx-auto px-6 py-7 md:py-8">
           <nav className="flex flex-col" aria-label="Navegação principal">
             {navLinks.map((link, idx) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setIsMenuOpen(false)}
-                style={{ transitionDelay: `${idx * 38}ms` }}
+                style={{ transitionDelay: `${idx * 34}ms` }}
                 className={`liquid-glass-menu-link text-2xl font-black tracking-tighter text-apple transition-all duration-300 group ${isMenuOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-3'}`}
               >
                 <span className="relative z-10">{link.label}</span>
@@ -112,12 +132,12 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
             ))}
           </nav>
 
-          <div className={`mt-7 pt-6 border-t border-apple/10 flex flex-col items-start transition-all duration-500 delay-150 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
+          <div className={`mt-7 pt-6 border-t border-white/45 flex flex-col items-start transition-all duration-500 delay-150 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`}>
             <div className="flex items-center gap-4 mb-6">
               <img
                 src={profileImageUrl}
                 alt="Leonardo Brykcy"
-                className="w-12 h-12 rounded-2xl object-cover ring-1 ring-white/70 shadow-sm"
+                className="liquid-glass-avatar w-12 h-12 rounded-2xl object-cover"
                 loading="lazy"
               />
               <div>
@@ -133,7 +153,7 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="w-10 h-10 rounded-2xl border border-white/60 bg-white/25 backdrop-blur-md flex items-center justify-center text-apple/55 hover:text-apple hover:bg-white/45 transform hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pistachio-dark/50"
+                  className="liquid-glass-contact-button w-10 h-10 rounded-2xl flex items-center justify-center text-apple/60 hover:text-apple transform hover:-translate-y-0.5 transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
                   aria-label={link.ariaLabel}
                 >
                   {React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5' })}
