@@ -17,7 +17,7 @@
     --rail-width: min(408px, calc(100vw - 24px));
     --inner-width: calc(var(--rail-width) - 8px);
     --step: calc(var(--inner-width) / 5);
-    --lens-width: calc(var(--step) * 1.72);
+    --lens-width: calc(var(--step) * 1.92);
   }
 
   .mobile-glass-tabbar__lens {
@@ -53,6 +53,6 @@
     --rail-width: calc(100vw - 16px);
     --inner-width: calc(var(--rail-width) - 8px);
     --step: calc(var(--inner-width) / 5);
-    --lens-width: calc(var(--step) * 1.62);
+    --lens-width: calc(var(--step) * 1.78);
   }
 }
