@@ -1,23 +1,38 @@
 /* Mobile Liquid Glass tab bar -------------------------------------------------
-   Cross-browser lens technique inspired by Apple's floating tab bar behavior.
-   The selected lens is a clipped, magnified copy of the real tabs, so Safari/iOS
-   gets a convincing refraction/magnification effect without SVG backdrop filters. */
+   Safari-safe moving lens. The lens magnifies a second copy of the tab content,
+   while the page itself is hard-locked to the vertical axis on mobile. */
 
 .mobile-glass-tabbar {
   display: none;
 }
 
 @media (max-width: 767px) {
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+
   html {
     scroll-padding-top: 18px;
+    touch-action: pan-y;
   }
 
   body {
-    padding-bottom: calc(104px + env(safe-area-inset-bottom, 0px));
+    position: relative;
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+    touch-action: pan-y;
   }
 
-  /* Let the original portfolio breathe on mobile. The persistent navigation lives
-     at the bottom, so the brand header no longer steals vertical space while scrolling. */
+  main,
+  section {
+    max-width: 100vw;
+    overflow-x: clip;
+  }
+
   .identity-header {
     position: absolute !important;
     height: calc(58px + env(safe-area-inset-top, 0px)) !important;
@@ -44,22 +59,28 @@
   }
 
   .mobile-glass-tabbar {
-    --glass-text: rgba(255, 255, 255, 0.72);
-    --glass-text-active: #f7faf3;
+    --glass-text: rgba(255, 255, 255, 0.76);
+    --glass-text-active: #fbfff8;
     --glass-accent: #d7e4c2;
-    --glass-accent-bright: #e8f1da;
+    --glass-accent-bright: #eef6e4;
 
     position: fixed;
-    left: 50%;
-    bottom: max(11px, env(safe-area-inset-bottom, 0px));
+    left: max(10px, env(safe-area-inset-left, 0px));
+    right: max(10px, env(safe-area-inset-right, 0px));
+    bottom: max(10px, env(safe-area-inset-bottom, 0px));
     z-index: 170;
     display: block;
-    width: min(calc(100vw - 24px), 430px);
-    height: 76px;
-    transform: translateX(-50%);
+    width: auto;
+    max-width: 430px;
+    height: 70px;
+    margin-inline: auto;
+    transform: none;
     isolation: isolate;
+    contain: layout paint;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   .mobile-glass-tabbar__surface {
@@ -67,32 +88,32 @@
     inset: 0;
     z-index: 0;
     overflow: hidden;
-    border-radius: 31px;
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.23);
     background:
-      radial-gradient(120% 90% at 16% -16%, rgba(255, 255, 255, 0.14), transparent 52%),
-      linear-gradient(145deg, rgba(66, 72, 82, 0.20), rgba(20, 23, 29, 0.26) 56%, rgba(10, 12, 16, 0.31)),
-      rgba(28, 31, 38, 0.23);
-    -webkit-backdrop-filter: blur(18px) saturate(190%) brightness(0.86) contrast(1.05);
-    backdrop-filter: blur(18px) saturate(190%) brightness(0.86) contrast(1.05);
+      radial-gradient(120% 88% at 18% -14%, rgba(255, 255, 255, 0.17), transparent 54%),
+      linear-gradient(145deg, rgba(69, 76, 87, 0.12), rgba(24, 28, 35, 0.15) 56%, rgba(10, 12, 16, 0.18)),
+      rgba(28, 31, 38, 0.12);
+    -webkit-backdrop-filter: blur(28px) saturate(185%) brightness(1.01) contrast(1.08);
+    backdrop-filter: blur(28px) saturate(185%) brightness(1.01) contrast(1.08);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.22),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.035),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.30),
-      0 18px 42px rgba(20, 22, 27, 0.24),
-      0 3px 12px rgba(20, 22, 27, 0.18);
+      inset 0 1px 0 rgba(255, 255, 255, 0.30),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.20),
+      0 14px 36px rgba(20, 22, 27, 0.19),
+      0 3px 10px rgba(20, 22, 27, 0.12);
   }
 
   .mobile-glass-tabbar__surface::before {
     content: "";
     position: absolute;
-    left: 8%;
-    right: 8%;
+    left: 7%;
+    right: 7%;
     top: 1px;
-    height: 18px;
+    height: 15px;
     border-radius: 999px;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.13), transparent);
-    filter: blur(5px);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.18), transparent);
+    filter: blur(4px);
     pointer-events: none;
   }
 
@@ -100,8 +121,8 @@
     content: "";
     position: absolute;
     inset: 2px;
-    border-radius: 29px;
-    border: 1px solid rgba(255, 255, 255, 0.035);
+    border-radius: 26px;
+    border: 1px solid rgba(255, 255, 255, 0.045);
     pointer-events: none;
   }
 
@@ -112,28 +133,29 @@
     display: flex;
     align-items: stretch;
     padding: 4px;
+    overflow: hidden;
+    border-radius: inherit;
   }
 
   .mobile-glass-tabbar__tab {
     flex: 1 1 25%;
     min-width: 0;
-    min-height: 68px;
+    min-height: 62px;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 0;
-    border-radius: 25px;
+    border-radius: 23px;
     background: transparent;
     color: var(--glass-text);
     text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    transition: color 180ms ease, transform 160ms ease;
+    touch-action: pan-y;
+    transition: color 180ms ease, transform 150ms ease, opacity 180ms ease;
   }
 
   .mobile-glass-tabbar__tab:active {
-    transform: scale(0.96);
+    transform: scale(0.965);
   }
 
   .mobile-glass-tabbar__tab.is-active {
@@ -149,26 +171,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    gap: 3px;
+    pointer-events: none;
   }
 
   .mobile-glass-tabbar__icon {
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 23px;
     flex: 0 0 auto;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.22));
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18));
     transition: color 180ms ease, transform 180ms ease;
   }
 
   .mobile-glass-tabbar__label {
-    max-width: 78px;
+    max-width: 76px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 10px;
+    font-size: 9.5px;
     line-height: 1;
-    font-weight: 650;
-    letter-spacing: 0;
+    font-weight: 680;
+    letter-spacing: -0.01em;
   }
 
   .mobile-glass-tabbar__tab:focus-visible {
@@ -180,10 +203,9 @@
     position: absolute;
     inset: 8px;
     border-radius: 18px;
-    box-shadow: 0 0 0 2px rgba(215, 228, 194, 0.76);
+    box-shadow: 0 0 0 2px rgba(215, 228, 194, 0.82);
   }
 
-  /* One physical lens moves between tabs. This is intentionally NOT one pill per tab. */
   .mobile-glass-tabbar__lens {
     position: absolute;
     left: 0;
@@ -193,20 +215,19 @@
     pointer-events: none;
     will-change: transform, width, height;
     background:
-      radial-gradient(110% 80% at 50% -10%, rgba(255, 255, 255, 0.20), transparent 52%),
-      linear-gradient(150deg, rgba(255, 255, 255, 0.09), rgba(96, 104, 118, 0.13) 48%, rgba(20, 22, 28, 0.10)),
-      rgba(255, 255, 255, 0.045);
-    -webkit-backdrop-filter: blur(3px) saturate(205%) brightness(1.16) contrast(1.08);
-    backdrop-filter: blur(3px) saturate(205%) brightness(1.16) contrast(1.08);
+      radial-gradient(115% 80% at 50% -8%, rgba(255, 255, 255, 0.25), transparent 52%),
+      linear-gradient(150deg, rgba(255, 255, 255, 0.10), rgba(110, 118, 132, 0.10) 48%, rgba(20, 22, 28, 0.07)),
+      rgba(255, 255, 255, 0.055);
+    -webkit-backdrop-filter: blur(5px) saturate(210%) brightness(1.13) contrast(1.08);
+    backdrop-filter: blur(5px) saturate(210%) brightness(1.13) contrast(1.08);
     box-shadow:
-      inset 0 2px 0 rgba(255, 255, 255, 0.74),
-      inset 0 -2px 0 rgba(215, 228, 194, 0.54),
-      inset 0 -11px 18px rgba(147, 124, 255, 0.16),
-      inset 4px 0 8px rgba(255, 95, 165, 0.22),
-      inset -4px 0 8px rgba(92, 211, 255, 0.24),
-      0 0 0 1.25px rgba(255, 255, 255, 0.36),
-      0 12px 28px rgba(0, 0, 0, 0.26),
-      0 0 25px rgba(215, 228, 194, 0.12);
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.76),
+      inset 0 -1.5px 0 rgba(215, 228, 194, 0.42),
+      inset 3px 0 7px rgba(255, 95, 165, 0.15),
+      inset -3px 0 7px rgba(92, 211, 255, 0.17),
+      0 0 0 1px rgba(255, 255, 255, 0.35),
+      0 9px 22px rgba(0, 0, 0, 0.20),
+      0 0 18px rgba(215, 228, 194, 0.10);
   }
 
   .mobile-glass-tabbar__lens-rim {
@@ -217,18 +238,18 @@
     padding: 1px;
     background: conic-gradient(
       from 212deg,
-      rgba(100, 181, 255, 0.42),
+      rgba(100, 181, 255, 0.38),
       rgba(255, 255, 255, 0.06) 14%,
       rgba(215, 228, 194, 0.44) 30%,
       rgba(255, 255, 255, 0.06) 48%,
-      rgba(255, 180, 102, 0.31) 68%,
+      rgba(255, 180, 102, 0.28) 68%,
       rgba(255, 255, 255, 0.10) 84%,
-      rgba(100, 181, 255, 0.42)
+      rgba(100, 181, 255, 0.38)
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: calc(0.62 + (var(--lens-speed, 0) * 0.18));
+    opacity: calc(0.58 + (var(--lens-speed, 0) * 0.16));
   }
 
   .mobile-glass-tabbar__lens-highlight {
@@ -237,10 +258,10 @@
     left: 14%;
     right: 14%;
     top: 4%;
-    height: 34%;
+    height: 30%;
     border-radius: 50%;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0));
-    opacity: 0.62;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0));
+    opacity: 0.65;
     pointer-events: none;
   }
 
@@ -250,8 +271,8 @@
     top: 0;
     transform-origin: 0 0;
     filter:
-      drop-shadow(1.35px 0 0 rgba(255, 83, 151, 0.44))
-      drop-shadow(-1.35px 0 0 rgba(77, 205, 255, 0.46));
+      drop-shadow(1.15px 0 0 rgba(255, 83, 151, 0.38))
+      drop-shadow(-1.15px 0 0 rgba(77, 205, 255, 0.40));
     will-change: transform;
   }
 
@@ -270,14 +291,13 @@
   }
 
   .mobile-glass-tabbar__tab--copy .mobile-glass-tabbar__icon {
-    transform: translateY(7px) scale(1.02);
+    transform: translateY(6px) scale(1.015);
     filter:
-      drop-shadow(1px 0 0 rgba(255, 85, 150, 0.34))
-      drop-shadow(-1px 0 0 rgba(75, 207, 255, 0.34))
-      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.22));
+      drop-shadow(1px 0 0 rgba(255, 85, 150, 0.30))
+      drop-shadow(-1px 0 0 rgba(75, 207, 255, 0.30))
+      drop-shadow(0 2px 3px rgba(0, 0, 0, 0.18));
   }
 
-  /* Remove the older experimental bottom dock if stale CSS remains in index.css. */
   .ios-liquid-dock {
     display: none !important;
   }
@@ -285,12 +305,13 @@
 
 @media (max-width: 380px) {
   .mobile-glass-tabbar {
-    width: calc(100vw - 16px);
-    height: 72px;
+    left: max(7px, env(safe-area-inset-left, 0px));
+    right: max(7px, env(safe-area-inset-right, 0px));
+    height: 68px;
   }
 
   .mobile-glass-tabbar__tab {
-    min-height: 64px;
+    min-height: 60px;
   }
 
   .mobile-glass-tabbar__label {
@@ -307,21 +328,21 @@
 
 @media (prefers-contrast: more) {
   .mobile-glass-tabbar__surface {
-    background: rgba(18, 20, 24, 0.72);
-    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(18, 20, 24, 0.58);
+    border-color: rgba(255, 255, 255, 0.30);
   }
 
   .mobile-glass-tabbar__tab {
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.94);
   }
 }
 
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .mobile-glass-tabbar__surface {
-    background: rgba(28, 31, 38, 0.78);
+    background: rgba(28, 31, 38, 0.70);
   }
 
   .mobile-glass-tabbar__lens {
-    background: rgba(68, 74, 84, 0.72);
+    background: rgba(68, 74, 84, 0.64);
   }
 }
