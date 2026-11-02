@@ -4,6 +4,15 @@
    the rail dimensions below are viewport-derived so movement stays tied to the
    actual dock width instead of shrinking to the lens width. */
 @media (max-width: 767px) {
+  /* The portfolio globally virtualizes off-screen sections with content-visibility.
+     That optimization changes distant section positions while a long anchor scroll
+     is running. Keep the mobile document geometry stable so dock navigation lands
+     on the section the user actually tapped. */
+  main > section {
+    content-visibility: visible !important;
+    contain-intrinsic-size: none !important;
+  }
+
   .mobile-glass-tabbar {
     --rail-width: min(408px, calc(100vw - 24px));
     --inner-width: calc(var(--rail-width) - 8px);
