@@ -6,7 +6,7 @@
 
 @media (max-width: 767px) {
   .mobile-glass-tabbar {
-    --lens-width: calc(var(--step) * 1.72);
+    --lens-width: calc(var(--step) * 1.92);
     height: 64px;
     max-width: 408px;
     bottom: max(12px, env(safe-area-inset-bottom, 0px));
@@ -44,15 +44,15 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(65,169,255,.06) 9%,
-      rgba(66,179,255,.32) 23%,
-      rgba(93,255,167,.16) 39%,
-      rgba(255,215,77,.13) 59%,
-      rgba(255,72,136,.27) 78%,
+      rgba(65,169,255,.05) 9%,
+      rgba(66,179,255,.24) 23%,
+      rgba(93,255,167,.13) 39%,
+      rgba(255,215,77,.10) 59%,
+      rgba(255,72,136,.21) 78%,
       transparent 100%
     );
-    filter: blur(.45px) saturate(170%);
-    opacity: .88;
+    filter: blur(.5px) saturate(165%);
+    opacity: .72;
     pointer-events: none;
   }
 
@@ -73,22 +73,22 @@
     transform: translate3d(calc(var(--active-index) * var(--step)), 0, 0);
     transition: transform 340ms cubic-bezier(.2,.82,.2,1);
     background:
-      radial-gradient(100% 60% at 50% -4%, rgba(255,255,255,.23), transparent 58%),
-      radial-gradient(86% 115% at 50% 114%, rgba(112,145,183,.12), transparent 66%),
-      linear-gradient(180deg, rgba(54,62,74,.54), rgba(24,29,37,.63));
-    border: 1px solid rgba(233,244,255,.26);
-    -webkit-backdrop-filter: blur(7px) saturate(185%) contrast(1.12) brightness(1.05);
-    backdrop-filter: blur(7px) saturate(185%) contrast(1.12) brightness(1.05);
+      radial-gradient(108% 64% at 50% -8%, rgba(255,255,255,.25), transparent 58%),
+      radial-gradient(88% 120% at 50% 114%, rgba(113,151,193,.10), transparent 66%),
+      linear-gradient(180deg, rgba(67,76,89,.34), rgba(24,29,37,.42));
+    border: 1px solid rgba(238,247,255,.21);
+    -webkit-backdrop-filter: blur(5px) saturate(205%) contrast(1.15) brightness(1.07);
+    backdrop-filter: blur(5px) saturate(205%) contrast(1.15) brightness(1.07);
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.40),
-      inset 0 -1px 0 rgba(0,0,0,.48),
-      inset 13px 0 20px rgba(73,164,255,.035),
-      inset -13px 0 20px rgba(255,71,128,.035),
-      0 12px 28px rgba(5,8,13,.36),
-      0 0 0 1px rgba(255,255,255,.03);
+      inset 0 1px 0 rgba(255,255,255,.43),
+      inset 0 -1px 0 rgba(0,0,0,.36),
+      inset 15px 0 22px rgba(62,169,255,.026),
+      inset -15px 0 22px rgba(255,72,130,.026),
+      0 13px 29px rgba(5,8,13,.34),
+      0 0 0 1px rgba(255,255,255,.025);
     filter:
-      drop-shadow(-1.8px 0 1.25px rgba(50,159,255,.34))
-      drop-shadow(1.8px 0 1.25px rgba(255,62,121,.29));
+      drop-shadow(-1.2px 0 1px rgba(48,161,255,.24))
+      drop-shadow(1.2px 0 1px rgba(255,61,119,.21));
     will-change: transform;
     pointer-events: none;
   }
@@ -100,11 +100,15 @@
     overflow: hidden;
     border-radius: 30px;
     pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.27) 0 34%, rgba(0,0,0,.66) 62%, #000 88%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.27) 0 34%, rgba(0,0,0,.66) 62%, #000 88%);
   }
 
   /* This track is a second, non-interactive copy of the dock contents. It moves
      in the opposite direction of the lens so the copied content remains aligned
-     with the rail, then gets slightly magnified inside the curved viewport. */
+     with the rail, then gets magnified inside the curved viewport. The viewport
+     mask makes that duplicate strongest near the curved rim, where real glass
+     creates the most visible displacement. */
   .mobile-glass-tabbar__refract-track {
     position: absolute;
     left: 0;
@@ -119,12 +123,12 @@
       0
     );
     transition: transform 340ms cubic-bezier(.2,.82,.2,1);
-    opacity: .74;
+    opacity: .90;
     filter:
-      saturate(128%)
-      contrast(1.07)
-      drop-shadow(-.75px 0 rgba(49,161,255,.36))
-      drop-shadow(.75px 0 rgba(255,63,123,.28));
+      saturate(145%)
+      contrast(1.10)
+      drop-shadow(-.9px 0 rgba(45,164,255,.43))
+      drop-shadow(.9px 0 rgba(255,58,121,.34));
   }
 
   .mobile-glass-tabbar__refract-item {
@@ -135,28 +139,28 @@
     align-items: center;
     justify-content: center;
     gap: 2px;
-    color: rgba(247,249,253,.74);
-    transform: scale(1.085, 1.06);
+    color: rgba(247,249,253,.78);
+    transform: scale(1.16, 1.10);
     transform-origin: center;
     text-shadow:
-      -.55px 0 rgba(59,168,255,.42),
-      .55px 0 rgba(255,68,126,.30),
+      -.65px 0 rgba(49,168,255,.52),
+      .65px 0 rgba(255,61,124,.38),
       0 1px 2px rgba(0,0,0,.34);
   }
 
   .mobile-glass-tabbar__refract-item.is-active {
     color: #69b8ff;
-    opacity: 1;
-    filter: brightness(1.08) saturate(122%);
+    opacity: .78;
+    filter: brightness(1.10) saturate(135%);
   }
 
   .mobile-glass-tabbar__refract-item .mobile-glass-tabbar__icon {
-    width: 23px;
-    height: 23px;
+    width: 25px;
+    height: 25px;
     transform: none;
     filter:
-      drop-shadow(-.65px 0 rgba(45,163,255,.56))
-      drop-shadow(.65px 0 rgba(255,73,128,.36));
+      drop-shadow(-.8px 0 rgba(43,164,255,.64))
+      drop-shadow(.8px 0 rgba(255,68,126,.44));
   }
 
   .mobile-glass-tabbar__refract-label {
@@ -165,59 +169,60 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-inline: 1px;
-    font-size: 9px;
+    font-size: 10px;
     line-height: 1;
     font-weight: 670;
-    letter-spacing: -.02em;
+    letter-spacing: -.025em;
   }
 
-  /* Chromatic rim: transparent center, color only where a refractive edge
-     would split the light. */
+  /* Thin spectral rim. It is deliberately quieter than a neon outline: the
+     stronger color is supplied by the local caustics at high-curvature corners. */
   .mobile-glass-tabbar__lens::before {
     content: "";
     position: absolute;
     z-index: 4;
-    inset: -1.6px;
-    padding: 1.8px;
+    inset: -1.5px;
+    padding: 1.3px;
     border-radius: 32px;
     background: conic-gradient(
       from 205deg,
-      rgba(43,147,255,.96) 0deg,
-      rgba(59,216,255,.80) 31deg,
-      rgba(75,255,153,.59) 70deg,
-      rgba(251,226,80,.52) 119deg,
-      rgba(255,111,78,.61) 168deg,
-      rgba(255,46,129,.88) 218deg,
-      rgba(147,75,255,.72) 270deg,
-      rgba(53,165,255,.94) 333deg,
-      rgba(43,147,255,.96) 360deg
+      rgba(40,145,255,.90) 0deg,
+      rgba(54,215,255,.72) 31deg,
+      rgba(70,255,151,.54) 70deg,
+      rgba(251,225,79,.40) 119deg,
+      rgba(255,105,76,.48) 168deg,
+      rgba(255,42,128,.79) 218deg,
+      rgba(145,70,255,.60) 270deg,
+      rgba(51,164,255,.84) 333deg,
+      rgba(40,145,255,.90) 360deg
     );
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
-    opacity: .93;
-    filter: blur(.36px) saturate(190%);
+    opacity: .78;
+    filter: blur(.42px) saturate(185%);
     pointer-events: none;
   }
 
-  /* Stronger caustics at the left/right curvature reproduce the colored light
-     split visible in the supplied reference. */
+  /* Local prism flares reproduce the blue/green left bend and red/magenta right
+     bend in the reference. The strongest split sits on the lower curved corners. */
   .mobile-glass-tabbar__lens::after {
     content: "";
     position: absolute;
     z-index: 3;
-    inset: -4px;
-    border-radius: 33px;
+    inset: -5px;
+    border-radius: 34px;
     background:
-      radial-gradient(24% 58% at 0% 55%, rgba(36,150,255,.96), rgba(51,211,255,.38) 28%, rgba(91,255,178,.18) 43%, transparent 73%),
-      radial-gradient(24% 58% at 100% 57%, rgba(255,43,117,.90), rgba(255,118,61,.31) 31%, rgba(255,215,81,.15) 47%, transparent 73%),
-      radial-gradient(50% 18% at 50% 0%, rgba(88,255,164,.38), rgba(67,183,255,.15) 42%, transparent 80%),
-      radial-gradient(48% 17% at 50% 100%, rgba(255,205,70,.28), rgba(255,69,135,.13) 43%, transparent 82%);
+      radial-gradient(26% 65% at 0% 53%, rgba(31,148,255,.88), rgba(46,212,255,.31) 29%, rgba(83,255,175,.14) 44%, transparent 72%),
+      radial-gradient(26% 65% at 100% 55%, rgba(255,38,116,.84), rgba(255,113,58,.27) 31%, rgba(255,216,79,.12) 46%, transparent 72%),
+      radial-gradient(30% 27% at 13% 100%, rgba(43,153,255,.98), rgba(54,233,214,.66) 30%, rgba(139,255,113,.35) 49%, transparent 76%),
+      radial-gradient(30% 27% at 87% 100%, rgba(255,51,137,.96), rgba(125,93,255,.60) 31%, rgba(53,185,255,.31) 50%, transparent 77%),
+      radial-gradient(48% 16% at 50% 0%, rgba(78,255,158,.29), rgba(64,181,255,.10) 43%, transparent 82%);
     mix-blend-mode: screen;
-    filter: blur(1px) saturate(185%);
-    opacity: .91;
+    filter: blur(.9px) saturate(195%);
+    opacity: .94;
     pointer-events: none;
   }
 
@@ -228,36 +233,45 @@
 
   .mobile-glass-tabbar__tab {
     min-height: 58px;
-    color: rgba(246,248,252,.74);
+    color: rgba(246,248,252,.72);
     text-shadow: 0 1px 2px rgba(0,0,0,.28);
   }
 
+  .mobile-glass-tabbar__content {
+    transition: transform 230ms cubic-bezier(.2,.82,.2,1), filter 230ms ease;
+  }
+
   .mobile-glass-tabbar__tab.is-active {
-    color: #67b7ff;
+    color: #69baff;
     text-shadow:
-      -0.55px 0 rgba(66,180,255,.68),
-      0.55px 0 rgba(255,80,137,.34),
+      -0.55px 0 rgba(66,180,255,.62),
+      0.55px 0 rgba(255,80,137,.30),
       0 1px 2px rgba(0,0,0,.38);
   }
 
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content {
+    transform: scale(1.12);
+    filter: brightness(1.07) saturate(1.08);
+  }
+
   .mobile-glass-tabbar__icon {
-    width: 21px;
-    height: 21px;
+    width: 22px;
+    height: 22px;
     filter: drop-shadow(0 1px 1px rgba(0,0,0,.25));
   }
 
   .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__icon {
-    transform: translateY(-1px) scale(1.09);
+    transform: translateY(-1px) scale(1.04);
     filter:
-      drop-shadow(-.6px 0 rgba(56,167,255,.56))
-      drop-shadow(.6px 0 rgba(255,69,130,.32))
+      drop-shadow(-.55px 0 rgba(56,167,255,.48))
+      drop-shadow(.55px 0 rgba(255,69,130,.27))
       drop-shadow(0 1px 1px rgba(0,0,0,.25));
   }
 
   .mobile-glass-tabbar__label {
-    font-size: 8.3px;
+    font-size: 9.2px;
     font-weight: 650;
-    letter-spacing: -.015em;
+    letter-spacing: -.018em;
   }
 
   .mobile-glass-tabbar__tab:focus-visible::after {
@@ -268,7 +282,7 @@
 
 @media (max-width: 370px) {
   .mobile-glass-tabbar {
-    --lens-width: calc(var(--step) * 1.62);
+    --lens-width: calc(var(--step) * 1.78);
     height: 62px;
   }
 
@@ -278,13 +292,18 @@
   }
 
   .mobile-glass-tabbar__refract-label {
-    font-size: 8.4px;
+    font-size: 9px;
+  }
+
+  .mobile-glass-tabbar__label {
+    font-size: 8.7px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mobile-glass-tabbar__lens,
-  .mobile-glass-tabbar__refract-track {
+  .mobile-glass-tabbar__refract-track,
+  .mobile-glass-tabbar__content {
     transition-duration: .01ms !important;
   }
 }
