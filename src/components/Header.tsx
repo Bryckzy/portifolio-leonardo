@@ -57,17 +57,16 @@ const ContactIcon = () => (
 const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks }) => {
   const [activeHref, setActiveHref] = useState('#overview');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [lensX, setLensX] = useState(0);
+  const [isLensAnimating, setIsLensAnimating] = useState(false);
   const scrollFrameRef = useRef<number | null>(null);
   const clickLockUntilRef = useRef(0);
   const reduceMotionRef = useRef(false);
   const navigationSequenceRef = useRef(0);
   const navigationCleanupRef = useRef<(() => void) | null>(null);
   const dockRef = useRef<HTMLElement | null>(null);
-  const lensRef = useRef<HTMLSpanElement | null>(null);
-  const refractTrackRef = useRef<HTMLSpanElement | null>(null);
-  const lensAnimationRef = useRef<Animation | null>(null);
-  const refractAnimationRef = useRef<Animation | null>(null);
-  const lensXRef = useRef<number | null>(null);
+  const lensInitializedRef = useRef(false);
+  const lensAnimationTimerRef = useRef<number | null>(null);
 
   const mobileItems: DockItem[] = useMemo(() => [
     { href: '#overview', label: 'Início', icon: <HomeIcon /> },
@@ -99,18 +98,6 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
     return Math.max(0, Math.min(centered, innerWidth - lensWidth));
   }, [mobileItems.length]);
 
-  const readAnimatedTranslateX = useCallback((element: HTMLElement) => {
-    const transform = window.getComputedStyle(element).transform;
-    if (!transform || transform === 'none') return 0;
-
-    try {
-      return new DOMMatrixReadOnly(transform).m41;
-    } catch {
-      const match = transform.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([^,]+),/);
-      return match ? Number.parseFloat(match[1]) || 0 : 0;
-    }
-  }, []);
-
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
@@ -123,122 +110,37 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
   useEffect(() => () => {
     navigationCleanupRef.current?.();
-    lensAnimationRef.current?.cancel();
-    refractAnimationRef.current?.cancel();
+    if (lensAnimationTimerRef.current !== null) window.clearTimeout(lensAnimationTimerRef.current);
   }, []);
 
   useLayoutEffect(() => {
-    const dock = dockRef.current;
-    const lens = lensRef.current;
-    const refractTrack = refractTrackRef.current;
-    if (!dock || !lens || !refractTrack) return;
+    const nextX = calculateLensX(activeIndex);
+    setLensX(nextX);
 
-    const targetX = calculateLensX(activeIndex);
-    const targetLensTransform = `translate3d(${targetX}px, 0, 0)`;
-    const targetTrackTransform = `translate3d(${-targetX}px, 0, 0)`;
-
-    if (lensXRef.current === null) {
-      lens.style.transform = targetLensTransform;
-      refractTrack.style.transform = targetTrackTransform;
-      lensXRef.current = targetX;
+    if (!lensInitializedRef.current) {
+      lensInitializedRef.current = true;
       return;
     }
 
-    const runningAnimation = lensAnimationRef.current?.playState === 'running';
-    const fromX = runningAnimation ? readAnimatedTranslateX(lens) : lensXRef.current;
-
-    lensAnimationRef.current?.cancel();
-    refractAnimationRef.current?.cancel();
-
-    if (Math.abs(targetX - fromX) < 0.5) {
-      lens.style.transform = targetLensTransform;
-      refractTrack.style.transform = targetTrackTransform;
-      lensXRef.current = targetX;
-      return;
-    }
-
-    const direction = Math.sign(targetX - fromX) || 1;
-    const distance = Math.abs(targetX - fromX);
-    const reduced = reduceMotionRef.current;
-    const duration = reduced ? 190 : 520;
-    const overshoot = reduced ? 0 : Math.min(12, Math.max(5, distance * 0.085));
-    const farX = targetX + overshoot * direction;
-    const settleX = targetX - overshoot * 0.34 * direction;
-
-    const lensFrames: Keyframe[] = reduced
-      ? [
-          { transform: `translate3d(${fromX}px, 0, 0)`, offset: 0 },
-          { transform: targetLensTransform, offset: 1 },
-        ]
-      : [
-          { transform: `translate3d(${fromX}px, 0, 0)`, offset: 0 },
-          { transform: `translate3d(${farX}px, 0, 0)`, offset: 0.64 },
-          { transform: `translate3d(${settleX}px, 0, 0)`, offset: 0.84 },
-          { transform: targetLensTransform, offset: 1 },
-        ];
-
-    const trackFrames: Keyframe[] = reduced
-      ? [
-          { transform: `translate3d(${-fromX}px, 0, 0)`, offset: 0 },
-          { transform: targetTrackTransform, offset: 1 },
-        ]
-      : [
-          { transform: `translate3d(${-fromX}px, 0, 0)`, offset: 0 },
-          { transform: `translate3d(${-farX}px, 0, 0)`, offset: 0.64 },
-          { transform: `translate3d(${-settleX}px, 0, 0)`, offset: 0.84 },
-          { transform: targetTrackTransform, offset: 1 },
-        ];
-
-    lens.style.transform = targetLensTransform;
-    refractTrack.style.transform = targetTrackTransform;
-    dock.classList.add('is-animating');
-
-    const options: KeyframeAnimationOptions = {
-      duration,
-      easing: reduced ? 'ease-out' : 'cubic-bezier(.18,.84,.24,1)',
-      fill: 'forwards',
-    };
-
-    const lensAnimation = lens.animate(lensFrames, options);
-    const refractAnimation = refractTrack.animate(trackFrames, options);
-    lensAnimationRef.current = lensAnimation;
-    refractAnimationRef.current = refractAnimation;
-    lensXRef.current = targetX;
-
-    const finish = () => {
-      if (lensAnimationRef.current !== lensAnimation) return;
-      lensAnimation.cancel();
-      refractAnimation.cancel();
-      lensAnimationRef.current = null;
-      refractAnimationRef.current = null;
-      dock.classList.remove('is-animating');
-      lens.style.transform = targetLensTransform;
-      refractTrack.style.transform = targetTrackTransform;
-    };
-
-    lensAnimation.addEventListener('finish', finish, { once: true });
-
-    return () => {
-      lensAnimation.removeEventListener('finish', finish);
-    };
-  }, [activeIndex, calculateLensX, readAnimatedTranslateX]);
+    setIsLensAnimating(true);
+    if (lensAnimationTimerRef.current !== null) window.clearTimeout(lensAnimationTimerRef.current);
+    lensAnimationTimerRef.current = window.setTimeout(() => {
+      setIsLensAnimating(false);
+      lensAnimationTimerRef.current = null;
+    }, reduceMotionRef.current ? 240 : 620);
+  }, [activeIndex, calculateLensX]);
 
   useEffect(() => {
     const dock = dockRef.current;
-    const lens = lensRef.current;
-    const refractTrack = refractTrackRef.current;
-    if (!dock || !lens || !refractTrack || typeof ResizeObserver === 'undefined') return;
+    if (!dock || typeof ResizeObserver === 'undefined') return;
 
+    let lastWidth = dock.getBoundingClientRect().width;
     const observer = new ResizeObserver(() => {
-      const targetX = calculateLensX(activeIndex);
-      lensAnimationRef.current?.cancel();
-      refractAnimationRef.current?.cancel();
-      lensAnimationRef.current = null;
-      refractAnimationRef.current = null;
-      lensXRef.current = targetX;
-      dock.classList.remove('is-animating');
-      lens.style.transform = `translate3d(${targetX}px, 0, 0)`;
-      refractTrack.style.transform = `translate3d(${-targetX}px, 0, 0)`;
+      const nextWidth = dock.getBoundingClientRect().width;
+      if (Math.abs(nextWidth - lastWidth) < 0.5) return;
+      lastWidth = nextWidth;
+      setIsLensAnimating(false);
+      setLensX(calculateLensX(activeIndex));
     });
 
     observer.observe(dock);
@@ -336,6 +238,16 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
     '--active-index': activeIndex,
   } as React.CSSProperties;
 
+  const lensStyle: React.CSSProperties = {
+    left: `calc(4px + ${lensX}px)`,
+    transform: 'none',
+  };
+
+  const refractTrackStyle: React.CSSProperties = {
+    left: `${-lensX}px`,
+    transform: 'none',
+  };
+
   return (
     <>
       <header className={`identity-header fixed inset-x-0 top-0 z-[110] ${isScrolled ? 'is-scrolled' : ''}`}>
@@ -387,11 +299,11 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
         </div>
       </header>
 
-      <nav ref={dockRef} className="mobile-glass-tabbar" style={dockStyle} aria-label="Navegação principal no celular">
+      <nav ref={dockRef} className={`mobile-glass-tabbar ${isLensAnimating ? 'is-animating' : ''}`} style={dockStyle} aria-label="Navegação principal no celular">
         <span className="mobile-glass-tabbar__surface" aria-hidden="true" />
-        <span ref={lensRef} className="mobile-glass-tabbar__lens" aria-hidden="true">
+        <span className="mobile-glass-tabbar__lens" style={lensStyle} aria-hidden="true">
           <span className="mobile-glass-tabbar__refract-viewport">
-            <span ref={refractTrackRef} className="mobile-glass-tabbar__refract-track">
+            <span className="mobile-glass-tabbar__refract-track" style={refractTrackStyle}>
               {mobileItems.map((item, index) => (
                 <span
                   key={`refract-${item.href}`}
