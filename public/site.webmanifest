@@ -1,0 +1,20 @@
+{
+  "name": "Leonardo Brykcy | Product, Systems, Data & AI",
+  "short_name": "Leonardo Brykcy",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f6f6f1",
+  "theme_color": "#f6f6f1",
+  "icons": [
+    {
+      "src": "/favicon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
