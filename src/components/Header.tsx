@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { NavLink, ContactLink } from '../../types';
 import './MobileLiquidTabBar.css';
 
@@ -62,6 +62,12 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
   const reduceMotionRef = useRef(false);
   const navigationSequenceRef = useRef(0);
   const navigationCleanupRef = useRef<(() => void) | null>(null);
+  const dockRef = useRef<HTMLElement | null>(null);
+  const lensRef = useRef<HTMLSpanElement | null>(null);
+  const refractTrackRef = useRef<HTMLSpanElement | null>(null);
+  const lensAnimationRef = useRef<Animation | null>(null);
+  const refractAnimationRef = useRef<Animation | null>(null);
+  const lensXRef = useRef<number | null>(null);
 
   const mobileItems: DockItem[] = useMemo(() => [
     { href: '#overview', label: 'Início', icon: <HomeIcon /> },
@@ -80,6 +86,31 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
   const mobileActiveHref = mobileHrefForSection(activeHref);
   const activeIndex = Math.max(0, mobileItems.findIndex((item) => item.href === mobileActiveHref));
 
+  const calculateLensX = useCallback((index: number) => {
+    const dock = dockRef.current;
+    if (!dock) return 0;
+
+    const railWidth = dock.getBoundingClientRect().width;
+    const innerWidth = Math.max(0, railWidth - 8);
+    const step = innerWidth / mobileItems.length;
+    const lensMultiplier = window.innerWidth <= 370 ? 1.78 : 1.92;
+    const lensWidth = step * lensMultiplier;
+    const centered = index * step + (step - lensWidth) / 2;
+    return Math.max(0, Math.min(centered, innerWidth - lensWidth));
+  }, [mobileItems.length]);
+
+  const readAnimatedTranslateX = useCallback((element: HTMLElement) => {
+    const transform = window.getComputedStyle(element).transform;
+    if (!transform || transform === 'none') return 0;
+
+    try {
+      return new DOMMatrixReadOnly(transform).m41;
+    } catch {
+      const match = transform.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([^,]+),/);
+      return match ? Number.parseFloat(match[1]) || 0 : 0;
+    }
+  }, []);
+
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
@@ -92,7 +123,127 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
   useEffect(() => () => {
     navigationCleanupRef.current?.();
+    lensAnimationRef.current?.cancel();
+    refractAnimationRef.current?.cancel();
   }, []);
+
+  useLayoutEffect(() => {
+    const dock = dockRef.current;
+    const lens = lensRef.current;
+    const refractTrack = refractTrackRef.current;
+    if (!dock || !lens || !refractTrack) return;
+
+    const targetX = calculateLensX(activeIndex);
+    const targetLensTransform = `translate3d(${targetX}px, 0, 0)`;
+    const targetTrackTransform = `translate3d(${-targetX}px, 0, 0)`;
+
+    if (lensXRef.current === null) {
+      lens.style.transform = targetLensTransform;
+      refractTrack.style.transform = targetTrackTransform;
+      lensXRef.current = targetX;
+      return;
+    }
+
+    const runningAnimation = lensAnimationRef.current?.playState === 'running';
+    const fromX = runningAnimation ? readAnimatedTranslateX(lens) : lensXRef.current;
+
+    lensAnimationRef.current?.cancel();
+    refractAnimationRef.current?.cancel();
+
+    if (Math.abs(targetX - fromX) < 0.5) {
+      lens.style.transform = targetLensTransform;
+      refractTrack.style.transform = targetTrackTransform;
+      lensXRef.current = targetX;
+      return;
+    }
+
+    const direction = Math.sign(targetX - fromX) || 1;
+    const distance = Math.abs(targetX - fromX);
+    const reduced = reduceMotionRef.current;
+    const duration = reduced ? 190 : 520;
+    const overshoot = reduced ? 0 : Math.min(12, Math.max(5, distance * 0.085));
+    const farX = targetX + overshoot * direction;
+    const settleX = targetX - overshoot * 0.34 * direction;
+
+    const lensFrames: Keyframe[] = reduced
+      ? [
+          { transform: `translate3d(${fromX}px, 0, 0)`, offset: 0 },
+          { transform: targetLensTransform, offset: 1 },
+        ]
+      : [
+          { transform: `translate3d(${fromX}px, 0, 0)`, offset: 0 },
+          { transform: `translate3d(${farX}px, 0, 0)`, offset: 0.64 },
+          { transform: `translate3d(${settleX}px, 0, 0)`, offset: 0.84 },
+          { transform: targetLensTransform, offset: 1 },
+        ];
+
+    const trackFrames: Keyframe[] = reduced
+      ? [
+          { transform: `translate3d(${-fromX}px, 0, 0)`, offset: 0 },
+          { transform: targetTrackTransform, offset: 1 },
+        ]
+      : [
+          { transform: `translate3d(${-fromX}px, 0, 0)`, offset: 0 },
+          { transform: `translate3d(${-farX}px, 0, 0)`, offset: 0.64 },
+          { transform: `translate3d(${-settleX}px, 0, 0)`, offset: 0.84 },
+          { transform: targetTrackTransform, offset: 1 },
+        ];
+
+    lens.style.transform = targetLensTransform;
+    refractTrack.style.transform = targetTrackTransform;
+    dock.classList.add('is-animating');
+
+    const options: KeyframeAnimationOptions = {
+      duration,
+      easing: reduced ? 'ease-out' : 'cubic-bezier(.18,.84,.24,1)',
+      fill: 'forwards',
+    };
+
+    const lensAnimation = lens.animate(lensFrames, options);
+    const refractAnimation = refractTrack.animate(trackFrames, options);
+    lensAnimationRef.current = lensAnimation;
+    refractAnimationRef.current = refractAnimation;
+    lensXRef.current = targetX;
+
+    const finish = () => {
+      if (lensAnimationRef.current !== lensAnimation) return;
+      lensAnimation.cancel();
+      refractAnimation.cancel();
+      lensAnimationRef.current = null;
+      refractAnimationRef.current = null;
+      dock.classList.remove('is-animating');
+      lens.style.transform = targetLensTransform;
+      refractTrack.style.transform = targetTrackTransform;
+    };
+
+    lensAnimation.addEventListener('finish', finish, { once: true });
+
+    return () => {
+      lensAnimation.removeEventListener('finish', finish);
+    };
+  }, [activeIndex, calculateLensX, readAnimatedTranslateX]);
+
+  useEffect(() => {
+    const dock = dockRef.current;
+    const lens = lensRef.current;
+    const refractTrack = refractTrackRef.current;
+    if (!dock || !lens || !refractTrack || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(() => {
+      const targetX = calculateLensX(activeIndex);
+      lensAnimationRef.current?.cancel();
+      refractAnimationRef.current?.cancel();
+      lensAnimationRef.current = null;
+      refractAnimationRef.current = null;
+      lensXRef.current = targetX;
+      dock.classList.remove('is-animating');
+      lens.style.transform = `translate3d(${targetX}px, 0, 0)`;
+      refractTrack.style.transform = `translate3d(${-targetX}px, 0, 0)`;
+    });
+
+    observer.observe(dock);
+    return () => observer.disconnect();
+  }, [activeIndex, calculateLensX]);
 
   useEffect(() => {
     const updateFromScroll = () => {
@@ -236,11 +387,11 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
         </div>
       </header>
 
-      <nav className="mobile-glass-tabbar" style={dockStyle} aria-label="Navegação principal no celular">
+      <nav ref={dockRef} className="mobile-glass-tabbar" style={dockStyle} aria-label="Navegação principal no celular">
         <span className="mobile-glass-tabbar__surface" aria-hidden="true" />
-        <span className="mobile-glass-tabbar__lens" aria-hidden="true">
+        <span ref={lensRef} className="mobile-glass-tabbar__lens" aria-hidden="true">
           <span className="mobile-glass-tabbar__refract-viewport">
-            <span className="mobile-glass-tabbar__refract-track">
+            <span ref={refractTrackRef} className="mobile-glass-tabbar__refract-track">
               {mobileItems.map((item, index) => (
                 <span
                   key={`refract-${item.href}`}
