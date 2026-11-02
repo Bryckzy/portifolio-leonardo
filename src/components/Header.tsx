@@ -207,8 +207,13 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
     if (reduceMotionRef.current) {
       target.scrollIntoView({ behavior: 'auto', block: 'start' });
-      clickLockUntilRef.current = 0;
-      window.requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+      const reducedTimer = window.setTimeout(() => {
+        if (sequence !== navigationSequenceRef.current) return;
+        clickLockUntilRef.current = 0;
+        navigationCleanupRef.current = null;
+        window.requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+      }, 320);
+      navigationCleanupRef.current = () => window.clearTimeout(reducedTimer);
       return;
     }
 
