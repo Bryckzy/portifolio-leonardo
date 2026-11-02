@@ -206,7 +206,21 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
       <nav className="mobile-glass-tabbar" style={dockStyle} aria-label="Navegação principal no celular">
         <span className="mobile-glass-tabbar__surface" aria-hidden="true" />
-        <span className="mobile-glass-tabbar__lens" aria-hidden="true" />
+        <span className="mobile-glass-tabbar__lens" aria-hidden="true">
+          <span className="mobile-glass-tabbar__refract-viewport">
+            <span className="mobile-glass-tabbar__refract-track">
+              {mobileItems.map((item, index) => (
+                <span
+                  key={`refract-${item.href}`}
+                  className={`mobile-glass-tabbar__refract-item ${activeIndex === index ? 'is-active' : ''}`}
+                >
+                  {item.icon}
+                  <span className="mobile-glass-tabbar__refract-label">{item.label}</span>
+                </span>
+              ))}
+            </span>
+          </span>
+        </span>
         <div className="mobile-glass-tabbar__tabs">
           {mobileItems.map((item, index) => {
             const selected = activeIndex === index;
