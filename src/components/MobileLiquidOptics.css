@@ -1,0 +1,223 @@
+/* Stable mobile Liquid Glass optics -----------------------------------------
+   One static backdrop-filter rail + one lightweight moving optical lens.
+   No moving backdrop filters, masks or duplicated content layers. */
+
+@media (max-width: 767px) {
+  main > section {
+    content-visibility: visible !important;
+    contain-intrinsic-size: none !important;
+  }
+
+  .mobile-glass-tabbar {
+    --lens-width: calc(var(--step) * 1.92);
+    height: 64px;
+    max-width: 408px;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    border-radius: 32px;
+    contain: layout;
+    overflow: visible;
+  }
+
+  .mobile-glass-tabbar__surface {
+    overflow: hidden;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,.18);
+    background:
+      radial-gradient(120% 92% at 50% -28%, rgba(255,255,255,.20), transparent 55%),
+      linear-gradient(180deg, rgba(47,54,65,.84), rgba(22,27,34,.86)),
+      rgba(18,22,29,.80);
+    -webkit-backdrop-filter: blur(22px) saturate(175%) contrast(1.04);
+    backdrop-filter: blur(22px) saturate(175%) contrast(1.04);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.26),
+      inset 0 -1px 0 rgba(0,0,0,.44),
+      0 18px 44px rgba(8,12,18,.28),
+      0 3px 10px rgba(8,12,18,.22);
+  }
+
+  .mobile-glass-tabbar__surface::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 0;
+    height: 1px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(65,175,255,.30) 24%,
+      rgba(88,255,170,.14) 40%,
+      rgba(255,216,83,.11) 60%,
+      rgba(255,70,135,.26) 78%,
+      transparent
+    );
+    opacity: .82;
+    pointer-events: none;
+  }
+
+  .mobile-glass-tabbar__surface::after {
+    inset: 2px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,.07);
+    box-shadow: inset 0 0 18px rgba(255,255,255,.025);
+  }
+
+  .mobile-glass-tabbar__lens {
+    left: 4px;
+    top: -8px;
+    z-index: 1;
+    width: var(--lens-width);
+    height: 80px;
+    border-radius: 31px;
+    transform: none;
+    transition: left 560ms cubic-bezier(.22,1.28,.36,1);
+    border: 1px solid rgba(235,246,255,.26);
+    background:
+      radial-gradient(105% 62% at 50% -5%, rgba(255,255,255,.26), transparent 58%),
+      radial-gradient(90% 110% at 50% 112%, rgba(117,150,187,.11), transparent 66%),
+      linear-gradient(180deg, rgba(72,82,96,.43), rgba(24,29,37,.49));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.42),
+      inset 0 -1px 0 rgba(0,0,0,.38),
+      inset 13px 0 22px rgba(54,165,255,.04),
+      inset -13px 0 22px rgba(255,67,128,.04),
+      0 12px 28px rgba(5,8,13,.34);
+    will-change: left;
+  }
+
+  .mobile-glass-tabbar__lens::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 33px;
+    pointer-events: none;
+    background:
+      radial-gradient(28% 64% at 0% 54%, rgba(39,154,255,.93), rgba(49,218,255,.34) 29%, rgba(79,255,172,.17) 45%, transparent 73%),
+      radial-gradient(28% 64% at 100% 56%, rgba(255,43,122,.88), rgba(255,114,67,.29) 31%, rgba(255,213,80,.12) 47%, transparent 73%),
+      radial-gradient(34% 27% at 11% 100%, rgba(45,153,255,.91), rgba(55,232,215,.55) 32%, transparent 74%),
+      radial-gradient(34% 27% at 89% 100%, rgba(255,49,137,.90), rgba(132,89,255,.49) 32%, transparent 74%);
+    filter: blur(.9px) saturate(190%);
+    opacity: .88;
+  }
+
+  .mobile-glass-tabbar__lens::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: 29px;
+    pointer-events: none;
+    background:
+      linear-gradient(110deg, transparent 18%, rgba(99,190,255,.13) 31%, rgba(255,255,255,.22) 48%, rgba(255,111,165,.13) 66%, transparent 82%),
+      radial-gradient(72% 23% at 50% 0%, rgba(255,255,255,.25), transparent 78%);
+    background-size: 170% 100%, 100% 100%;
+    background-position: 140% 0, 0 0;
+    opacity: .56;
+  }
+
+  @keyframes liquid-prism-pulse {
+    0% { opacity: .55; filter: blur(1.25px) saturate(145%); }
+    42% { opacity: 1; filter: blur(.62px) saturate(245%); }
+    100% { opacity: .88; filter: blur(.9px) saturate(190%); }
+  }
+
+  @keyframes liquid-light-sweep {
+    0% { background-position: 150% 0, 0 0; opacity: .28; }
+    45% { opacity: .78; }
+    100% { background-position: -55% 0, 0 0; opacity: .56; }
+  }
+
+  @keyframes liquid-tab-settle {
+    0% { transform: scale(.94); }
+    48% { transform: scale(1.16); }
+    72% { transform: scale(1.08); }
+    100% { transform: scale(1.11); }
+  }
+
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before {
+    animation: liquid-prism-pulse 560ms cubic-bezier(.22,1.12,.36,1) both;
+  }
+
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
+    animation: liquid-light-sweep 560ms ease-out both;
+  }
+
+  .mobile-glass-tabbar__tabs {
+    inset: 3px 4px;
+    z-index: 3;
+  }
+
+  .mobile-glass-tabbar__tab {
+    min-height: 58px;
+    color: rgba(247,249,252,.68);
+    text-shadow: 0 1px 2px rgba(0,0,0,.32);
+  }
+
+  .mobile-glass-tabbar__tab.is-active {
+    color: #79c0ff;
+    text-shadow:
+      -.45px 0 rgba(64,177,255,.50),
+      .45px 0 rgba(255,79,137,.28),
+      0 1px 2px rgba(0,0,0,.34);
+  }
+
+  .mobile-glass-tabbar__content {
+    transition: transform 220ms ease, filter 220ms ease;
+  }
+
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content {
+    transform: scale(1.11);
+    filter: brightness(1.08) saturate(1.08);
+    animation: liquid-tab-settle 560ms cubic-bezier(.22,1.12,.36,1) both;
+  }
+
+  .mobile-glass-tabbar__icon {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.26));
+  }
+
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__icon {
+    transform: translateY(-1px) scale(1.04);
+    filter:
+      drop-shadow(-.5px 0 rgba(55,168,255,.46))
+      drop-shadow(.5px 0 rgba(255,72,130,.26))
+      drop-shadow(0 1px 1px rgba(0,0,0,.26));
+  }
+
+  .mobile-glass-tabbar__label {
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: -.015em;
+  }
+}
+
+@media (max-width: 370px) {
+  .mobile-glass-tabbar {
+    --lens-width: calc(var(--step) * 1.78);
+    height: 62px;
+  }
+
+  .mobile-glass-tabbar__lens {
+    top: -7px;
+    height: 76px;
+  }
+
+  .mobile-glass-tabbar__label {
+    font-size: 8.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-glass-tabbar__lens {
+    transition-duration: 220ms !important;
+    transition-timing-function: ease-out !important;
+  }
+
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content,
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before,
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
+    animation-duration: 220ms !important;
+    animation-timing-function: ease-out !important;
+  }
+}
