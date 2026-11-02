@@ -1,628 +1,489 @@
-
 import React from 'react';
-import type { ContactLink, Experience, Education, Certification, ProjectShowcaseItem, NavLink } from './types';
-import {
-  LinkedInIcon,
-  GitHubIcon,
-  EmailIcon,
-  ShareIcon,
-} from './components/Icons';
+import type { Certification, ContactLink, Education, Experience, NavLink, ProjectShowcaseItem } from './types';
+import { EmailIcon, GitHubIcon, LinkedInIcon, ShareIcon } from './components/Icons';
 import Header from './src/components/Header';
-import MarketingPerformance from './src/components/MarketingPerformance';
 import ProjectSection from './src/components/ProjectSection';
 
-const PROFILE_IMAGE_URL = "https://avatars.githubusercontent.com/u/69459277?v=4";
+const PROFILE_IMAGE_URL = 'https://avatars.githubusercontent.com/u/69459277?v=4';
 
 const navLinksData: NavLink[] = [
-  { href: "#overview", label: "Overview" },
-  { href: "#experiencia", label: "Experiência" },
-  { href: "#marketing", label: "Performance" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#formacao", label: "Formação" },
-  { href: "#contato", label: "Contato" },
+  { href: '#overview', label: 'Início' },
+  { href: '#experiencia', label: 'Experiência' },
+  { href: '#projetos', label: 'Projetos' },
+  { href: '#contato', label: 'Contato' },
 ];
 
 const contactLinksData: ContactLink[] = [
-  { href: "mailto:leobrykcy.product@gmail.com", label: "Email", icon: <EmailIcon />, ariaLabel: "Email" },
-  { href: "https://www.linkedin.com/in/leonardo-brykcy", label: "LinkedIn", icon: <LinkedInIcon />, ariaLabel: "LinkedIn" },
-  { href: "https://github.com/Bryckzy", label: "GitHub", icon: <GitHubIcon />, ariaLabel: "GitHub" },
+  { href: 'mailto:leobrykcy.product@gmail.com', label: 'Email', icon: <EmailIcon />, ariaLabel: 'Enviar email para Leonardo Brykcy' },
+  { href: 'https://www.linkedin.com/in/leonardo-brykcy', label: 'LinkedIn', icon: <LinkedInIcon />, ariaLabel: 'Abrir LinkedIn de Leonardo Brykcy' },
+  { href: 'https://github.com/Bryckzy', label: 'GitHub', icon: <GitHubIcon />, ariaLabel: 'Abrir GitHub de Leonardo Brykcy' },
+];
+
+const impactMetrics = [
+  { value: '1.910', label: 'SKUs em catálogo', detail: 'governança, fiscal, logística e qualidade de dados' },
+  { value: '320+', label: 'cadastros revisados', detail: 'atributos críticos, GTIN, NCM, peso e cubagem' },
+  { value: '10+', label: 'sistemas e automações', detail: 'produto, operações, dados, RH e produtividade' },
+  { value: '1,5M+', label: 'impressões em growth', detail: 'experiência prática em aquisição e performance' },
+];
+
+const capabilities = [
+  {
+    index: '01',
+    title: 'Product Strategy',
+    text: 'Discovery, priorização, métricas e tradução de problemas ambíguos em produtos que pessoas realmente conseguem usar.',
+    tags: ['Discovery', 'Roadmap', 'UX', 'Growth'],
+  },
+  {
+    index: '02',
+    title: 'Systems & Automation',
+    text: 'Desenho e construção de ferramentas internas, integrações e fluxos que removem trabalho manual e reduzem ruído operacional.',
+    tags: ['React', 'Vite', 'APIs', 'Supabase'],
+  },
+  {
+    index: '03',
+    title: 'Data & AI',
+    text: 'Dados como infraestrutura de decisão: modelagem, qualidade, dashboards e aplicações práticas de IA/LLM em produtos e operações.',
+    tags: ['SQL', 'LLM', 'Analytics', 'Automation'],
+  },
 ];
 
 const experienceData: Experience[] = [
   {
-    id: "exp-startools",
-    title: "Product Maintenance Analyst",
-    company: "Startools Ferramentas",
-    period: "Dezembro 2025 - Presente",
-    location: "SBC, SP",
-    logoUrl: "https://i.imgur.com/q7hnTeR.png",
+    id: 'exp-startools',
+    title: 'Product Systems & Data',
+    company: 'Startools Ferramentas',
+    period: '2025 — 2026',
+    location: 'São Bernardo do Campo, SP',
+    logoUrl: 'https://i.imgur.com/q7hnTeR.png',
     description: [
-      "Focado em operações de produto B2B, atuando na governança de Master Data no ERP.",
-      "Otimização do ciclo de vida de dados para compliance fiscal e eficiência logística.",
-      "Redução de gaps operacionais através de melhoria contínua de processos e sistemas.",
-      "Garantia de integridade de informações críticas para precificação e supply chain."
-    ]
+      'Governança e saneamento de dados de produto em um catálogo de aproximadamente 1.910 SKUs, conectando ERP, compliance fiscal e operação logística.',
+      'Criação de uma suíte de ferramentas internas para logística, GTIN, product matching, etiquetas, showroom, RH e análise operacional.',
+      'Modelagem de fluxos de frete, redespacho e NF-e, com integração entre necessidades de negócio, dados e sistemas.',
+    ],
   },
   {
-    id: "exp-quark",
-    title: "Founder | CEO",
-    company: "Quark-IT",
-    period: "Maio 2020 - Presente",
-    location: "Brasil",
-    logoUrl: "https://i.imgur.com/cwCk6d6.png",
+    id: 'exp-quark',
+    title: 'Founder · Product & Systems',
+    company: 'Quark-IT',
+    period: '2020 — projetos independentes',
+    location: 'Brasil',
+    logoUrl: 'https://i.imgur.com/cwCk6d6.png',
     description: [
-      "Liderança estratégica impactando +50 empresas com soluções digitais escaláveis.",
-      "Desenvolvimento de arquiteturas robustas em Vercel, Supabase e automações com IA.",
-      "Consultoria 360º: desde o mapeamento de necessidades até a entrega final (Discovery -> Delivery).",
-      "Geração de ROI através de estratégias de SEO e Product Marketing para negócios locais."
-    ]
+      'Condução de projetos digitais para negócios locais e operações B2B, do diagnóstico ao lançamento.',
+      'Arquitetura de soluções com React, Vercel, Supabase, automações e integrações com IA.',
+      'Atuação próxima ao negócio: posicionamento, aquisição, experiência, dados e melhoria contínua do produto.',
+    ],
   },
   {
-    id: "exp-fluency",
-    title: "Product Owner",
-    company: "Fluencypass",
-    period: "Novembro 2023 - Setembro 2024",
-    location: "SBC, SP",
-    logoUrl: "https://i.imgur.com/b83BoxP_d.webp?maxwidth=760&fidelity=grand",
+    id: 'exp-fluency',
+    title: 'Product Owner · AI & Learning',
+    company: 'Fluencypass',
+    period: '2023 — 2024',
+    location: 'São Paulo, SP',
+    logoUrl: 'https://i.imgur.com/b83BoxP_d.webp?maxwidth=760&fidelity=grand',
     description: [
-      "Orquestração de produtos EdTech integrando Inteligência Artificial Generativa.",
-      "Desenvolvimento de protótipos e testes adaptativos (CAT) para escala global.",
-      "Gestão de roadmap técnico com foco em métricas de aprendizado e retenção.",
-      "Colaboração direta com engenharia para tradução de visão de negócio em requisitos."
-    ]
+      'Produto EdTech com experimentação em IA generativa e avaliação adaptativa de proficiência.',
+      'Prototipação de experiências, definição de requisitos e colaboração direta com engenharia e stakeholders de negócio.',
+      'Roadmap orientado por aprendizagem, retenção e redução de fricção na jornada do aluno.',
+    ],
   },
   {
-    id: "exp-mb-prot",
-    title: "Prototype and Production Mechanic",
-    company: "Mercedes-Benz do Brasil",
-    period: "Janeiro 2019 - Março 2023",
-    location: "SBC, SP",
-    logoUrl: "https://i.imgur.com/mFq1vmJ.png",
+    id: 'exp-mb',
+    title: 'Prototype & Production',
+    company: 'Mercedes-Benz do Brasil',
+    period: '2019 — 2023',
+    location: 'São Bernardo do Campo, SP',
+    logoUrl: 'https://i.imgur.com/mFq1vmJ.png',
     description: [
-      "Participação no desenvolvimento de veículos elétricos e tecnologias de ponta.",
-      "Aplicação de metodologias ágeis em ambientes industriais de alta complexidade.",
-      "Foco em precisão técnica, segurança e garantia de qualidade nos protótipos.",
-      "Base fundamental de análise de detalhes e processos que hoje sustenta minha visão de produto."
-    ]
-  }
-];
-
-const educationData: Education[] = [
-  {
-    id: "edu-ufabc-gestao",
-    institution: "Universidade Federal do ABC (UFABC)",
-    degree: "Bacharelado em Engenharia de Gestão",
-    period: "2022 - 2027",
-    details: "Formação simultânea e interdisciplinar focada em estratégia e otimização de sistemas complexos.",
-    logoUrl: "https://i.imgur.com/MiEi4Je.png"
+      'Experiência em protótipos, produção e validação em ambiente industrial de alta complexidade.',
+      'Participação em iniciativas ligadas a veículos elétricos, testes e desenvolvimento de soluções para operações especiais.',
+      'Base técnica em precisão, segurança, qualidade e resolução estruturada de problemas — hoje aplicada à construção de produtos digitais.',
+    ],
   },
-  {
-    id: "edu-ufabc-aero",
-    institution: "Universidade Federal do ABC (UFABC)",
-    degree: "Bacharelado em Engenharia Aeroespacial",
-    period: "2022 - 2027",
-    details: "Formação técnica de alta complexidade em paralelo à gestão, unificando precisão técnica e visão estratégica.",
-    logoUrl: "https://i.imgur.com/MiEi4Je.png"
-  },
-  {
-    id: "edu-pm3-path",
-    institution: "Escola PM3",
-    degree: "Formação em Product Management",
-    period: "2023",
-    details: "Referência em gestão de produtos no Brasil, focando em Discovery, Delivery e Product-Led Growth.",
-    logoUrl: "https://i.imgur.com/1NHtBuj.png"
-  },
-  {
-    id: "edu-senai-mb",
-    institution: "SENAI Mercedes-Benz",
-    degree: "Manufatura Automotiva & Mecânica",
-    period: "2019 - 2021",
-    details: "Base técnica de manufatura de precisão em ambiente corporativo global.",
-    logoUrl: "https://i.imgur.com/NnL38S1.png"
-  }
-];
-
-const certificationData: Certification[] = [
-  { id: "c-pm3-pm", name: "Product Management", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
-  { id: "c-pm3-pd", name: "Product Design", issuer: "Escola PM3", year: "2023", logoUrl: "https://i.imgur.com/1NHtBuj.png" },
-  { id: "c-cambridge", name: "C1 Advanced English", issuer: "Cambridge Assessment", year: "2022", logoUrl: "https://i.imgur.com/uH5sops.png" },
-  { id: "c-senai-emp", name: "Empreendedorismo", issuer: "SENAI-SP", year: "2021", logoUrl: "https://i.imgur.com/NnL38S1.png" },
 ];
 
 const projectShowcaseData: ProjectShowcaseItem[] = [
   {
-    id: "p-startools-logistica",
-    name: "Startools Logística",
-    category: "Internal Ops",
-    context: "Falta de controle logístico e visibilidade nas entregas, dificultando a gestão e gerando ineficiências operacionais.",
+    id: 'p-ops-suite',
+    name: 'Startools Operations Suite',
+    category: 'Product Systems',
+    context: 'Uma operação B2B dependia de ERP, planilhas e tarefas manuais para manter produto, logística, showroom e processos internos sincronizados.',
     role: [
-      "Discovery completo do fluxo logístico",
-      "Definição de backlog e priorização",
-      "Criação de visão de produto end-to-end"
+      'Mapeamento de gargalos operacionais e definição das prioridades de produto',
+      'Arquitetura e construção de ferramentas conectadas ao fluxo real da empresa',
+      'Estruturação de dados, validações e interfaces para uso recorrente pelas equipes',
     ],
-    solution: "Sistema completo de gestão logística com acompanhamento, etapas e relatórios.",
+    solution: 'Uma suíte de sistemas internos cobrindo logística, geração de GTIN, product matching, etiquetas, showroom, RH e análise de transportadoras.',
     results: [
-      "Redução média de falhas operacionais observada na operação",
-      "Aumento de eficiência média na gestão global de entregas",
-      "Melhoria consolidada na previsibilidade logística"
+      'Catálogo de aproximadamente 1.910 SKUs tratado como base operacional estruturada',
+      'Mais de 320 cadastros e atributos críticos revisados e normalizados',
+      'Redução da dependência de tarefas manuais em fluxos recorrentes de operação',
     ],
-    imageUrls: [
-      "https://i.imgur.com/Y4WpiHQ.jpeg",
-      "https://i.imgur.com/AVBj6rs.jpeg"
-    ],
-    techStack: ["Product Discovery", "UX Flow", "End-to-End"]
+    imageUrls: ['https://i.imgur.com/Y4WpiHQ.jpeg', 'https://i.imgur.com/M88eZZj.jpeg'],
+    techStack: ['React', 'Vite', 'Supabase', 'SQL', 'APIs', 'Product Ops'],
+    featured: true,
   },
   {
-    id: "p-startools-scan",
-    name: "Startools Product Scan",
-    category: "Internal Ops",
-    context: "Dificuldade de acesso rápido a informações de produtos em eventos e showroom pela equipe comercial.",
+    id: 'p-logistics',
+    name: 'Startools Logistics',
+    category: 'Logistics Intelligence',
+    context: 'Acompanhar entregas, transportadoras e desempenho logístico exigia leitura manual de dados dispersos e dificultava comparar eficiência.',
     role: [
-      "Identificação de necessidade operacional em campo",
-      "Definição de experiência mobile-first focada em campo",
-      "Priorização de velocidade resolutiva e usabilidade no scan"
+      'Desenho do modelo de acompanhamento de entregas e transportadoras',
+      'Definição de KPIs como média, P90, eficiência e custo',
+      'Construção da experiência para leitura rápida do desempenho operacional',
     ],
-    solution: "Sistema leve de leitura de código de barras com retorno instantâneo agilizando a visualização de informações em campo.",
+    solution: 'Dashboard e fluxo operacional para consolidar dados de entrega e transformar histórico logístico em decisão.',
     results: [
-      "Redução média significativa no tempo de consulta de produtos",
-      "Melhoria média na experiência comercial presencial em eventos"
+      'Comparação de transportadoras com métricas consistentes em uma única visão',
+      'Maior clareza sobre prazo, dispersão e custo por operação',
+      'Base para decisões de cotação, redespacho e gestão de SLA',
     ],
-    imageUrls: [
-      "https://i.imgur.com/2TbAMxX.jpeg",
-      "https://i.imgur.com/dIXJwvy.jpeg"
-    ],
-    techStack: ["Mobile-first", "Operações Comerciais"]
+    imageUrls: ['https://i.imgur.com/Y4WpiHQ.jpeg', 'https://i.imgur.com/AVBj6rs.jpeg'],
+    techStack: ['Product Analytics', 'Logistics', 'Dashboards', 'Data Ops'],
   },
   {
-    id: "p-linguacombo",
-    name: "LinguaCombo",
-    category: "Marketing",
-    context: "Cursos de idiomas com preços altos e baixa acessibilidade, principalmente para jovens e iniciantes.",
+    id: 'p-productmatch',
+    name: 'Product Match',
+    category: 'Competitive Intelligence',
+    context: 'Comparar um catálogo interno com concorrentes era lento, inconsistente e difícil de escalar manualmente.',
     role: [
-      "Definição da proposta de valor focada em educação acessível",
-      "Estruturação do modelo de pricing com inspiração em combos",
-      "Construção da jornada guiada simplificada de compra",
-      "Validação contínua da oferta baseada em dados de check-out"
+      'Definição do problema de matching e dos critérios de comparação',
+      'Desenho do fluxo de análise e das regras de correspondência',
+      'Priorização de uma interface que evidencia diferenças relevantes para decisão comercial',
     ],
-    solution: "Criação de uma plataforma online de venda de aulas com um modelo de precificação acessível e comunicação altamente simplificada.",
+    solution: 'Sistema para cruzar produtos internos e concorrentes, organizando evidências para análise de preço, posicionamento e catálogo.',
     results: [
-      "Aumento médio de conversão observado em landing pages educacionais comparáveis entre 20% e 40%",
-      "Redução média esperada da fricção no checkout em produtos de baixo ticket"
+      'Processo comparativo transformado de busca manual em fluxo estruturado',
+      'Melhor rastreabilidade da lógica usada para identificar correspondências',
+      'Base reutilizável para inteligência competitiva em escala',
     ],
-    imageUrls: [
-      "https://i.imgur.com/cPWETJJ.jpeg"
-    ],
-    techStack: ["Growth", "Pricing Strategy", "E-commerce"]
+    imageUrls: ['https://i.imgur.com/M88eZZj.jpeg', 'https://i.imgur.com/E2bNbOV.jpeg'],
+    techStack: ['Data Matching', 'Competitive Intelligence', 'Automation'],
+    repoLink: 'https://github.com/Bryckzy/Product-Match-Startools',
   },
   {
-    id: "p-productmatch",
-    name: "Product Match",
-    category: "Projetos",
-    context: "Empresas com dificuldade de posicionamento competitivo mercadológico por falta de visibilidade em escala sobre concorrentes.",
+    id: 'p-exposcan',
+    name: 'ExpoScan',
+    category: 'Mobile Operations',
+    context: 'Em feiras e showroom, a equipe comercial precisava consultar informações de produto rapidamente sem navegar por planilhas ou catálogos extensos.',
     role: [
-      "Definição exata do problema de inteligência competitiva",
-      "Estruturação lógica do fluxo automatizado de comparação",
-      "Priorização das vitrines e features de análise automática"
+      'Mapeamento da jornada de consulta em campo',
+      'Definição da experiência mobile-first e do fluxo por código de barras',
+      'Priorização de velocidade, legibilidade e baixa fricção operacional',
     ],
-    solution: "Sistema corporativo focado em cruzar informações do catálogo interno com as de produtos concorrentes mapeados online.",
+    solution: 'Aplicação móvel para leitura de códigos e acesso imediato às informações de produto durante atendimento presencial.',
     results: [
-      "Redução média esperada no tempo de análise competitiva podendo chegar a 70%",
-      "Apoio estrutural e melhoria na tomada de decisão comercial de forma holística comparativa"
+      'Consulta de produto reduzida a uma interação direta pelo celular',
+      'Experiência preparada para catálogos com milhares de itens e variações',
+      'Menos dependência de materiais auxiliares durante eventos e showroom',
     ],
-    imageUrls: [
-      "https://i.imgur.com/M88eZZj.jpeg",
-      "https://i.imgur.com/E2bNbOV.jpeg"
-    ],
-    techStack: ["Competitive Intelligence", "Data Strategy"]
+    imageUrls: ['https://i.imgur.com/2TbAMxX.jpeg', 'https://i.imgur.com/dIXJwvy.jpeg'],
+    techStack: ['Mobile-first', 'Barcode', 'Sales Ops'],
+    repoLink: 'https://github.com/Bryckzy/Startools-ExpoScan',
   },
   {
-    id: "p-etiquetas-showroom",
-    name: "Etiquetas Showroom",
-    category: "Internal Ops",
-    context: "Processos puramente manuais, gerando inconsistências no padrão e na agilidade de identificação de produtos de showroom.",
+    id: 'p-ofertaai',
+    name: 'OfertaAI',
+    category: 'AI Commerce',
+    context: 'Recomendações de produtos em canais de mensagem normalmente exigem pesquisa manual, copy e montagem do link comercial.',
     role: [
-      "Mapeamento imersivo e diagnóstico do fluxo atual",
-      "Identificação tática de gargalos operacionais físicos/digitais",
-      "Definição da padronização sustentável para o ambiente de operação"
+      'Definição do fluxo conversacional e da proposta de valor',
+      'Integração entre busca de produtos, geração de texto e regras de monetização',
+      'Instrumentação para acompanhar uso, pesquisas, erros e custo computacional',
     ],
-    solution: "Criação de sistema coeso para a geração automatizada e ágil de etiquetas baseadas nestes padrões corporativos.",
+    solution: 'Bot de WhatsApp que pesquisa produtos, gera recomendações e organiza links de afiliado em um único fluxo conversacional.',
     results: [
-      "Acesso e redução média global de erros na cadeia de manuseio e etiquetagem",
-      "Escalabilidade e aumento de eficiência visual na organização do espaço"
+      'Arquitetura pensada para operar com WhatsApp, Supabase e backend em nuvem',
+      'Automação de uma jornada que antes exigia múltiplas etapas manuais',
+      'Base de produto preparada para medir comportamento e custo por interação',
     ],
-    imageUrls: [
-      "https://i.imgur.com/ogcl5OT.jpeg"
-    ],
-    techStack: ["Automação", "Mapeamento Ops"]
+    techStack: ['WhatsApp', 'LLM', 'Supabase', 'APIs', 'Analytics'],
   },
   {
-    id: "p-quark-site",
-    name: "Quark IT — Site & Portfólio",
-    category: "Marketing",
-    context: "Negócios locais com presença digital estagnada e alta dificuldade natural de criar verticais recorrentes na aquisição de clientes.",
+    id: 'p-level-test',
+    name: 'Adaptive Level Test',
+    category: 'AI · EdTech',
+    context: 'Testes lineares de idioma podem gerar avaliações longas e pouco adaptadas ao nível real de cada aluno.',
     role: [
-      "Estruturação direta e assertiva do posicionamento de produto",
-      "Mapeamento da jornada orgânica até funil em aquisição",
-      "Priorização tática das landing pages com visibilidade em lead generation"
+      'Exploração de avaliação adaptativa e lógica inspirada em Item Response Theory',
+      'Prototipação da jornada e dos critérios de progressão do teste',
+      'Tradução entre objetivo pedagógico, experiência do usuário e viabilidade técnica',
     ],
-    solution: "Site institucional orientado ao posicionamento profissional de forma contínua para apresentação e onboarding de serviços.",
+    solution: 'Experiência adaptativa que ajusta o percurso de avaliação conforme respostas e sinais de proficiência.',
     results: [
-      "Suporte vital e aumento médio contínuo nas frentes locais de lead generation",
-      "Atingimento da taxa de conversão média por visitantes otimizada para o setor B2B local"
+      'Menor necessidade de expor todos os usuários ao mesmo percurso de prova',
+      'Estrutura preparada para personalização e experimentação contínua',
+      'Aplicação concreta de IA em uma decisão central do produto educacional',
     ],
-    imageUrls: [
-      "https://i.imgur.com/hgNEjNj.jpeg",
-      "https://i.imgur.com/hW4l5ba.jpeg"
-    ],
-    techStack: ["Lead Generation", "UX Strategy"]
+    techStack: ['Product Discovery', 'AI', 'IRT', 'EdTech'],
+  },
+];
+
+const educationData: Education[] = [
+  {
+    id: 'edu-ufabc-aero',
+    institution: 'Universidade Federal do ABC',
+    degree: 'Engenharia Aeroespacial · formação interdisciplinar',
+    period: '2022 — em andamento',
+    details: 'Ciência, engenharia e sistemas complexos como complemento à atuação em produto e tecnologia.',
+    logoUrl: 'https://i.imgur.com/MiEi4Je.png',
   },
   {
-    id: "p-aprender-crescer",
-    name: "Landing Page — Aprender para Crescer",
-    category: "Marketing",
-    context: "Baixa retenção de atenção e queda perceptível no conversão para produtos voltados estritamente à esfera educacional.",
-    role: [
-      "Reredação e reestruturação total da proposta de valor exposta",
-      "Desenvolvimento de hierarquização visual pautada em métricas",
-      "Aprovação e testagem com foco exclusivo no tracionamento"
-    ],
-    solution: "Implementação de modelo reestruturado de Landing Page modular com CTAs progressivos direcionando conversão fluida em InfoProdutos.",
-    results: [
-      "Expectativa de aumento e melhoria média em conversão entre 25% e 50% frente aos padrões atuais web",
-      "Ataque a objeções operacionais gerando redução direta no abandono"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/ROtsZyd.jpeg"
-    ],
-    techStack: ["Growth", "CRO", "Copywriting"]
+    id: 'edu-pm3',
+    institution: 'Escola PM3',
+    degree: 'Product Management & Product Design',
+    period: '2023',
+    details: 'Formação em discovery, estratégia, experiência e desenvolvimento de produtos digitais.',
+    logoUrl: 'https://i.imgur.com/1NHtBuj.png',
   },
   {
-    id: "p-grunner-mb",
-    name: "Grunner (Mercedes-Benz)",
-    category: "Projetos",
-    context: "Elevada necessidade de expansão segura e ágil na adaptação dos ecossistemas de caminhões para uma operação autônoma agrícola.",
-    role: [
-      "Atuação presente em etapas complexas conectadas e ciclo de produto",
-      "Elaboração como ponte/interface entre divisões técnicas e corporativas",
-      "Forte contribuição transversal nos testes práticos focando segurança"
-    ],
-    solution: "Arquitetura adaptada viabilizando de ponta a ponta que veículos superem interrupções operando em ambiente remoto agrícola autônomo.",
-    results: [
-      "Diminuição robusta na necessidade contínua por interferência manual em ambientes hostis",
-      "Incremento global médio na disponibilidade tática mecânica da operação por escala"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/05SyIoV.jpeg"
-    ],
-    techStack: ["Product Ops", "Integração B2B"]
+    id: 'edu-senai',
+    institution: 'SENAI Mercedes-Benz',
+    degree: 'Manufatura Automotiva & Mecânica',
+    period: '2019 — 2021',
+    details: 'Fundação técnica em manufatura, precisão, processos e ambiente industrial.',
+    logoUrl: 'https://i.imgur.com/NnL38S1.png',
   },
-  {
-    id: "p-easytab",
-    name: "Easy Tab",
-    category: "Projetos",
-    context: "Grande atraso e custo logístico em horas humanas para o registro de tabulações em call centers sob forte demanda.",
-    role: [
-      "Mapeamento precoce sobre aplicação inteligente de dados LLM",
-      "Conectividade de serviços validando uso do modelo focado em voz",
-      "Refinamento das interações modelando processos de escuta em tabulação direta"
-    ],
-    solution: "Implementação combinada integrando conversão Speech-to-Text ao processo de processamento da IA para automatizar resumos dos atendimentos.",
-    results: [
-      "Cenário prospectivo traçando forte redução contínua em tempo manual no processo de chamada",
-      "Impacto positivo provável sobre os limiares de produtividade operacional do turno"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/jMvligm.png"
-    ],
-    techStack: ["LLM", "Automação com IA"]
-  },
-  {
-    id: "p-calc",
-    name: "Calculadora Logística 3D",
-    category: "Projetos",
-    context: "Falta de visibilidade e ineficiência na alocação de espaço e cubagem industrial, gerando encarecimento excessivo e altos custos não otimizados no frete logístico corporativo.",
-    role: [
-      "Mapeamento estruturado minucioso para as validações da alocação de espaço dos insumos e cargas",
-      "Gestão do backlog e priorização das visões voltadas a resultados interativos da calculadora no dia-a-dia do operador de pátio"
-    ],
-    solution: "Ferramenta tática e robusta, projetando na tela de forma contínua em 3D o melhor aproveitamento prático gerado pelos limites volumétricos testados.",
-    results: [
-      "Redução média em custos de frete estimada em implementações de 10% e 20%",
-      "Eficácia contínua visando maximização do espaço real nos transportes viários e operacionais"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/Gea7j14.png?w=800&auto=format&q=75"
-    ],
-    techStack: ["Data Ops", "Visão Espacial"]
-  },
-  {
-    id: "p-sullivan",
-    name: "Sullivan Connection",
-    category: "Projetos",
-    context: "Dependência de planilhas complexas, demora excessiva e falha recorrente em dados na coleta de requerimentos de campo das obras, minando orçamento comercial.",
-    role: [
-      "Avaliação crítica das dependências processuais da equipe de rua com o backend",
-      "Orquestração estratégica viabilizando arquitetura para rápida emissão assíncrona por parte da infraestrutura",
-    ],
-    solution: "Estrutura nativamente mobile fornecendo total autonomia na manutenção, e facilitando imersão de preenchimento comercial em linha.",
-    results: [
-      "Expansibilidade de adoção observando em casos correlacionados aumento de aceites próximos de 80% do pipeline médio",
-      "Refinamento da cadência digital desobstruindo tempo precioso do comercial corporativo atuante na região"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/B4grnDk.png?w=800&auto=format&q=75"
-    ],
-    techStack: ["Mobile Architecture", "Agile"]
-  },
-  {
-    id: "p-level",
-    name: "Level Test AI",
-    category: "Projetos",
-    context: "Avaliações monolíticas tradicionais causavam alto índice de erro do nível medido em relação à curva de fluência, estendendo desgastes nos primeiros dias dos estudantes.",
-    role: [
-      "Revisão integral das métricas preditivas apontando lacunas avaliativas no uso das tecnologias legadas",
-      "Design de lógica pautado no formato 'Item Response Theory', balanceando IA para personalização fluida e de baixa frustração na avaliação"
-    ],
-    solution: "Prova modular orientada e adaptada em tempo de execução via GenAI para medir fluência real dos candidados baseada puramente na curva cognitiva.",
-    results: [
-      "Saltos nos níveis e melhoria em escalabilidade resultando em redução drástica no tempo médio da checagem em paralelo de perfis do fluxo central edtech"
-    ],
-    imageUrls: [
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=70"
-    ],
-    techStack: ["AI Models", "Linguistics"]
-  },
-  {
-    id: "p-labels",
-    name: "SKU Label System",
-    category: "Internal Ops",
-    context: "Gargalos e erros na identificação de produtos para ERP no momento da expedição, gerando problemas de integridade de dados.",
-    role: [
-      "Identificação das necessidades na expedição",
-      "Definição do fluxo de automação",
-      "Acompanhamento da implantação do sistema corporativo"
-    ],
-    solution: "Sistema ágil para geração e identificação automatizada de labels/etiquetas integradas ao ERP.",
-    results: [
-      "Redução média sensível de falhas na identificação de produtos",
-      "Aumento médio de integridade dos dados operacionais logísticos"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/1RDePwi.png?w=800&auto=format&q=75"
-    ],
-    techStack: ["React", "Node.js", "SQL"]
-  },
-  {
-    id: "p-styllo",
-    name: "Barbearia Novo Styllo",
-    category: "Marketing",
-    context: "Negócio local buscando profissionalização de marca e dificuldades em canalizar agendamentos digitalmente de forma escalável.",
-    role: [
-      "Definição agressiva de estratégia digital local",
-      "Estruturação de funil orgânico de conversão cruzada",
-      "Implementação forte do SEO local map centric"
-    ],
-    solution: "Plataforma de presença digital com agenda unificada e otimização visando conversão e aquisição via buscas locais.",
-    results: [
-      "Aumento médio expressivo na geração de marcações orgânicas",
-      "Melhoria contínua média no posicionamento de buscas na região de atuação principal"
-    ],
-    imageUrls: [
-      "https://i.imgur.com/92B9svc.png?w=800&auto=format&q=75"
-    ],
-    techStack: ["React", "Framer Motion", "Growth"]
-  }
+];
+
+const certificationData: Certification[] = [
+  { id: 'cert-pm', name: 'Product Management', issuer: 'Escola PM3', year: '2023' },
+  { id: 'cert-pd', name: 'Product Design', issuer: 'Escola PM3', year: '2023' },
+  { id: 'cert-cambridge', name: 'C1 Advanced English', issuer: 'Cambridge Assessment', year: '2022' },
+  { id: 'cert-senai', name: 'Empreendedorismo', issuer: 'SENAI-SP', year: '2021' },
 ];
 
 const App: React.FC = () => {
   const handleShare = async () => {
+    const shareData = {
+      title: 'Leonardo Brykcy | Product, Systems & AI',
+      text: 'Portfólio de Leonardo Brykcy — Product, Systems, Data & AI.',
+      url: window.location.origin,
+    };
+
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: 'Leonardo Brykcy | Product Professional',
-          text: 'Conheça o portfólio de Leonardo Brykcy, Product Professional & Digital Strategist.',
-          url: window.location.href,
-        });
-      } catch (err) {
-        console.log('Error sharing:', err);
+        await navigator.share(shareData);
+        return;
+      } catch {
+        return;
       }
-    } else {
-      const el = document.createElement('textarea');
-      el.value = window.location.href;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-      alert('Link copiado para a área de transferência!');
+    }
+
+    try {
+      await navigator.clipboard.writeText(window.location.origin);
+    } catch {
+      // Clipboard can be unavailable in older browsers; the visible URL remains shareable.
     }
   };
 
   return (
-    <div className="flex flex-col min-h-screen selection:bg-pistachio selection:text-black">
-      <Header 
-        navLinks={navLinksData} 
-        profileImageUrl={PROFILE_IMAGE_URL}
-        contactLinks={contactLinksData}
-      />
-      
-      <main className="flex-grow">
-        {/* HERO SECTION */}
-        <section id="overview" className="bg-linen-texture pt-24 pb-16 md:pt-32 md:pb-20 px-6 min-h-[90vh] flex flex-col justify-center">
-          <div className="max-w-6xl mx-auto text-center w-full">
-            <div className="mb-8 flex flex-col items-center relative group">
-              <div className="absolute inset-0 rounded-[2.5rem] bg-pistachio blur-3xl opacity-30 -z-10 transition-all group-hover:opacity-50 scale-125 animate-pulse"></div>
-              <img 
-                src={PROFILE_IMAGE_URL} 
-                alt="Leonardo Brykcy" 
-                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-[3rem] shadow-2xl border-4 border-white/50 object-cover transform transition-transform hover:rotate-3 duration-500"
-              />
-              
-              {/* Floating Social Buttons - Home Primary Action */}
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-8 px-4">
-                 <a 
-                   href="https://www.linkedin.com/in/leonardo-brykcy" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="flex items-center justify-center px-4 py-3 bg-pistachio text-apple font-black rounded-2xl hover:bg-pistachio-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-pistachio/20 group/btn"
-                   aria-label="LinkedIn"
-                 >
-                   <LinkedInIcon className="w-5 h-5 transition-transform group-hover/btn:scale-110" />
-                 </a>
-                 <a 
-                   href="https://github.com/Bryckzy" 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="flex items-center justify-center px-4 py-3 bg-pistachio text-apple font-black rounded-2xl hover:bg-pistachio-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-pistachio/20 group/btn"
-                   aria-label="GitHub"
-                 >
-                   <GitHubIcon className="w-5 h-5 transition-transform group-hover/btn:scale-110" />
-                 </a>
-                 <button 
-                   onClick={handleShare}
-                   className="flex items-center justify-center px-4 py-3 bg-pistachio text-apple font-black rounded-2xl hover:bg-pistachio-dark transition-all transform hover:-translate-y-1 shadow-lg shadow-pistachio/20 group/btn"
-                   aria-label="Compartilhar"
-                 >
-                   <ShareIcon className="w-5 h-5 transition-transform group-hover/btn:rotate-12" />
-                 </button>
+    <div className="site-shell">
+      <a className="skip-link" href="#conteudo">Pular para o conteúdo</a>
+      <Header navLinks={navLinksData} />
+
+      <main id="conteudo">
+        <section id="overview" className="hero-section section-anchor" aria-labelledby="hero-title">
+          <div className="hero-mesh" aria-hidden="true">
+            <span className="hero-orb hero-orb-one" />
+            <span className="hero-orb hero-orb-two" />
+            <span className="hero-orb hero-orb-three" />
+          </div>
+
+          <div className="container hero-grid">
+            <div className="hero-copy">
+              <p className="eyebrow">Product · Systems · Data · AI</p>
+              <h1 id="hero-title">
+                <span className="hero-name">Leonardo Brykcy.</span>
+                <span className="hero-statement">Eu transformo operação complexa em produto que funciona.</span>
+              </h1>
+              <p className="hero-description">
+                Product Manager e builder com experiência entre indústria, EdTech e operações B2B. Uno estratégia, dados e engenharia para sair do problema ambíguo até uma solução usada no dia a dia.
+              </p>
+
+              <div className="hero-actions">
+                <a className="button button-primary" href="#projetos">Ver projetos <span aria-hidden="true">↘</span></a>
+                <a className="button button-secondary" href="https://www.linkedin.com/in/leonardo-brykcy" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+                <button className="icon-button" type="button" onClick={handleShare} aria-label="Compartilhar portfólio">
+                  <ShareIcon className="icon" />
+                </button>
+              </div>
+
+              <div className="hero-meta" aria-label="Informações profissionais">
+                <span>São Bernardo do Campo, SP</span>
+                <span>PT · EN · FR</span>
+                <span>UFABC</span>
               </div>
             </div>
-            
-            <h1 className="text-6xl sm:text-7xl md:text-[8rem] lg:text-[10rem] font-black mb-6 tracking-tighter text-apple leading-[0.85] animate-fade-in">
-              Leonardo <br className="md:hidden" /> Brykcy.
-            </h1>
-            <p className="text-xl md:text-3xl font-medium text-gray-500 max-w-4xl mx-auto leading-tight mb-20 px-4">
-              Product Professional & Líder Estratégico. <br className="hidden md:block" />
-              Sua visão traduzida em <span className="text-apple font-bold italic border-b-4 border-pistachio">impacto real e escalabilidade.</span>
-            </p>
-            
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-8 max-w-5xl mx-auto pt-16 border-t border-apple/5">
-              <div className="text-center p-5 sm:p-6 md:p-8 bg-white/60 rounded-[2rem] sm:rounded-[3rem] backdrop-blur-sm border border-white/20 hover:border-pistachio transition-all group">
-                <span className="block text-3xl sm:text-4xl md:text-6xl font-black mb-1 text-apple group-hover:text-pistachio-dark transition-colors">7+</span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Anos de Trajetória</span>
+
+            <aside className="hero-profile-card" aria-label="Resumo profissional">
+              <div className="portrait-frame">
+                <img
+                  src={PROFILE_IMAGE_URL}
+                  width="460"
+                  height="460"
+                  alt="Leonardo Brykcy"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+                <span className="portrait-status">Disponível para conversas</span>
               </div>
-              <div className="text-center p-5 sm:p-6 md:p-8 bg-pistachio rounded-[2rem] sm:rounded-[3rem] border border-pistachio-dark hover:shadow-2xl transition-all shadow-pistachio/10 group">
-                <span className="block text-3xl sm:text-4xl md:text-6xl font-black mb-1 text-apple group-hover:scale-110 transition-transform">+50</span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-apple/60">Empresas Impactadas</span>
+              <div className="profile-card-copy">
+                <span className="profile-kicker">Product × Engineering</span>
+                <p>Produto com profundidade técnica suficiente para construir, medir e iterar — sem perder o negócio de vista.</p>
               </div>
-              <div className="text-center p-5 sm:p-6 md:p-8 bg-white/60 rounded-[2rem] sm:rounded-[3rem] backdrop-blur-sm border border-white/20 hover:border-pistachio transition-all">
-                <span className="block text-xl sm:text-2xl md:text-4xl font-black mb-1 text-apple mt-1">Trilingue</span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">PT / EN / FR</span>
-              </div>
-              <div className="text-center p-5 sm:p-6 md:p-8 bg-pistachio rounded-[2rem] sm:rounded-[3rem] border border-pistachio-dark shadow-lg shadow-pistachio/20 transform transition-transform hover:scale-105 flex flex-col justify-center items-center overflow-hidden">
-                <span className="block text-xs sm:text-sm md:text-base lg:text-lg font-black mb-1 text-apple leading-tight whitespace-nowrap">Discovery <span className="mx-0.5 text-apple/30">{"->"}</span> Delivery</span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-black uppercase tracking-[0.15em] text-apple/40">Mindset End-to-End</span>
-              </div>
-            </div>
+            </aside>
           </div>
         </section>
 
-        {/* MANTRA */}
-        <section className="bg-pistachio/30 py-32 px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-7xl font-black mb-8 tracking-tighter text-apple">
-              Equilíbrio entre <span className="opacity-40">Engenharia</span> & <span className="text-pistachio-dark italic">Negócio.</span>
-            </h2>
-            <p className="text-lg md:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto font-medium">
-              Minha experiência na Mercedes-Benz me deu a base técnica de precisão. Como Founder da Quark-IT, aprendi a agilidade do mercado. Hoje, unifico essas visões para governar produtos sustentáveis e orientados a dados.
-            </p>
-          </div>
-        </section>
-
-        {/* EXPERIÊNCIA */}
-        <section id="experiencia" className="py-32 md:py-48 px-6 bg-linen">
-          <div className="max-w-5xl mx-auto">
-            <h2 className="section-title mb-24 text-center">Histórico Profissional.</h2>
-            <div className="space-y-32">
-              {experienceData.map((exp) => (
-                <div key={exp.id} className="grid grid-cols-1 lg:grid-cols-12 gap-12 group">
-                  <div className="lg:col-span-4">
-                    <div className="sticky top-24">
-                       <span className="text-[10px] font-black uppercase tracking-widest text-pistachio-dark mb-4 block">{exp.period}</span>
-                       <div className="flex items-center gap-5 mb-8">
-                          {exp.logoUrl && <img src={exp.logoUrl} className="w-14 h-14 rounded-2xl shadow-md bg-white p-1" alt={exp.company} />}
-                          <div>
-                            <h3 className="text-2xl font-black tracking-tighter leading-none">{exp.company}</h3>
-                            <p className="text-xs font-bold text-gray-400 mt-1 uppercase tracking-widest">{exp.location}</p>
-                          </div>
-                       </div>
-                       <p className="text-sm font-black text-apple/40 uppercase tracking-[0.2em]">{exp.title}</p>
-                    </div>
-                  </div>
-                  <div className="lg:col-span-8">
-                    <ul className="space-y-6">
-                      {exp.description.map((item, i) => (
-                        <li key={i} className="text-lg md:text-xl text-gray-600 leading-relaxed pl-8 border-l-4 border-pistachio group-hover:border-pistachio-dark transition-colors duration-500">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+        <section className="proof-section" aria-labelledby="proof-title">
+          <div className="container">
+            <div className="section-heading compact">
+              <p className="eyebrow">Evidência antes de discurso</p>
+              <h2 id="proof-title">Escala real. Sistemas reais. Problemas reais.</h2>
+            </div>
+            <div className="metric-grid">
+              {impactMetrics.map((metric) => (
+                <article className="metric-card" key={metric.label}>
+                  <strong>{metric.value}</strong>
+                  <h3>{metric.label}</h3>
+                  <p>{metric.detail}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        <MarketingPerformance />
+        <section id="impacto" className="capabilities-section section-anchor" aria-labelledby="capabilities-title">
+          <div className="container split-heading">
+            <div className="section-heading">
+              <p className="eyebrow">Como eu opero</p>
+              <h2 id="capabilities-title">Da pergunta certa até o software rodando.</h2>
+            </div>
+            <p className="section-lede">Minha vantagem não é ficar em uma única camada. Eu consigo circular entre negócio, experiência, arquitetura, dados e execução para reduzir perda de contexto.</p>
+          </div>
+
+          <div className="container capability-grid">
+            {capabilities.map((capability) => (
+              <article className="capability-card" key={capability.title}>
+                <span className="capability-index">{capability.index}</span>
+                <h3>{capability.title}</h3>
+                <p>{capability.text}</p>
+                <div className="tag-row">
+                  {capability.tags.map((tag) => <span className="tag" key={tag}>{tag}</span>)}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="experiencia" className="experience-section section-anchor" aria-labelledby="experience-title">
+          <div className="container split-heading">
+            <div className="section-heading">
+              <p className="eyebrow">Trajetória</p>
+              <h2 id="experience-title">Indústria, IA, produto e operação.</h2>
+            </div>
+            <p className="section-lede">Uma carreira pouco linear — e justamente por isso útil para produtos que vivem entre mundo físico, software e processos reais.</p>
+          </div>
+
+          <div className="container timeline">
+            {experienceData.map((experience) => (
+              <article className="timeline-item" key={experience.id}>
+                <div className="timeline-meta">
+                  <span>{experience.period}</span>
+                  <span>{experience.location}</span>
+                </div>
+                <div className="timeline-company">
+                  {experience.logoUrl && <img src={experience.logoUrl} width="64" height="64" loading="lazy" decoding="async" alt="" />}
+                  <div>
+                    <h3>{experience.company}</h3>
+                    <p>{experience.title}</p>
+                  </div>
+                </div>
+                <ul className="timeline-points">
+                  {experience.description.map((item) => <li key={item}>{item}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
 
         <ProjectSection projects={projectShowcaseData} />
 
-        {/* FORMAÇÃO E CERTIFICADOS */}
-        <section id="formacao" className="py-32 md:py-48 px-6 bg-linen-texture">
-          <div className="max-w-6xl mx-auto">
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32">
-                <div>
-                   <h2 className="text-4xl font-black mb-16 tracking-tighter">Academic Path.</h2>
-                   <div className="space-y-8 sm:space-y-12">
-                     {educationData.map(edu => (
-                       <div key={edu.id} className="flex flex-col sm:flex-row gap-6 sm:gap-8 group bg-white/50 p-6 sm:p-8 rounded-[2.5rem] border border-white/50 hover:bg-white transition-all">
-                         <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 flex items-center justify-center p-2 bg-white rounded-2xl shadow-sm">
-                           {edu.logoUrl && <img src={edu.logoUrl} className="w-full h-full object-contain rounded-xl" alt={edu.institution} />}
-                         </div>
-                         <div>
-                            <h4 className="text-xl sm:text-2xl font-black tracking-tight">{edu.institution}</h4>
-                            <p className="text-base sm:text-lg font-bold text-gray-500 mb-4 sm:mb-2 leading-tight">{edu.degree}</p>
-                            <span className="text-[10px] font-black uppercase tracking-widest text-pistachio-dark bg-pistachio/20 px-4 py-1.5 rounded-full">{edu.period}</span>
-                         </div>
-                       </div>
-                     ))}
-                   </div>
-                </div>
-                <div>
-                   <h2 className="text-4xl font-black mb-16 tracking-tighter">Certifications.</h2>
-                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      {certificationData.map(cert => (
-                        <div key={cert.id} className="p-8 bg-white rounded-[2rem] border border-apple/5 shadow-sm hover:shadow-md transition-all flex flex-col items-start gap-4">
-                          {cert.logoUrl && <img src={cert.logoUrl} className="w-10 h-10 object-contain" alt={cert.issuer} />}
-                          <div>
-                            <p className="font-black text-sm text-apple leading-tight mb-2">{cert.name}</p>
-                            <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{cert.issuer} • {cert.year}</p>
-                          </div>
-                        </div>
-                      ))}
-                   </div>
-                </div>
-             </div>
+        <section className="growth-section" aria-labelledby="growth-title">
+          <div className="container growth-grid">
+            <div className="growth-copy">
+              <p className="eyebrow light">Growth & distribution</p>
+              <h2 id="growth-title">Construir é metade. Fazer chegar nas pessoas é a outra.</h2>
+              <p>Também trabalhei com aquisição, mídia e otimização de funil — uma camada que ajuda a conectar produto com distribuição e resultado de negócio.</p>
+            </div>
+            <div className="growth-stats" aria-label="Métricas de performance marketing">
+              <div><strong>1,5M+</strong><span>impressões</span></div>
+              <div><strong>15k+</strong><span>cliques</span></div>
+              <div><strong>R$50k+</strong><span>mídia gerida</span></div>
+              <div><strong>R$0,10</strong><span>CPC médio em campanhas selecionadas</span></div>
+            </div>
           </div>
         </section>
 
-        {/* CTA FINAL */}
-        <section id="contato" className="py-40 bg-apple text-white px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-6xl md:text-[10rem] font-black mb-20 tracking-tighter leading-none">Let's Talk.</h2>
-            <div className="flex flex-wrap justify-center gap-10 md:gap-24 mb-32">
-              {contactLinksData.map(link => (
-                <a key={link.label} href={link.href} className="group flex flex-col items-center">
-                  <div className="w-20 h-20 md:w-28 md:h-28 bg-white/5 rounded-[3.5rem] flex items-center justify-center mb-6 group-hover:bg-pistachio group-hover:text-apple transition-all duration-700 shadow-2xl transform group-hover:rotate-12">
-                    {React.cloneElement(link.icon as React.ReactElement<{ className?: string }>, { className: "w-8 h-8 md:w-12 md:h-12" })}
+        <section className="education-section" aria-labelledby="education-title">
+          <div className="container split-heading">
+            <div className="section-heading">
+              <p className="eyebrow">Formação</p>
+              <h2 id="education-title">Técnica, produto e sistemas complexos.</h2>
+            </div>
+            <p className="section-lede">A formação acadêmica complementa uma trajetória prática em produto, software e indústria.</p>
+          </div>
+
+          <div className="container education-layout">
+            <div className="education-list">
+              {educationData.map((education) => (
+                <article className="education-item" key={education.id}>
+                  {education.logoUrl && <img src={education.logoUrl} width="56" height="56" loading="lazy" decoding="async" alt="" />}
+                  <div>
+                    <span>{education.period}</span>
+                    <h3>{education.institution}</h3>
+                    <h4>{education.degree}</h4>
+                    <p>{education.details}</p>
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.6em] opacity-40 group-hover:opacity-100 transition-opacity">{link.label}</span>
-                </a>
+                </article>
               ))}
             </div>
-            <p className="text-gray-500 text-[10px] font-black uppercase tracking-[0.5em] px-4">
-              Leonardo Brykcy © {new Date().getFullYear()} • Product Strategy & Operations
-            </p>
+
+            <aside className="certification-panel">
+              <p className="eyebrow">Certificações</p>
+              <div className="certification-list">
+                {certificationData.map((certification) => (
+                  <div className="certification-row" key={certification.id}>
+                    <div>
+                      <strong>{certification.name}</strong>
+                      <span>{certification.issuer}</span>
+                    </div>
+                    <span>{certification.year}</span>
+                  </div>
+                ))}
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="contato" className="contact-section section-anchor" aria-labelledby="contact-title">
+          <div className="container contact-card">
+            <div>
+              <p className="eyebrow light">Próximo problema difícil</p>
+              <h2 id="contact-title">Se precisa de alguém que entenda o produto e consiga entrar na parte técnica, podemos conversar.</h2>
+            </div>
+            <div className="contact-actions">
+              <a className="button button-light" href="mailto:leobrykcy.product@gmail.com">Enviar email <span aria-hidden="true">↗</span></a>
+              <a className="button button-ghost-light" href="https://www.linkedin.com/in/leonardo-brykcy" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a className="button button-ghost-light" href="https://github.com/Bryckzy" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+            <footer className="site-footer">
+              <span>Leonardo Sales Brykcy</span>
+              <span>Product · Systems · Data · AI</span>
+              <span>© {new Date().getFullYear()}</span>
+            </footer>
           </div>
         </section>
       </main>
