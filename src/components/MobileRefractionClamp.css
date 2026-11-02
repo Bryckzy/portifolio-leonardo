@@ -1,7 +1,16 @@
-/* Edge geometry for the oversized optical lens. Keeps the lens centered on middle
-   items while clamping it to the rail on the first/last item, so no chromatic
-   edge is cut off by the phone viewport. */
+/* Edge geometry for the oversized optical lens.
+   Important: percentages stored in custom properties are resolved in the context
+   where they are consumed. Because transforms resolve % against the lens itself,
+   the rail dimensions below are viewport-derived so movement stays tied to the
+   actual dock width instead of shrinking to the lens width. */
 @media (max-width: 767px) {
+  .mobile-glass-tabbar {
+    --rail-width: min(408px, calc(100vw - 24px));
+    --inner-width: calc(var(--rail-width) - 8px);
+    --step: calc(var(--inner-width) / 5);
+    --lens-width: calc(var(--step) * 1.72);
+  }
+
   .mobile-glass-tabbar__lens {
     left: 4px;
     transform: translate3d(
@@ -27,5 +36,14 @@
       0,
       0
     );
+  }
+}
+
+@media (max-width: 370px) {
+  .mobile-glass-tabbar {
+    --rail-width: calc(100vw - 16px);
+    --inner-width: calc(var(--rail-width) - 8px);
+    --step: calc(var(--inner-width) / 5);
+    --lens-width: calc(var(--step) * 1.62);
   }
 }
