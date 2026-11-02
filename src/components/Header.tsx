@@ -60,6 +60,8 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
   const scrollFrameRef = useRef<number | null>(null);
   const clickLockUntilRef = useRef(0);
   const reduceMotionRef = useRef(false);
+  const navigationSequenceRef = useRef(0);
+  const navigationCleanupRef = useRef<(() => void) | null>(null);
 
   const mobileItems: DockItem[] = useMemo(() => [
     { href: '#overview', label: 'Início', icon: <HomeIcon /> },
@@ -88,6 +90,10 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
     return () => media.removeEventListener?.('change', update);
   }, []);
 
+  useEffect(() => () => {
+    navigationCleanupRef.current?.();
+  }, []);
+
   useEffect(() => {
     const updateFromScroll = () => {
       scrollFrameRef.current = null;
@@ -109,7 +115,9 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
       }
 
       const last = sections[sections.length - 1];
-      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 18) {
+      const bodyPaddingBottom = Number.parseFloat(window.getComputedStyle(document.body).paddingBottom) || 0;
+      const bottomTolerance = Math.max(18, bodyPaddingBottom + 24);
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - bottomTolerance) {
         current = last;
       }
 
@@ -136,17 +144,41 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
     const target = document.querySelector<HTMLElement>(href);
     if (!target) return;
 
-    clickLockUntilRef.current = Date.now() + 650;
+    navigationCleanupRef.current?.();
+    navigationSequenceRef.current += 1;
+    const sequence = navigationSequenceRef.current;
+
+    clickLockUntilRef.current = Number.POSITIVE_INFINITY;
     setActiveHref(href);
-    target.scrollIntoView({
-      behavior: reduceMotionRef.current ? 'auto' : 'smooth',
-      block: 'start',
-    });
     window.history.replaceState(null, '', href);
 
-    window.setTimeout(() => {
+    if (reduceMotionRef.current) {
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
       clickLockUntilRef.current = 0;
-    }, 700);
+      window.requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+      return;
+    }
+
+    let fallbackTimer: number | null = null;
+
+    const cleanup = () => {
+      window.removeEventListener('scrollend', releaseLock);
+      if (fallbackTimer !== null) window.clearTimeout(fallbackTimer);
+      if (navigationCleanupRef.current === cleanup) navigationCleanupRef.current = null;
+    };
+
+    const releaseLock = () => {
+      if (sequence !== navigationSequenceRef.current) return;
+      cleanup();
+      clickLockUntilRef.current = 0;
+      window.requestAnimationFrame(() => window.dispatchEvent(new Event('scroll')));
+    };
+
+    navigationCleanupRef.current = cleanup;
+    window.addEventListener('scrollend', releaseLock, { once: true });
+    fallbackTimer = window.setTimeout(releaseLock, 5000);
+
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
   const dockStyle = {
