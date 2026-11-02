@@ -1,0 +1,31 @@
+/* Edge geometry for the oversized optical lens. Keeps the lens centered on middle
+   items while clamping it to the rail on the first/last item, so no chromatic
+   edge is cut off by the phone viewport. */
+@media (max-width: 767px) {
+  .mobile-glass-tabbar__lens {
+    left: 4px;
+    transform: translate3d(
+      clamp(
+        0px,
+        calc(var(--active-index) * var(--step) + (var(--step) - var(--lens-width)) / 2),
+        calc(var(--inner-width) - var(--lens-width))
+      ),
+      0,
+      0
+    );
+  }
+
+  .mobile-glass-tabbar__refract-track {
+    transform: translate3d(
+      calc(
+        0px - clamp(
+          0px,
+          calc(var(--active-index) * var(--step) + (var(--step) - var(--lens-width)) / 2),
+          calc(var(--inner-width) - var(--lens-width))
+        )
+      ),
+      0,
+      0
+    );
+  }
+}
