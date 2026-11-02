@@ -1,8 +1,8 @@
 /* Mobile optical pass --------------------------------------------------------
    Rebuilds the mobile dock around the supplied reference: smoked glass rail,
    oversized lens, clipped magnified duplicate content, and chromatic edge split.
-   The duplicate track gives WebKit an optical-refraction illusion without relying
-   on SVG backdrop displacement filters, which Safari still does not support. */
+   Motion of the lens itself is driven by Web Animations in Header.tsx so Safari
+   receives explicit pixel keyframes instead of interpolating a custom property. */
 
 @media (max-width: 767px) {
   .mobile-glass-tabbar {
@@ -71,7 +71,7 @@
     border-radius: 31px;
     overflow: visible;
     transform: translate3d(calc(var(--active-index) * var(--step)), 0, 0);
-    transition: transform 340ms cubic-bezier(.2,.82,.2,1);
+    transition: none;
     background:
       radial-gradient(108% 64% at 50% -8%, rgba(255,255,255,.25), transparent 58%),
       radial-gradient(88% 120% at 50% 114%, rgba(113,151,193,.10), transparent 66%),
@@ -104,11 +104,6 @@
     mask-image: radial-gradient(ellipse at center, rgba(0,0,0,.27) 0 34%, rgba(0,0,0,.66) 62%, #000 88%);
   }
 
-  /* This track is a second, non-interactive copy of the dock contents. It moves
-     in the opposite direction of the lens so the copied content remains aligned
-     with the rail, then gets magnified inside the curved viewport. The viewport
-     mask makes that duplicate strongest near the curved rim, where real glass
-     creates the most visible displacement. */
   .mobile-glass-tabbar__refract-track {
     position: absolute;
     left: 0;
@@ -122,13 +117,14 @@
       0,
       0
     );
-    transition: transform 340ms cubic-bezier(.2,.82,.2,1);
+    transition: none;
     opacity: .90;
     filter:
       saturate(145%)
       contrast(1.10)
       drop-shadow(-.9px 0 rgba(45,164,255,.43))
       drop-shadow(.9px 0 rgba(255,58,121,.34));
+    will-change: transform;
   }
 
   .mobile-glass-tabbar__refract-item {
@@ -175,8 +171,6 @@
     letter-spacing: -.025em;
   }
 
-  /* Thin spectral rim. It is deliberately quieter than a neon outline: the
-     stronger color is supplied by the local caustics at high-curvature corners. */
   .mobile-glass-tabbar__lens::before {
     content: "";
     position: absolute;
@@ -206,8 +200,6 @@
     pointer-events: none;
   }
 
-  /* Local prism flares reproduce the blue/green left bend and red/magenta right
-     bend in the reference. The strongest split sits on the lower curved corners. */
   .mobile-glass-tabbar__lens::after {
     content: "";
     position: absolute;
@@ -224,6 +216,34 @@
     filter: blur(.9px) saturate(195%);
     opacity: .94;
     pointer-events: none;
+  }
+
+  @keyframes mobile-prism-pulse {
+    0% { opacity: .66; filter: blur(1.2px) saturate(145%); }
+    42% { opacity: 1; filter: blur(.62px) saturate(255%); }
+    72% { opacity: .88; filter: blur(1.05px) saturate(215%); }
+    100% { opacity: .94; filter: blur(.9px) saturate(195%); }
+  }
+
+  @keyframes mobile-rim-pulse {
+    0% { opacity: .52; filter: blur(.55px) saturate(150%); }
+    44% { opacity: .96; filter: blur(.28px) saturate(235%); }
+    100% { opacity: .78; filter: blur(.42px) saturate(185%); }
+  }
+
+  @keyframes mobile-tab-settle {
+    0% { transform: scale(.94); filter: brightness(.98) saturate(.96); }
+    46% { transform: scale(1.17); filter: brightness(1.12) saturate(1.16); }
+    72% { transform: scale(1.085); filter: brightness(1.04) saturate(1.05); }
+    100% { transform: scale(1.12); filter: brightness(1.07) saturate(1.08); }
+  }
+
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
+    animation: mobile-prism-pulse 520ms cubic-bezier(.18,.84,.24,1) both;
+  }
+
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before {
+    animation: mobile-rim-pulse 520ms cubic-bezier(.18,.84,.24,1) both;
   }
 
   .mobile-glass-tabbar__tabs {
@@ -252,6 +272,7 @@
   .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content {
     transform: scale(1.12);
     filter: brightness(1.07) saturate(1.08);
+    animation: mobile-tab-settle 520ms cubic-bezier(.18,.84,.24,1) both;
   }
 
   .mobile-glass-tabbar__icon {
@@ -301,9 +322,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mobile-glass-tabbar__lens,
-  .mobile-glass-tabbar__refract-track,
   .mobile-glass-tabbar__content {
-    transition-duration: .01ms !important;
+    transition-duration: 160ms !important;
+  }
+
+  .mobile-glass-tabbar__tab.is-active .mobile-glass-tabbar__content,
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::before,
+  .mobile-glass-tabbar.is-animating .mobile-glass-tabbar__lens::after {
+    animation-duration: 190ms !important;
   }
 }
