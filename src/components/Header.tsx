@@ -243,11 +243,6 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
     transform: 'none',
   };
 
-  const refractTrackStyle: React.CSSProperties = {
-    left: `${-lensX}px`,
-    transform: 'none',
-  };
-
   return (
     <>
       <header className={`identity-header fixed inset-x-0 top-0 z-[110] ${isScrolled ? 'is-scrolled' : ''}`}>
@@ -301,21 +296,7 @@ const Header: React.FC<HeaderProps> = ({ navLinks, profileImageUrl, contactLinks
 
       <nav ref={dockRef} className={`mobile-glass-tabbar ${isLensAnimating ? 'is-animating' : ''}`} style={dockStyle} aria-label="Navegação principal no celular">
         <span className="mobile-glass-tabbar__surface" aria-hidden="true" />
-        <span className="mobile-glass-tabbar__lens" style={lensStyle} aria-hidden="true">
-          <span className="mobile-glass-tabbar__refract-viewport">
-            <span className="mobile-glass-tabbar__refract-track" style={refractTrackStyle}>
-              {mobileItems.map((item, index) => (
-                <span
-                  key={`refract-${item.href}`}
-                  className={`mobile-glass-tabbar__refract-item ${activeIndex === index ? 'is-active' : ''}`}
-                >
-                  {item.icon}
-                  <span className="mobile-glass-tabbar__refract-label">{item.label}</span>
-                </span>
-              ))}
-            </span>
-          </span>
-        </span>
+        <span className="mobile-glass-tabbar__lens" style={lensStyle} aria-hidden="true" />
         <div className="mobile-glass-tabbar__tabs">
           {mobileItems.map((item, index) => {
             const selected = activeIndex === index;
