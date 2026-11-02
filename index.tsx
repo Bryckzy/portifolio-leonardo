@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import MobileViewportDockRuntime from './src/components/MobileViewportDockRuntime';
 import './src/components/MobileLiquidOptics.css';
 import './src/components/MobileMotionAccessibility.css';
 import './src/components/MobileVisualViewportDock.css';
@@ -15,5 +16,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <MobileViewportDockRuntime />
   </React.StrictMode>
 );
