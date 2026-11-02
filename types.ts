@@ -1,4 +1,3 @@
-
 import type React from 'react';
 
 export interface ProjectItem {
@@ -61,14 +60,16 @@ export interface ContactLink {
 export interface ProjectShowcaseItem {
   id: string;
   name: string;
-  category: string; 
+  category: string;
   context: string;
   role: string[];
   solution: string;
   results: string[];
-  imageUrls: string[]; 
+  imageUrls?: string[];
   techStack?: string[];
   liveLink?: string;
+  repoLink?: string;
+  featured?: boolean;
 }
 
 export interface NavLink {
