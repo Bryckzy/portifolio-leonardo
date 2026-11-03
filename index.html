@@ -124,7 +124,11 @@
 
       .bg-linen-texture {
         background-color: #f9f7f2;
-        background-image: url("https://www.transparenttextures.com/patterns/linen-paper.png");
+        background-image:
+          repeating-linear-gradient(0deg, rgba(29, 29, 31, 0.010) 0 1px, transparent 1px 4px),
+          repeating-linear-gradient(90deg, rgba(29, 29, 31, 0.008) 0 1px, transparent 1px 5px),
+          radial-gradient(circle at 20% 0%, rgba(215, 228, 194, 0.12), transparent 38%);
+        background-blend-mode: multiply, multiply, normal;
       }
 
       #root { min-height: 100vh; display: flex; flex-direction: column; }
